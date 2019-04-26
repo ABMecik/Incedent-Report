@@ -21,12 +21,15 @@ public class Message {
 	private String title;
 	private String Desc;
 	
+	
 	@ManyToOne
 	@JoinColumn(name="user")
+	@Column(nullable=false)
 	private User fromuser;
 	
 	@ManyToOne
 	@JoinColumn(name="user")
+	@Column(nullable=false)
 	private User touser;
 	
 	@ManyToOne
