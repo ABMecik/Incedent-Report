@@ -32,39 +32,9 @@ public class UserService {
 		Date date = new Date();
 		user.setCreated_at(date);
 		
-		em.getTransaction().begin();
-		Role role = em.createNamedQuery("FindByName", Role.class)
-				.setParameter("name", "User")
-				.getSingleResult();
-		em.getTransaction().commit();
-		em.close();
+		RoleService rls = new RoleService();
 		
-		if(role == null) {
-			role = new Role();
-			role.setName("User");
-			
-			try {
-
-				em.getTransaction().begin();
-				em.persist(role);
-				em.getTransaction().commit();
-				em.close();
-
-				return true;
-			}
-			catch(Exception e){
-				em.close();
-				return false;
-			}
-			
-		}
-		
-		em.getTransaction().begin();
-		role = em.createNamedQuery("FindByName", Role.class)
-				.setParameter("name", "User")
-				.getSingleResult();
-		em.getTransaction().commit();
-		em.close();
+		Role role = rls.checkRole("Role");
 		
 		
 		user.getUroles().add(role);
