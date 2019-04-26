@@ -35,6 +35,7 @@ public class User{
 	private int id;
 	
 	private String name;
+	private String surname;
 	
 	@Column(nullable=false, unique=true)
 	private String email;
@@ -73,6 +74,10 @@ public class User{
 	
 	
 
+
+
+
+
 	public User(String name, String email, String username, String password) {
 		super();
 		this.name = name;
@@ -84,19 +89,90 @@ public class User{
 
 
 
-	public User(int id, String name, String email, String username, String password, Date created_at, List<Role> uroles,
-			Department deptartment, String title) {
+
+
+
+
+	public User(int id, String name, String surname, String email, String username, String password, Date created_at,
+			List<Role> uroles, Department dept, String title) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.surname = surname;
 		this.email = email;
 		this.username = username;
 		this.password = password;
 		this.created_at = created_at;
 		this.uroles = uroles;
-		this.deptartment = deptartment;
+		this.dept = dept;
 		this.title = title;
 	}
+
+
+
+
+
+
+
+
+	public User(String name, String surname, String email, String username, String password) {
+		super();
+		this.name = name;
+		this.surname = surname;
+		this.email = email;
+		this.username = username;
+		this.password = password;
+	}
+
+
+
+
+
+
+
+
+	public String getSurname() {
+		return surname;
+	}
+
+
+
+
+
+
+
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+
+
+
+
+
+
+
+	public Department getDept() {
+		return dept;
+	}
+
+
+
+
+
+
+
+
+	public void setDept(Department dept) {
+		this.dept = dept;
+	}
+
+
+
+
+
+
 
 
 	public int getId() {
@@ -169,14 +245,6 @@ public class User{
 	}
 
 
-	public Department getDeptartment() {
-		return deptartment;
-	}
-
-
-	public void setDeptartment(Department deptartment) {
-		this.deptartment = deptartment;
-	}
 
 
 	public String getTitle() {

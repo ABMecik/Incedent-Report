@@ -42,14 +42,16 @@ public class Register extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-		
-		
+
 		String username = request.getParameter("username");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		String name = request.getParameter("name");
+		String surname = request.getParameter("surname");
 		
-		User user = new User(name,email,username,password);
+		System.out.println("us : "+username);
+		
+		User user = new User(name,username,email,username,password);
 		
 		UserService us = new UserService();
 		
