@@ -62,10 +62,19 @@ public class User{
 	
 	
 	private String title;
+	
+	@OneToMany(mappedBy="staff")
+	private List<Ticket> todo = new ArrayList<Ticket>();
 
-
+	@OneToMany(mappedBy="created_by")
+	private List<Ticket> tickets = new ArrayList<Ticket>();
+	
+	@OneToMany(mappedBy="touser")
+	private List<Message> recivedmsgs = new ArrayList<Message>();
 	
 	
+	@OneToMany(mappedBy="fromuser")
+	private List<Message> forwardmsgs = new ArrayList<Message>();
 	
 	public User() {
 		super();
@@ -73,6 +82,94 @@ public class User{
 
 	
 	
+	
+
+
+
+
+	public List<Ticket> getTodo() {
+		return todo;
+	}
+
+
+
+
+
+
+
+
+	public void setTodo(List<Ticket> todo) {
+		this.todo = todo;
+	}
+
+
+
+
+
+
+
+
+	public List<Ticket> getTickets() {
+		return tickets;
+	}
+
+
+
+
+
+
+
+
+	public void setTickets(List<Ticket> tickets) {
+		this.tickets = tickets;
+	}
+
+
+
+
+
+
+
+
+	public List<Message> getRecivedmsgs() {
+		return recivedmsgs;
+	}
+
+
+
+
+
+
+
+
+	public void setRecivedmsgs(List<Message> recivedmsgs) {
+		this.recivedmsgs = recivedmsgs;
+	}
+
+
+
+
+
+
+
+
+	public List<Message> getForwardmsgs() {
+		return forwardmsgs;
+	}
+
+
+
+
+
+
+
+
+	public void setForwardmsgs(List<Message> forwardmsgs) {
+		this.forwardmsgs = forwardmsgs;
+	}
+
+
+
 
 
 

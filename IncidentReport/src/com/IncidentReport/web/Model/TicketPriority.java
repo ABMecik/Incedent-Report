@@ -3,22 +3,18 @@ package com.IncidentReport.web.Model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
-@Entity(name="department")
-@Table(name="department")
-public class Department {
-
+@Entity(name="ticketpriority")
+@Table(name="ticketpriority")
+public class TicketPriority {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,23 +22,12 @@ public class Department {
 	private int id;
 	@Column(nullable=false, unique=true)
 	private String name;
+	@Column(nullable=false, unique=true)
+	private int importance;
 	
 	
-	@OneToMany(mappedBy="dept")
-	private List<User> users = new ArrayList<User>();
-	
-	@OneToMany(mappedBy="dept")
+	@OneToMany(mappedBy="priority")
 	private List<Ticket> todo = new ArrayList<Ticket>();
-
-	
-	public List<Ticket> getTodo() {
-		return todo;
-	}
-
-
-	public void setTodo(List<Ticket> todo) {
-		this.todo = todo;
-	}
 
 
 	public int getId() {
@@ -65,29 +50,32 @@ public class Department {
 	}
 
 
-	public List<User> getUsers() {
-		return users;
+	public int getImportance() {
+		return importance;
 	}
 
 
-	public void setUsers(List<User> users) {
-		this.users = users;
+	public void setImportance(int importance) {
+		this.importance = importance;
 	}
 
 
-	public Department(int id, String name, List<User> users) {
+	public List<Ticket> getTodo() {
+		return todo;
+	}
+
+
+	public void setTodo(List<Ticket> todo) {
+		this.todo = todo;
+	}
+
+
+	public TicketPriority() {
 		super();
-		this.id = id;
-		this.name = name;
-		this.users = users;
 	}
 
+	
+	
+	
 
-	public Department() {
-		super();
-	}
-	
-	
-	
-	
 }
