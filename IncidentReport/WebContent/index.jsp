@@ -64,21 +64,25 @@
 			</div>
             
 			<div class="sign-in-htm">
+			
+			<form action="Login" method="POST">
 				<div class="group">
-					<label for="user" class="label">Username or Email</label>
-					<input id="user" type="text" class="input" name="sign-in-username">
+					<label for="user" class="label">Username</label>
+					<input id="user" type="text" class="input" name="username">
 				</div>
 				<div class="group">
 					<label for="pass" class="label">Password</label>
-					<input id="pass" type="password" class="input" data-type="password" name="sign-in-pass">
+					<input id="pass" type="password" class="input" data-type="password" name="password">
 				</div>
 				<div class="group">
-					<input type="submit" class="button" value="Sign In">
+					<input type="submit" class="button" value="Login">
 				</div>
+			</form>
+			
 				<div class="hr"></div>
 			</div>
-            
-			<div class="for-pwd-htm">
+              
+             <div class="for-pwd-htm">
 				<div class="group">
 					<label for="user" class="label">Username or Email</label>
 					<input id="user" type="text" class="input">
@@ -88,12 +92,12 @@
 				</div>
 				<div class="hr"></div>
 			</div>
-              
+			
 		</div>
 	</div>
 </div>
 <%}else{ %>
-<h1>WELCOME</h1>
+<h1>Welcome ${user.getUsername()}</h1>
 <%} %>
 </body>
 </html>

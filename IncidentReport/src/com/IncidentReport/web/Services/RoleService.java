@@ -19,25 +19,21 @@ public class RoleService {
 
 
 	public Role checkRole(String role) {
-		em.getTransaction().begin();
-		Role r = em.createNamedQuery("FindByName", Role.class)
-				.setParameter("name", role)
-				.getSingleResult();
-		em.getTransaction().commit();
-		em.close();
-		
-		if(r == null) {
-			
-			createRole(r);
-			
+		Role r = new Role();
+		try {
 			em.getTransaction().begin();
 			r = em.createNamedQuery("FindByName", Role.class)
 					.setParameter("name", role)
 					.getSingleResult();
 			em.getTransaction().commit();
 			em.close();
-
+			
 		}
+		catch(Exception e){
+			em.close();
+			return null;
+		}
+		
 
 		return r;
 
@@ -47,7 +43,7 @@ public class RoleService {
 
 
 
-	private void createRole(Role r) {
+	public void createRole(Role r) {
 		
 		try {
 

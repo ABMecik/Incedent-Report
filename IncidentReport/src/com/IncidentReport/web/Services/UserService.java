@@ -16,6 +16,8 @@ public class UserService {
 
 
 	private EntityManager em;
+	
+	private RoleService rls = new RoleService();
 
 
 
@@ -32,9 +34,13 @@ public class UserService {
 		Date date = new Date();
 		user.setCreated_at(date);
 		
-		RoleService rls = new RoleService();
+		
 		
 		Role role = rls.checkRole("Role");
+		if(role == null) {
+			rls.createRole(role);
+		}
+		role = rls.checkRole("Role");
 		
 		
 		user.getUroles().add(role);

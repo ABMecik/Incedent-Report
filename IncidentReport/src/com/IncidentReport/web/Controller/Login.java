@@ -34,11 +34,6 @@ public class Login extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		Cookie userName = new Cookie("userNameCookie", request.getParameter("username"));
-		   
-
-		   userName.setMaxAge(10);
-		  
-
 		   response.addCookie( userName );
 	}
 
