@@ -1,128 +1,257 @@
-<%--
-    JBoss, Home of Professional Open Source
-    Copyright 2013, Red Hat, Inc. and/or its affiliates, and individual
-    contributors by the @authors tag. See the copyright.txt in the
-    distribution for a full listing of individual contributors.
-
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-    http://www.apache.org/licenses/LICENSE-2.0
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
---%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
+<!DOCTYPE html >
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
-
 <head>
-    <title>SpringMVC Starter Application</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <link rel="stylesheet" type="text/css" href="<c:url value="/static/resources/css/screen.css"/>"/>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="sat, 01 Dec 2001 00:00:00 GMT">
+<title>YK | Welcome</title>
+
+<link href="static/css/bootstrap.min.css" rel="stylesheet">
+<link href="static/css/style.css" rel="stylesheet">
+<link href="static/css/login.css" rel="stylesheet">
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
 </head>
-
 <body>
-<div id="container">
-    <div class="dualbrand">
-        <img src="<c:url value="/static/resources/gfx/rhjb_eap_logo.png"/>"/>
-    </div>
-    <div id="content">
-        <h1>Welcome to JBoss!</h1>
 
-        <div>
-            <p>You have successfully deployed a basic SpringMVC web application.</p>
-        </div>
 
-        <form:form commandName="newMember" id="reg">
-            <h2>Member Registration</h2>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navigation">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand text-uppercase" href="/login">YK <span
+					class="label label-success text-capitalize">Beta</span></a>
+			</div>
 
-            <p>Enforces annotation-based constraints defined on the model class.</p>
-            <table>
-                <tbody>
-                <tr>
-                    <td><form:label path="name">Name:</form:label></td>
-                    <td><form:input path="name"/></td>
-                    <td><form:errors class="invalid" path="name"/></td>
-                </tr>
-                <tr>
-                    <td><form:label path="email">Email:</form:label></td>
-                    <td><form:input path="email"/></td>
-                    <td><form:errors class="invalid" path="email"/></td>
-                </tr>
-                <tr>
-                    <td><form:label path="phoneNumber">Phone #:</form:label></td>
-                    <td><form:input path="phoneNumber"/></td>
-                    <td><form:errors class="invalid" path="phoneNumber"/></td>
-                </tr>
-                <tr>
-                    <td><p style="color: red">${error}</p></td>
-                </tr>
-                </tbody>
-            </table>
-            <table>
-                <tr>
-                    <td>
-                        <input type="submit" value="Register" class="register"/>
-                        <input type="reset" value="Cancel" class="cancel"/>
-                    </td>
-                </tr>
-            </table>
-        </form:form>
-        <h2>Members</h2>
-        <c:choose>
-            <c:when test="${members.size()==0}">
-                <em>No registered members.</em>
-            </c:when>
-            <c:otherwise>
-                <table id="membersTable" class="simpletablestyle">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone #</th>
-                            <th>REST URL</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach items="${members}" var="member">
-                            <tr>
-                                <td>${member.id}</td>
-                                <td>${member.name}</td>
-                                <td>${member.email}</td>
-                                <td>${member.phoneNumber}</td>
-                                <td><a href="<c:url value="/rest/members/${member.id}"/>">/rest/members/${member.id}</a></td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-                <table class="simpletablestyle">
-                    <tr>
-                        <td>
-                            REST URL for all members: <a href="<c:url value="/rest/members"/>">/rest/members</a>
-                        </td>
-                    </tr>
-                </table>
-            </c:otherwise>
-        </c:choose>
-    </div>
-    <div id="aside">
-        <p>Learn more about Red Hat JBoss Enterprise Application Platform 6.</p>
-        <ul>
-            <li><a href="https://access.redhat.com/site/documentation/JBoss_Enterprise_Application_Platform/">Documentation</a></li>
-            <li><a href="http://red.ht/jbeap-6">Product Information</a></li>
-        </ul>
-    </div>
-    <div id="footer">
-        <p>
-            This project was generated from a Maven archetype from
-            JBoss.<br/>
-        </p>
-    </div>
-</div>
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="navigation">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="register"><button type="button"
+								class="btn btn-success navbar-btn btn-circle">Sing up</button></a></li>
+					<li><a href="/login"><button type="button"
+								class="btn btn-success navbar-btn btn-circle">Sign in</button></a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+
+	<div class="inpage">
+		<c:choose>
+			<c:when test="${mode=='MODE_REGISTER' }">
+				<!-- 
+				<div class="container text-center">
+					<h3>New Registration</h3>
+					<hr>
+					<form class="form-horizontal" method="POST" action="register">
+						<c:if test="${not empty error }">
+							<div class="alert alert-danger">
+								<c:out value="${error }"></c:out>
+							</div>
+						</c:if>
+						<input type="hidden" name="id" value="${user.id }" />
+						<div class="form-group">
+							<label class="control-label col-md-3">Username</label>
+							<div class="col-md-7">
+								<input type="text" class="form-control" name="username"
+									value="${user.username }" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3">Email</label>
+							<div class="col-md-7">
+								<input type="text" class="form-control" name="email"
+									value="${user.email }" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3">First Name</label>
+							<div class="col-md-7">
+								<input type="text" class="form-control" name="firstname"
+									value="${user.firstname }" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3">Last Name</label>
+							<div class="col-md-7">
+								<input type="text" class="form-control" name="lastname"
+									value="${user.lastname }" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3">Age </label>
+							<div class="col-md-3">
+								<input type="text" class="form-control" name="age"
+									value="${user.age }" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3">Password</label>
+							<div class="col-md-7">
+								<input type="password" class="form-control" name="password"
+									value="${user.password }" />
+							</div>
+						</div>
+						<div class="form-group ">
+							<input type="submit" class="btn btn-primary" value="Register" />
+						</div>
+					</form>
+				</div>
+				 -->
+				<div class="container text-center">
+					<b id="login-name">REGISTER</b>
+				</div>
+				<div class="row">
+					<div class="col-md-6 col-md-offset-3" id="login">
+						<form class="form-horizontal" method="POST" action="register">
+							<c:if test="${not empty error }">
+								<div class="alert alert-danger">
+									<c:out value="${error }"></c:out>
+								</div>
+							</c:if>
+							<div class="form-group">
+								<label class="user"> Email </label>
+								<div class="input-group">
+									<span class="input-group-addon" id="iconn"> <i
+										class="glyphicon glyphicon-envelope"></i></span> <input type="text"
+										class="form-control" id="text1" name="email" id="email"
+										placeholder=" Email" value="${user.email }">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="user"> Username </label>
+								<div class="input-group">
+									<span class="input-group-addon" id="iconn"> <i
+										class="glyphicon glyphicon-user"></i></span> <input type="text"
+										class="form-control" id="text1" name="username" id="username"
+										placeholder=" Username" value="${user.username }">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="user"> Password </label>
+								<div class="input-group">
+									<span class="input-group-addon" id="iconn1"> <i
+										class="glyphicon glyphicon-lock"></i></span> <input type="password"
+										class="form-control" id="text2" name="password" id="password"
+										placeholder=" Password" value="${user.password }">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="user"> Repeat Password </label>
+								<div class="input-group">
+									<span class="input-group-addon" id="iconn1"> <i
+										class="glyphicon glyphicon-lock"></i></span> <input type="password"
+										class="form-control" id="text2" name="passwordagain"
+										id="passwordagain" placeholder=" Password Again ">
+								</div>
+							</div>
+							<div class="form-group">
+								<input type="submit" class="btn btn-success" value="Register"
+									style="border-radius: 0px;"> <input type="reset"
+									class="btn btn-danger" value="reset"
+									style="border-radius: 0px;">
+							</div>
+						</form>
+					</div>
+				</div>
+	</div>
+	</c:when>
+	<c:when
+		test="${mode=='MODE_LOGIN' or mode=='' or empty mode or mode!='MODE_REGISTER' }">
+		<!--
+				<div class="container text-center">
+					<h3>User Login</h3>
+					<hr>
+					<form class="form-horizontal" method="POST" action="/login">
+						<c:if test="${not empty param.error}">
+							<div class="alert alert-danger">
+								<h2>Invalid Email or Password</h2>
+							</div>
+						</c:if>
+						<div class="form-group">
+							<label class="control-label col-md-3">Username</label>
+							<div class="col-md-7">
+								<input type="text" class="form-control" name="username"
+									value="${user.username }" id="username" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3">Password</label>
+							<div class="col-md-7">
+								<input type="password" class="form-control" name="password"
+									value="${user.password }" id="password" />
+							</div>
+						</div>
+						<div class="form-group ">
+							<input type="submit" class="btn btn-primary" value="Login" />
+						</div>
+					</form>
+				</div>
+				-->
+
+
+		<div class="container">
+			<div class="container text-center">
+				<b id="login-name">LOGIN</b>
+			</div>
+			<div class="row">
+				<div class="col-md-6 col-md-offset-3" id="register">
+					<form class="form-horizontal" method="POST" action="/login">
+						<c:if test="${not empty param.error}">
+							<div class="alert alert-danger">
+								<h2>Invalid Email or Password</h2>
+							</div>
+						</c:if>
+						<div class="form-group">
+							<label class="user"> UserName </label>
+							<div class="input-group">
+								<span class="input-group-addon" id="iconn"> <i
+									class="glyphicon glyphicon-user"></i></span> <input type="text"
+									class="form-control" id="text1" name="username" id="username"
+									placeholder="username" value="${user.username }">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="user"> Password </label>
+							<div class="input-group">
+								<span class="input-group-addon" id="iconn1"> <i
+									class="glyphicon glyphicon-lock"></i></span> <input type="password"
+									class="form-control" id="text2" name="password" id="password"
+									placeholder=" Enter Password">
+							</div>
+						</div>
+						<div class="form-group">
+							<input type="submit" class="btn btn-success" value="Login"
+								style="border-radius: 0px;"> <input type="reset"
+								class="btn btn-danger" value="reset" style="border-radius: 0px;">
+						</div>
+						<br /> <br /> <br /> <a href="#"
+							style="color: white; font-size: 15px; float: right; margin-right: 10px;">
+							Forget Password </a> <a href="register"
+							style="color: white; font-size: 15px; float: right; margin-right: 10px;">
+							Register </a>
+					</form>
+				</div>
+			</div>
+		</div>
+	</c:when>
+	</c:choose>
+	</div>
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="static/js/jquery-1.11.1.min.js"></script>
+	<script src="static/js/bootstrap.min.js"></script>
 </body>
 </html>

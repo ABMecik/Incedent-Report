@@ -1,0 +1,74 @@
+.invisible-at-first {
+	display: none;
+}
+
+.inpage {
+	padding-top: 20px;
+	padding-bot: 40px;
+	padding-left: 40px;
+	padding-right: 40px;
+	margin: auto;
+}
+
+.thead-dark {
+	background-color: rgb(0, 0, 0);
+}
+
+.table>thead>tr>th {
+	color: rgb(255, 255, 255);
+}
+
+.header>.li {
+	color: rgb(255, 255, 255);
+}
+
+.content {
+	padding: 16px;
+}
+
+.sticky {
+	position: fixed;
+	top: 0;
+	width: 100%
+}
+
+.sticky+.content {
+	padding-top: 102px;
+}
+
+.inprofile {
+	padding-top: 100px;
+	padding-bot: 100px;
+	padding-left: 100px;
+	padding-right: 100px;
+	margin-top: auto;
+	margin-bot: auto;
+}
+
+.alert {
+	padding: 3px;
+	background-color: #19df4e; /*#f44336;  Red */
+	color: white;
+	margin-bottom: 5px;
+}
+
+/* The close button */
+.alert>.closebtn {
+	margin-left: 5px;
+	color: white;
+	font-weight: bold;
+	float: right;
+	font-size: 22px;
+	line-height: 20px;
+	cursor: pointer;
+	transition: 0.3s;
+}
+
+/* When moving the mouse over the close button */
+.alert>.closebtn:hover {
+	color: black;
+}
+
+.alert>.msg:hover {
+	color: black;
+}

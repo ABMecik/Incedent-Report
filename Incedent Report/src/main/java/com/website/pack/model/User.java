@@ -118,6 +118,10 @@ public class User {
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
+	public User orElse(Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	
