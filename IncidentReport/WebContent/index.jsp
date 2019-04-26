@@ -7,6 +7,7 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <head>
 <title>Welcome</title>
 <link rel="stylesheet" type="text/css" href="resources/css/navbar.css">
@@ -114,7 +115,11 @@
             <a href="#" class="nav-link">My Profile</a>
         </li>
         <li class="nav-list-item">
-            <a href="#" class="nav-link">Works</a>
+	        <form class="form-inline" action="Logout">
+	            <button type="submit" class="btn text-color" value="Logout">
+	                <i class="fa fa-sign-out"></i>
+	            </button>
+	        </form>
         </li>
     </ul>
 </nav>
