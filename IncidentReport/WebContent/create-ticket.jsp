@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 
@@ -8,7 +11,7 @@
 
 <head>
 	<title>Welcome</title>
-	<link rel="stylesheet" type="text/css" href="navbar.css">
+	<link rel="stylesheet" type="text/css" href="resources/css/navbar.css">
     <script src="navbar.js"></script>
 
 </head>
@@ -20,10 +23,10 @@
         </div>
         <ul class="nav-list">
             <li class="nav-list-item">
-                <a href="#" class="nav-link">Dashboard</a>
+                <a href="index" class="nav-link">Dashboard</a>
             </li>
             <li class="nav-list-item">
-                <a href="#" class="nav-link">Create Ticket</a>
+                <a href="create-ticket" class="nav-link">Create Ticket</a>
             </li>
             <li class="nav-list-item">
                 <a href="#" class="nav-link">My Profile</a>
@@ -34,7 +37,7 @@
         </ul>
     </nav>
     
-    <form action="Register" method="POST">
+    <form action="CreateTicket" method="POST">
 
     <div class="login-wrap">
 	<div class="login-html">
