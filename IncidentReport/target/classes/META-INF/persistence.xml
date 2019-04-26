@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="IncidentReport">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>com.IncidentReport.web.Model.User</class>
+		<class>com.IncidentReport.web.Model.Role</class>
+		<class>com.IncidentReport.web.Model.Department</class>
+		<properties>
+              
+			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/incident_report" />
+			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
+			<property name="hibernate.connection.username" value="root" />
+			<property name="hibernate.connection.password" value="mysql123" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL57Dialect"/>
+			<property name="hibernate.hbm2ddl.auto" value="create" />
+			
+			<!-- 
+			 
+			<property name="hibernate.archive.autodetection" value="class" />
+			<property name="hibernate.show_sql" value="true" />
+      		<property name="hibernate.format_sql" value="true" />
+			-->
+
+			  <property name="hibernate.c3p0.acquire_increment" value="1" />
+			  <property name="hibernate.c3p0.unreturnedConnectionTimeout" value="3000"/>
+			  <property name="hibernate.c3p0.debugUnreturnedConnectionStackTraces" value="true"/>
+
+			  <property name="hibernate.c3p0.validate" value="true" />
+		      <property name="hibernate.c3p0.min_size" value="5" />
+		      <property name="hibernate.c3p0.max_size" value="20" />
+		      <property name="hibernate.c3p0.timeout" value="3000" />
+		      <property name="hibernate.c3p0.max_statements" value="50" />
+		      <property name="hibernate.c3p0.idle_test_period" value="300" />
+		      
+		</properties>
+	</persistence-unit>
+</persistence>

@@ -37,7 +37,7 @@ public class ApplicationController  extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
-		int id=user.getId();
+		//int id=user.getId();
 
 		
 		RequestDispatcher reqDispatcher = getServletConfig().getServletContext()
