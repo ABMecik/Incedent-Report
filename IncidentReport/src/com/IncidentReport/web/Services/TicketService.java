@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import com.IncidentReport.web.Listener.EMF;
+import com.IncidentReport.web.Model.Department;
 import com.IncidentReport.web.Model.Role;
 import com.IncidentReport.web.Model.Ticket;
 import com.IncidentReport.web.Model.TicketPriority;
@@ -145,6 +146,34 @@ public class TicketService {
 			em.close();
 			return null;
 		}
+	}
+
+
+
+	public void updateTicketSPMD(int ticketID, TicketStatus status, TicketPriority priority, User manager,
+			Department department, User frontdesk) {
+		
+		try {
+			em.getTransaction().begin();
+
+			Ticket ticket = em.find(Ticket.class, ticketID);
+			
+			ticket.setStatus(status);
+			ticket.setPriority(priority);
+			ticket.setDepartment(department);
+			ticket.setManager(manager);
+			ticket.setFrontdesk(frontdesk);
+			
+			
+			em.getTransaction().commit();
+			em.close();
+
+		}
+		catch(Exception e){
+			System.out.println(e);
+			em.close();
+		}
+		
 	}
 
 

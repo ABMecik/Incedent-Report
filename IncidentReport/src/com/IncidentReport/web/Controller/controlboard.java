@@ -58,10 +58,13 @@ public class controlboard extends HttpServlet {
 				if(role.equals("Front Desk")) {
 					TicketService ts = new TicketService();
 					UserService us = new UserService();
-					List<Ticket> tickets = ts.AllTickets();
+					List<Ticket> ftickets = ts.AllTickets();
 					List<User> managers = us.findRoleList("Manager");
+					for(User uuu : managers) {
+						System.out.println("ID : " + uuu.getId() + " Name : " + uuu.getUsername());
+					}
 					request.setAttribute("managers", managers);
-					request.setAttribute("tickets", tickets);
+					request.setAttribute("ftickets", ftickets);
 					displayPage(request, response, "/controlboard.jsp");
 				}
 			}

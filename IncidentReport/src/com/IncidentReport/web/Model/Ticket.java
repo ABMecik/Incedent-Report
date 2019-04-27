@@ -52,6 +52,14 @@ public class Ticket {
 	@ManyToOne
 	@JoinColumn(name = "created_by")
 	private User created_by;
+	
+	@ManyToOne
+	@JoinColumn(name = "frontdesk")
+	private User frontdesk;
+	
+	@ManyToOne
+	@JoinColumn(name = "manager")
+	private User manager;
 	 
 	@OneToMany(mappedBy = "relatedticket")
 	private List<Message> messages = new ArrayList<Message>();
@@ -200,6 +208,22 @@ public class Ticket {
 
 	public void setAnonim(boolean isAnonim) {
 		this.isAnonim = isAnonim;
+	}
+
+	public User getFrontdesk() {
+		return frontdesk;
+	}
+
+	public void setFrontdesk(User frontdesk) {
+		this.frontdesk = frontdesk;
+	}
+
+	public User getManager() {
+		return manager;
+	}
+
+	public void setManager(User manager) {
+		this.manager = manager;
 	}
 	
 	

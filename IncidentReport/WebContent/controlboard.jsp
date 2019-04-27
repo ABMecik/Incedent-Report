@@ -86,7 +86,7 @@
 	                          </thead>
 	                          <tbody>
 	                          
-	                          <c:forEach var="ticket" items="${tickets}">
+	                          <c:forEach var="ticket" items="${ftickets}">
 		                              <tr>
 		                                <td align="center">
 		                                    <div class="sonar-wrapper">
@@ -111,6 +111,7 @@
 													</form>
 		                                </td>
 		                            <form action="UpdateTicket" method="POST">
+		                            <input type="hidden" name="UpdateType" value="uf">
 		                            <input type="hidden" name="ticketID" value="${ticket.getId()}">
 		                                <td align="center">
 		                                    <div class="container">

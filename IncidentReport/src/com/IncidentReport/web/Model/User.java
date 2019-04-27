@@ -23,6 +23,7 @@ import javax.persistence.Table;
 @Entity(name = "user")
 @Table(name = "user")
 @NamedQueries({
+		@NamedQuery(name = "allUsers", query = "SELECT u FROM user u"),
 		@NamedQuery(name = "Login", query = "SELECT u FROM user AS u WHERE u.username = :username AND u.password = :password"),
 		@NamedQuery(name = "Info", query = "SELECT u FROM user AS u WHERE u.id = :id"),
 		@NamedQuery(name = "findRoleList", query = "SELECT u FROM user AS u WHERE u.role = :role_id") })
@@ -70,6 +71,13 @@ public class User {
 
 	@OneToMany(mappedBy = "sender")
 	private List<Message> messagesSended;
+	
+	
+	@OneToMany(mappedBy = "manager")
+	private List<Ticket> tomanage = new ArrayList<Ticket>();
+
+	@OneToMany(mappedBy = "frontdesk")
+	private List<Ticket> tocheck = new ArrayList<Ticket>();
 	
 	
 	public User() {
@@ -220,6 +228,24 @@ public class User {
 	public void setRole(Role role) {
 		this.role = role;
 	}
+
+	public List<Ticket> getTomanage() {
+		return tomanage;
+	}
+
+	public void setTomanage(List<Ticket> tomanage) {
+		this.tomanage = tomanage;
+	}
+
+	public List<Ticket> getTocheck() {
+		return tocheck;
+	}
+
+	public void setTocheck(List<Ticket> tocheck) {
+		this.tocheck = tocheck;
+	}
+	
+	
 	
 	
 

@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 
 import com.IncidentReport.web.Listener.EMF;
 import com.IncidentReport.web.Model.Role;
+import com.IncidentReport.web.Model.Ticket;
 import com.IncidentReport.web.Model.User;
 import com.IncidentReport.web.Security.Sha512;
 
@@ -167,26 +168,39 @@ public class UserService {
 
 	public List<User> findRoleList(String role) {
 		List<User> u = new ArrayList<User>();
-		RoleService rs = new RoleService();
-		Role r = rs.findByName(role);
-		if(r == null) {
+		try {
+			List<User> users = this.allUsers();
+			
+			for(User user : users) {
+				
+				if(user.getRole().getName().equals(role)) {
+					System.out.println("user : " + user.getUsername());
+					u.add(user);
+				}
+			}
+			
 			return u;
 		}
+		catch(Exception e){
+			em.close();
+			return u;
+		}
+	}
+
+
+
+	private List<User> allUsers() {
 		try {
 			em.getTransaction().begin();
-			u = em.createNamedQuery("findRoleList", User.class)
-					.setParameter("role_id", r.getId())
-					.getResultList();
-
+			List<User> u = em.createNamedQuery("allUsers", User.class).getResultList();
 			em.getTransaction().commit();
 			em.close();
 			
 			return u;
 		}
 		catch(Exception e){
-			System.out.println("miss");
 			em.close();
-			return u;
+			return null;
 		}
 	}
 
