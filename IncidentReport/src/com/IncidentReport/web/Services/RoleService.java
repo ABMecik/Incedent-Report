@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 
 import com.IncidentReport.web.Listener.EMF;
 import com.IncidentReport.web.Model.Role;
+import com.IncidentReport.web.Model.User;
 
 public class RoleService {
 	
@@ -18,7 +19,7 @@ public class RoleService {
 
 
 
-	public Role checkRole(String role) {
+	public boolean checkRole(String role) {
 		Role r = new Role();
 		try {
 			em.getTransaction().begin();
@@ -27,28 +28,23 @@ public class RoleService {
 					.getSingleResult();
 			em.getTransaction().commit();
 			em.close();
+			return true;
 			
 		}
 		catch(Exception e){
 			em.close();
-			return null;
+			return false;
 		}
-		
-
-		return r;
-
-		
-
 	}
 
 
 
-	public void createRole(Role r) {
+	public void createRole(Role role) {
 		
 		try {
 
 			em.getTransaction().begin();
-			em.persist(r);
+			em.persist(role);
 			em.getTransaction().commit();
 			em.close();
 		}
@@ -56,6 +52,52 @@ public class RoleService {
 			em.close();
 		}
 
+	}
+
+
+
+	public boolean setUserRole(int userID, int roleID) {
+		try {
+			em.getTransaction().begin();
+			
+			User user = em.find(User.class, userID);
+			Role role = em.find(Role.class, roleID);
+
+			user.getUroles().add(role);
+			role.getUsers().add(user);
+			
+			em.flush();
+			em.getTransaction().commit();
+			em.close();
+
+			return true;
+		}
+		catch(Exception e){
+			System.out.println(e);
+			em.close();
+			return false;
+		}
+		
+	}
+
+
+
+	public Role findByName(String role) {
+		Role r = new Role();
+		try {
+			em.getTransaction().begin();
+			r = em.createNamedQuery("FindByName", Role.class)
+					.setParameter("name", role)
+					.getSingleResult();
+			em.getTransaction().commit();
+			em.close();
+			return r;
+			
+		}
+		catch(Exception e){
+			em.close();
+			return null;
+		}
 	}
 
 }

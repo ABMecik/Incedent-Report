@@ -31,18 +31,8 @@ public class Department {
 	@OneToMany(mappedBy="dept")
 	private List<User> users = new ArrayList<User>();
 	
-	@OneToMany(mappedBy="dept")
+	@OneToMany(mappedBy="department")
 	private List<Ticket> todo = new ArrayList<Ticket>();
-
-	
-	public List<Ticket> getTodo() {
-		return todo;
-	}
-
-
-	public void setTodo(List<Ticket> todo) {
-		this.todo = todo;
-	}
 
 
 	public int getId() {
@@ -85,6 +75,16 @@ public class Department {
 
 	public Department() {
 		super();
+	}
+
+
+	public List<Ticket> getTodo() {
+		return todo;
+	}
+
+
+	public void setTodo(List<Ticket> todo) {
+		this.todo = todo;
 	}
 	
 	

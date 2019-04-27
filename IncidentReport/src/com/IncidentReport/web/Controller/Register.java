@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.IncidentReport.web.Model.Role;
 import com.IncidentReport.web.Model.User;
+import com.IncidentReport.web.Services.RoleService;
 import com.IncidentReport.web.Services.UserService;
 
 
@@ -57,10 +59,29 @@ public class Register extends HttpServlet {
 		
 		Boolean s = us.insert(user);
 		
+		RoleService rs = new RoleService();
+		boolean r = rs.checkRole("User");
+		if(!r) {
+			rs = new RoleService();
+			Role newRole = new Role();
+			newRole.setName("User");
+			rs.createRole(newRole);
+		}
+		
 		
 		if(s) {
 			us = new UserService();
 			user = us.Login(username, password);
+			
+			
+			
+			rs = new RoleService();
+			Role role = rs.findByName("User");
+			
+			rs = new RoleService();
+			rs.setUserRole(user.getId(), role.getId());
+			
+			
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
 

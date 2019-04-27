@@ -34,36 +34,25 @@ public class UserService {
 		Date date = new Date();
 		user.setCreated_at(date);
 		
-		
-		
-		Role role = rls.checkRole("Role");
-		if(role == null) {
-			rls.createRole(role);
-		}
-		role = rls.checkRole("Role");
-		
-		
-		user.getUroles().add(role);
-
 		String password = user.getPassword();
 		password = sha512.encrypt(password);
 		user.setPassword(password);
 
 		try {
-
 			em.getTransaction().begin();
 			em.persist(user);
 			em.getTransaction().commit();
 			em.close();
-
 			return true;
 		}
 		catch(Exception e){
 			em.close();
 			return false;
 		}
-
+		
 	}
+
+
 
 	public User Login(String username,String password) {
 

@@ -20,14 +20,13 @@ public class TicketPriority {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="id", updatable = false, nullable = false)
 	private int id;
-	@Column(nullable=false, unique=true)
+
 	private String name;
-	@Column(nullable=false, unique=true)
 	private int importance;
 	
 	
 	@OneToMany(mappedBy="priority")
-	private List<Ticket> todo = new ArrayList<Ticket>();
+	private List<Ticket> tickets = new ArrayList<Ticket>();
 
 
 	public int getId() {
@@ -59,23 +58,19 @@ public class TicketPriority {
 		this.importance = importance;
 	}
 
-
-	public List<Ticket> getTodo() {
-		return todo;
-	}
-
-
-	public void setTodo(List<Ticket> todo) {
-		this.todo = todo;
-	}
-
-
 	public TicketPriority() {
 		super();
 	}
 
-	
-	
-	
 
+	public List<Ticket> getTickets() {
+		return tickets;
+	}
+
+
+	public void setTickets(List<Ticket> tickets) {
+		this.tickets = tickets;
+	}
+	
+	
 }

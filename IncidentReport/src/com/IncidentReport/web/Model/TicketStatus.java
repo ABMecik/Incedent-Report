@@ -21,16 +21,19 @@ public class TicketStatus {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="id", updatable = false, nullable = false)
 	private int id;
-	@Column(nullable=false, unique=true)
+
 	private String name;
-	
-	private String desc;
+	private String comment;
 	
 	
 	@OneToMany(mappedBy="status")
 	private List<Ticket> todo = new ArrayList<Ticket>();
 
 
+	public TicketStatus() {
+		super();
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -50,31 +53,22 @@ public class TicketStatus {
 		this.name = name;
 	}
 
-
-	public String getDesc() {
-		return desc;
+	public String getComment() {
+		return comment;
 	}
 
-
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
-
 
 	public List<Ticket> getTodo() {
 		return todo;
 	}
 
-
 	public void setTodo(List<Ticket> todo) {
 		this.todo = todo;
 	}
 
-
-	public TicketStatus() {
-		super();
-	}
-	
 	
 	
 	

@@ -9,31 +9,32 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Entity(name="message")
-@Table(name="message")
+@Entity(name = "ticketmessage")
+@Table(name = "ticketmessage")
 public class Message {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="id", updatable = false, nullable = false)
+	@Column(name = "id", updatable = false, nullable = false)
 	private int id;
-	@Column(nullable=false, unique=true)
-	private String title;
-	private String Desc;
-	
-	
-	@ManyToOne
-    @JoinColumn(name = "sender")
-    private User sender;
 
-    @ManyToOne
-    @JoinColumn(name = "receiver")
-    private User receiver;
+	private String title;
+	private String comment;
+
+	@ManyToOne
+	@JoinColumn(name = "sender")
+	private User sender;
+
+	@ManyToOne
+	@JoinColumn(name = "receiver")
+	private User receiver;
 	
 	@ManyToOne
-	@JoinColumn(name="ticket")
+	@JoinColumn(name = "ticket")
 	private Ticket relatedticket;
 
+	
+	
 	public Message() {
 		super();
 	}
@@ -54,12 +55,12 @@ public class Message {
 		this.title = title;
 	}
 
-	public String getDesc() {
-		return Desc;
+	public String getComment() {
+		return comment;
 	}
 
-	public void setDesc(String desc) {
-		Desc = desc;
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 	public User getSender() {
@@ -87,6 +88,5 @@ public class Message {
 	}
 
 	
-	
-	
+
 }

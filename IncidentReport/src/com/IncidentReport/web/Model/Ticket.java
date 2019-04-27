@@ -14,51 +14,49 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-@Entity(name="ticket")
-@Table(name="ticket")
+@Entity(name = "ticket")
+@Table(name = "ticket")
 public class Ticket {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="id", updatable = false, nullable = false)
+	@Column(name = "id", updatable = false, nullable = false)
 	private int id;
-	@Column(nullable=false, unique=true)
+	
 	private String title;
-	private String Desc;
+	private String comment;
 	private String Location;
-	
-	@ManyToOne
-	@JoinColumn(name="ticketpriority")
-	private TicketPriority priority;
-	
-	@ManyToOne
-	@JoinColumn(name="ticketstatus")
-	private TicketStatus status;
-	
 	private int rating;
-	
-	@Column(nullable=false)
+	private int isAnonim;
+	@Column(nullable = false)
 	private Date created_at;
 	private Date timeout;
 	
+
 	@ManyToOne
-	@JoinColumn(name="department")
-	private Department dept;
-	
-	@ManyToOne
-	@JoinColumn(name="staff")
+	@JoinColumn(name = "staff")
 	private User staff;
 	
-	
-	@OneToMany(mappedBy="relatedticket")
+	@ManyToOne
+	@JoinColumn(name = "department")
+	private Department department;
+
+	@ManyToOne
+	@JoinColumn(name = "created_by")
+	private User created_by;
+	 
+	@OneToMany(mappedBy = "relatedticket")
 	private List<Message> messages = new ArrayList<Message>();
 	
-	private boolean isAnonim;
-	
 	@ManyToOne
-	@JoinColumn(name="created_by")
-	private User created_by;
+	@JoinColumn(name = "priority")
+	private TicketPriority priority;
 
+	@ManyToOne
+	@JoinColumn(name = "status")
+	private TicketStatus status;
+	
+	
 	public Ticket() {
 		super();
 	}
@@ -79,36 +77,12 @@ public class Ticket {
 		this.title = title;
 	}
 
-	public String getDesc() {
-		return Desc;
-	}
-
-	public void setDesc(String desc) {
-		Desc = desc;
-	}
-
 	public String getLocation() {
 		return Location;
 	}
 
 	public void setLocation(String location) {
 		Location = location;
-	}
-
-	public TicketPriority getPriority() {
-		return priority;
-	}
-
-	public void setPriority(TicketPriority priority) {
-		this.priority = priority;
-	}
-
-	public TicketStatus getStatus() {
-		return status;
-	}
-
-	public void setStatus(TicketStatus status) {
-		this.status = status;
 	}
 
 	public int getRating() {
@@ -135,12 +109,20 @@ public class Ticket {
 		this.timeout = timeout;
 	}
 
-	public Department getDept() {
-		return dept;
+	public int getIsAnonim() {
+		return isAnonim;
 	}
 
-	public void setDept(Department dept) {
-		this.dept = dept;
+	public void setIsAnonim(int isAnonim) {
+		this.isAnonim = isAnonim;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 	public User getStaff() {
@@ -151,20 +133,12 @@ public class Ticket {
 		this.staff = staff;
 	}
 
-	public List<Message> getMessages() {
-		return messages;
+	public Department getDepartment() {
+		return department;
 	}
 
-	public void setMessages(List<Message> messages) {
-		this.messages = messages;
-	}
-
-	public boolean isAnonim() {
-		return isAnonim;
-	}
-
-	public void setAnonim(boolean isAnonim) {
-		this.isAnonim = isAnonim;
+	public void setDepartment(Department department) {
+		this.department = department;
 	}
 
 	public User getCreated_by() {
@@ -175,8 +149,31 @@ public class Ticket {
 		this.created_by = created_by;
 	}
 
+	public List<Message> getMessages() {
+		return messages;
+	}
+
+	public void setMessages(List<Message> messages) {
+		this.messages = messages;
+	}
+
+	public TicketPriority getPriority() {
+		return priority;
+	}
+
+	public void setPriority(TicketPriority priority) {
+		this.priority = priority;
+	}
+
+	public TicketStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(TicketStatus status) {
+		this.status = status;
+	}
 	
 	
-	
+
 
 }
