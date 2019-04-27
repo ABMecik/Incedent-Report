@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="com.IncidentReport.web.Model.Role"%>
 <%@page import="com.IncidentReport.web.Model.User"%>
+<%@page import="com.IncidentReport.web.Model.Ticket"%>
+<%@page import="com.IncidentReport.web.Model.Department"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -16,7 +19,7 @@
 
 <head>
 	<title>Welcome</title>
-	<link rel="stylesheet" type="text/css" href="resources/css/front_dashboard.css">
+	<link rel="stylesheet" type="text/css" href="resources/css/dashboard.css">
 </head>
 <body>
 
@@ -82,88 +85,98 @@
 	                            </tr> 
 	                          </thead>
 	                          <tbody>
-	                            <form action="UpdateTicket" method="POST">
-	                              <tr>
-	                                <td align="center">
-	                                    <div class="sonar-wrapper">
-	                                        <div class="sonar-emitter" style="background-color: lawngreen">
-	                                        <div class="sonar-wave"></div>
-	                                      </div>
-	                                    </div>  
-	                                </td>
-	                                <td class="hidden-xs" align="center">1</td>
-	                                <td align="center">Broken lights</td>
-	                                <td align="center">04/29/2019</td>
-	                                <td align="center">
-	                                    <form action="Detail" method="POST">
-	                                        <button type="submit" class="btn text-color" value="Detail">
-	                                            <i class="fa fa-cog"></i>
-	                                        </button>
-	                                    </form>
-	                                </td>
-	                                <td align="center">
-	                                    <div class="container">
-	                                    <div class="row">
-	                                        <div class="col-sm-4">
-	                                        <select class="form-control" name="set-status">
-	                                            <option value="" selected disabled hidden>Choose</option>
-	                                            <option value="volvo">Waiting</option>
-	                                            <option value="saab">Processing</option>
-	                                            <option value="mercedes">Approved</option>
-	                                            <option value="audi">Declined</option>
-	                                            <option value="audi">Finished</option>
-	                                        </select>
-	                                        </div>
-	                                    </div>
-	                                    </div>
-	                                </td> 
-	                                <td align="center">
-	                                  <div class="container">
-	                                    <div class="row">
-	                                        <div class="col-sm-4">
-	                                        <select class="form-control" name="set-priority" >
-	                                            <option value="" selected disabled hidden>Choose</option>
-	                                            <option value="1">1</option>
-	                                            <option value="2">2</option>
-	                                            <option value="3">3</option>
-	                                            <option value="4">4</option>
-	                                            <option value="5">5</option>
-	                                            <option value="6">6</option>
-	                                            <option value="7">7</option>
-	                                            <option value="8">8</option>
-	                                            <option value="9">9</option>
-	                                            <option value="10">10</option>
-	                                        </select>
-	                                        </div>
-	                                    </div>
-	                                    </div>
-	                                  </td>
-	                                  <td align="center">
-	                                    <div class="form-group" id="add-note" name="notes">
-	                                      <textarea class="form-control" rows="5" id="comment"></textarea>
-	                                    </div>
-	                                  </td>
-	                                  <td align="center">
-	                                        <div class="container">
-	                                            <div class="row">
-	                                                <div class="col-sm-4">
-	                                                    <select class="form-control" name="set-manager">
-	                                                        <option value="" selected disabled hidden>Choose</option>
-	                                                        <option value="Manager1">Manager 1</option>
-	                                                        <option value="Manager2">Manager 2</option>
-	                                                        <option value="Manager3">Manager 3</option>
-	                                                    </select>
-	                                                </div>
-	                                            </div>
-	                                        </div>
-	                                  </td>
-	                                <td align="center">
-	                                    <div class="group" >
-	                                        <input type="submit" class="button" id="bttn-create" value="Update">
-	                                    </div>  
-	                                </td>
-	                              </tr>
-	                            </form>                    
+	                          
+	                          <c:forEach var="ticket" items="${tickets}">
+		                              <tr>
+		                                <td align="center">
+		                                    <div class="sonar-wrapper">
+		                                    <c:choose>
+												<c:when test="${ticket.getStatus().getName()=='Waiting'}">
+		                                        	<div class="sonar-emitter" style="background-color: yellow">
+												</c:when>
+											</c:choose>
+		                                        <div class="sonar-wave"></div>
+		                                      </div>
+		                                    </div>  
+		                                </td>
+		                                <td class="hidden-xs" align="center">1</td>
+		                                <td align="center">${ticket.getTitle()}</td>
+		                                <td align="center">${ticket.getCreated_at()}</td>
+		                                <td align="center">
+		                                    <form action="TicketDetail" method="GET">
+														<input type="hidden" , name="ticketID" value="${ticket.getId()}">
+														<button type="submit" class="btn text-color" value="TicketDetail">
+															<i class="fa fa-cog"></i>
+														</button>
+													</form>
+		                                </td>
+		                            <form action="UpdateTicket" method="POST">
+		                            <input type="hidden" name="ticketID" value="${ticket.getId()}">
+		                                <td align="center">
+		                                    <div class="container">
+		                                    <div class="row">
+		                                        <div class="col-sm-4">
+		                                        <select class="form-control" name="set-status">
+		                                            <option value="" selected disabled hidden>Choose</option>
+		                                            <option value="volvo">Waiting</option>
+		                                            <option value="saab">Processing</option>
+		                                            <option value="mercedes">Approved</option>
+		                                            <option value="audi">Declined</option>
+		                                            <option value="audi">Finished</option>
+		                                        </select>
+		                                        </div>
+		                                    </div>
+		                                    </div>
+		                                </td> 
+		                                <td align="center">
+		                                  <div class="container">
+		                                    <div class="row">
+		                                        <div class="col-sm-4">
+		                                        <select class="form-control" name="set-priority" >
+		                                            <option value="" selected disabled hidden>Choose</option>
+		                                            <option value="1">1</option>
+		                                            <option value="2">2</option>
+		                                            <option value="3">3</option>
+		                                            <option value="4">4</option>
+		                                            <option value="5">5</option>
+		                                            <option value="6">6</option>
+		                                            <option value="7">7</option>
+		                                            <option value="8">8</option>
+		                                            <option value="9">9</option>
+		                                            <option value="10">10</option>
+		                                        </select>
+		                                        </div>
+		                                    </div>
+		                                    </div>
+		                                  </td>
+		                                  <td align="center">
+		                                    <div class="form-group" id="add-note" name="notes">
+		                                      <textarea class="form-control" rows="5" id="comment"></textarea>
+		                                    </div>
+		                                  </td>
+		                                  <td align="center">
+		                                        <div class="container">
+		                                            <div class="row">
+		                                                <div class="col-sm-4">
+		                                                    <select class="form-control" name="set-manager">
+		                                                        <option value="" selected disabled hidden>Choose</option>
+		                                                        <c:forEach var="manager" items="${managers}">
+			                                                        <option value="${manager.getId()}">${manager.getName()} ${manager.getSurname()} - ${manager.getDept().getName()}</option>
+		                                                        </c:forEach>
+		                                                    </select>
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		                                  </td>
+		                                <td align="center">
+		                                    <div class="group" >
+		                                        <input type="submit" class="button" id="bttn-create" value="UpdateTicket">
+		                                    </div>  
+		                                </td>
+		                                </form> 
+		                              </tr>
+	                            </c:forEach>
+	                                               
 	                          </tbody>
 	                        </table>
 	                      </div>

@@ -12,21 +12,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.IncidentReport.web.Model.Role;
 import com.IncidentReport.web.Model.Ticket;
 import com.IncidentReport.web.Model.User;
 import com.IncidentReport.web.Services.TicketService;
+import com.IncidentReport.web.Services.UserService;
 
-
-
-@WebServlet(urlPatterns = {"/homepage", "/Homepage", "/HOMEPAGE", "/index", "/Index", "/INDEX", "/defult", "/Defult", "/DEFULT", ""})
-public class ApplicationController  extends HttpServlet {
-	
+/**
+ * Servlet implementation class controlboard
+ */
+@WebServlet({ "/controlboard", "/control-board", "/ControlBoard", "/Control-Board" })
+public class controlboard extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ApplicationController() {
+    public controlboard() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,20 +40,43 @@ public class ApplicationController  extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		
+		
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 
 		
 		if(user==null) {
+			request.setAttribute("warning", "No have permission");
 			displayPage(request, response, "/index.jsp");
 		}
 		else {
-			openIndex(request, response, "/index.jsp", user);
+			String role = (String) session.getAttribute("role");
+			if(role.equals("User")) {
+				request.setAttribute("warning", "No have permission");
+				displayPage(request, response, "/index.jsp");
+			}else {
+				if(role.equals("Front Desk")) {
+					TicketService ts = new TicketService();
+					UserService us = new UserService();
+					List<Ticket> tickets = ts.AllTickets();
+					List<User> managers = us.findRoleList("Manager");
+					request.setAttribute("managers", managers);
+					request.setAttribute("tickets", tickets);
+					displayPage(request, response, "/controlboard.jsp");
+				}
+			}
 		}
-		
-		
 	}
 
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+	
+	
 	private void openIndex(HttpServletRequest request, HttpServletResponse response, String rPage, User user) throws ServletException, IOException {
 		
 		List<Ticket> tickets = new ArrayList<Ticket>();
@@ -70,16 +95,5 @@ public class ApplicationController  extends HttpServlet {
 				.getRequestDispatcher(rPage);
 		reqDispatcher.forward(request, response);
 	}
-
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-
-	}
-
 
 }

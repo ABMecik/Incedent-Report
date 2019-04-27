@@ -24,7 +24,8 @@ import javax.persistence.Table;
 @Table(name = "user")
 @NamedQueries({
 		@NamedQuery(name = "Login", query = "SELECT u FROM user AS u WHERE u.username = :username AND u.password = :password"),
-		@NamedQuery(name = "Info", query = "SELECT u FROM user AS u WHERE u.id = :id") })
+		@NamedQuery(name = "Info", query = "SELECT u FROM user AS u WHERE u.id = :id"),
+		@NamedQuery(name = "findRoleList", query = "SELECT u FROM user AS u WHERE u.role = :role_id") })
 public class User {
 
 	@Id

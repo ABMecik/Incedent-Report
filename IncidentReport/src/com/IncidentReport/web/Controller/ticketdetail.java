@@ -15,18 +15,19 @@ import javax.servlet.http.HttpSession;
 import com.IncidentReport.web.Model.Ticket;
 import com.IncidentReport.web.Model.User;
 import com.IncidentReport.web.Services.TicketService;
+import com.IncidentReport.web.Services.UserService;
 
-
-
-@WebServlet(urlPatterns = {"/homepage", "/Homepage", "/HOMEPAGE", "/index", "/Index", "/INDEX", "/defult", "/Defult", "/DEFULT", ""})
-public class ApplicationController  extends HttpServlet {
-	
+/**
+ * Servlet implementation class ticketdetail
+ */
+@WebServlet({ "/ticketdetail", "/ticket-detail", "/TicketDetail", "/Ticket-Detail" })
+public class ticketdetail extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ApplicationController() {
+    public ticketdetail() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,20 +39,36 @@ public class ApplicationController  extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		
+
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
-
+		String role = (String) session.getAttribute("role");
 		
 		if(user==null) {
+			request.setAttribute("warning", "No have permission");
 			displayPage(request, response, "/index.jsp");
 		}
 		else {
-			openIndex(request, response, "/index.jsp", user);
+			int ticketID = Integer.parseInt(request.getParameter("ticketID"));
+			TicketService ts = new TicketService();
+			Ticket ticket = ts.findById(ticketID);
+
+			request.setAttribute("ticket", ticket);
+			displayPage(request, response, "/ticket-detail.jsp");
+
 		}
-		
-		
 	}
 
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+		
+	}
+	
+	
 	private void openIndex(HttpServletRequest request, HttpServletResponse response, String rPage, User user) throws ServletException, IOException {
 		
 		List<Ticket> tickets = new ArrayList<Ticket>();
@@ -70,16 +87,5 @@ public class ApplicationController  extends HttpServlet {
 				.getRequestDispatcher(rPage);
 		reqDispatcher.forward(request, response);
 	}
-
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-
-	}
-
 
 }

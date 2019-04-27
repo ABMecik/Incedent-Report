@@ -63,36 +63,36 @@
                           <thead>
                             <tr>
                                 <th class="hidden-xs">ID:</th>
-                                <th>142</th>
+                                <th>${ticket.getId()}</th>
                             </tr> 
                           </thead>
                           <tbody>
                               <tr>
                                 <td class="hidden-xs" align="center">Title:</td>
-                                <td align="center">Irresponsible Manager</td>
+                                <td align="center">${ticket.getTitle()}</td>
                               </tr>
                               <tr>
                                 <td class="hidden-xs" align="center">Date:</td>
-                                <td align="center">04/27/2019</td>
+                                <td align="center">${ticket.getCreated_at()}</td>
                               </tr>
                               <tr>
                                 <td class="hidden-xs" align="center">Description:</td>
-                                <td align="center">The software of elevators are shit! Pathetic.</td>
+                                <td align="center">${ticket.getComment()}</td>
                               </tr>
                               <tr>
                                 <td class="hidden-xs" align="center">Location:</td>
-                                <td align="center">MEF University</td>
+                                <td align="center">${ticket.getLocation()}</td>
                               </tr>
                               <tr>
                                 <td class="hidden-xs" align="center">Priority:</td>
-                                <td align="center">7</td>
+                                <td align="center">${ticket.getPriority().getImportance()}</td>
                               </tr>
                               <tr>
                                 <td class="hidden-xs" align="center">Photo:</td>
                                 <td align="center">
                                     
                                     <!-- Trigger the Modal -->
-<img id="myImg" src="anger.jpg" alt="Snow" style="width:100%;max-width:300px">
+<img id="myImg" src="${ticket.getPhoto_path()}" alt="Snow" style="width:100%;max-width:300px">
 
 <!-- The Modal -->
 <div id="myModal" class="modal">

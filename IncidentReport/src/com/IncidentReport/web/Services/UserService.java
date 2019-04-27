@@ -163,4 +163,31 @@ public class UserService {
 		}
 	}
 
+
+
+	public List<User> findRoleList(String role) {
+		List<User> u = new ArrayList<User>();
+		RoleService rs = new RoleService();
+		Role r = rs.findByName(role);
+		if(r == null) {
+			return u;
+		}
+		try {
+			em.getTransaction().begin();
+			u = em.createNamedQuery("findRoleList", User.class)
+					.setParameter("role_id", r.getId())
+					.getResultList();
+
+			em.getTransaction().commit();
+			em.close();
+			
+			return u;
+		}
+		catch(Exception e){
+			System.out.println("miss");
+			em.close();
+			return u;
+		}
+	}
+
 }

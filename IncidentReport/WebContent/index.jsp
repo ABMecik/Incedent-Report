@@ -197,11 +197,9 @@
 														class="fa fa-check"></em></a></td>
 												<td align="center">H</td>
 												<td align="center">
-													<form action="TicketDetail" method="POST">
-														<input type="hidden" , name="ticketID"
-															value="${ticket.getId()}">
-														<button type="submit" class="btn text-color"
-															value="TicketDetail">
+													<form action="TicketDetail" method="GET">
+														<input type="hidden" , name="ticketID" value="${ticket.getId()}">
+														<button type="submit" class="btn text-color" value="TicketDetail">
 															<i class="fa fa-cog"></i>
 														</button>
 													</form>

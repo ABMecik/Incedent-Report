@@ -112,6 +112,43 @@ public class TicketService {
 
 
 
+	public List<Ticket> AllTickets() {
+		try {
+			em.getTransaction().begin();
+			List<Ticket> t = em.createNamedQuery("allTickets", Ticket.class).getResultList();
+			em.getTransaction().commit();
+			em.close();
+			
+			return t;
+		}
+		catch(Exception e){
+			em.close();
+			return null;
+		}
+	}
+
+
+
+	public Ticket findById(int ticketID) {
+		try {
+			em.getTransaction().begin();
+
+			Ticket myt = em.find(Ticket.class, ticketID);
+			
+			em.getTransaction().commit();
+			em.close();
+			return myt;
+		}
+		catch(Exception e){
+			System.out.println("its here");
+			System.out.println(e);
+			em.close();
+			return null;
+		}
+	}
+
+
+
 
 
 }

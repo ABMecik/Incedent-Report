@@ -21,6 +21,7 @@ import javax.persistence.Table;
 @Entity(name = "ticket")
 @Table(name = "ticket")
 @NamedQueries({
+	@NamedQuery(name = "allTickets", query = "SELECT t FROM ticket t"),
 	@NamedQuery(name = "FindTicketByNameAndDate", query = "SELECT t FROM ticket AS t WHERE t.title = :title AND t.created_at = :created_at")
 	})
 public class Ticket {
