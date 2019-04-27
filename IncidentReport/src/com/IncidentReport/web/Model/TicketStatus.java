@@ -8,12 +8,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
 @Entity(name="ticketstatus")
 @Table(name="ticketstatus")
+@NamedQueries({
+	@NamedQuery(name = "FindStatusByName", query = "SELECT ts FROM ticketstatus AS ts WHERE ts.name = :name")
+	})
 public class TicketStatus {
 
 	
@@ -22,6 +27,7 @@ public class TicketStatus {
 	@Column(name="id", updatable = false, nullable = false)
 	private int id;
 
+	
 	private String name;
 	private String comment;
 	

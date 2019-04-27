@@ -11,11 +11,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity(name = "ticket")
 @Table(name = "ticket")
+@NamedQueries({
+	@NamedQuery(name = "FindTicketByNameAndDate", query = "SELECT t FROM ticket AS t WHERE t.title = :title AND t.created_at = :created_at")
+	})
 public class Ticket {
 
 	@Id
@@ -25,13 +30,13 @@ public class Ticket {
 	
 	private String title;
 	private String comment;
-	private String Location;
+	private String location;
 	private int rating;
-	private int isAnonim;
+	private boolean isAnonim;
 	@Column(nullable = false)
 	private Date created_at;
 	private Date timeout;
-	
+	private String photo_path;
 
 	@ManyToOne
 	@JoinColumn(name = "staff")
@@ -78,11 +83,11 @@ public class Ticket {
 	}
 
 	public String getLocation() {
-		return Location;
+		return location;
 	}
 
 	public void setLocation(String location) {
-		Location = location;
+		this.location = location;
 	}
 
 	public int getRating() {
@@ -109,11 +114,11 @@ public class Ticket {
 		this.timeout = timeout;
 	}
 
-	public int getIsAnonim() {
+	public boolean getIsAnonim() {
 		return isAnonim;
 	}
 
-	public void setIsAnonim(int isAnonim) {
+	public void setIsAnonim(boolean isAnonim) {
 		this.isAnonim = isAnonim;
 	}
 
@@ -172,6 +177,28 @@ public class Ticket {
 	public void setStatus(TicketStatus status) {
 		this.status = status;
 	}
+
+	public Ticket(String title, String comment, String location, boolean isAnonim, String photo_path) {
+		super();
+		this.title = title;
+		this.comment = comment;
+		this.location = location;
+		this.isAnonim = isAnonim;
+		this.photo_path = photo_path;
+	}
+
+	public String getPhoto_path() {
+		return photo_path;
+	}
+
+	public void setPhoto_path(String photo_path) {
+		this.photo_path = photo_path;
+	}
+
+	public void setAnonim(boolean isAnonim) {
+		this.isAnonim = isAnonim;
+	}
+	
 	
 	
 

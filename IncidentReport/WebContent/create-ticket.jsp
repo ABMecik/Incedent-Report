@@ -42,7 +42,7 @@
         </ul>
     </nav>
     
-    <form action="CreateTicket" method="POST">
+    <form action="CreateTicket" method="POST" enctype='multipart/form-data'>
 
     <div class="login-wrap">
 	<div class="login-html">
@@ -60,8 +60,9 @@
 				</div>
 				<div class="group">
 					<label class="label">Location</label>
-					<input id="location" type="password" class="input" data-type="password" name="location">
+					<input id="location" type="text" class="input" name="location">
 				</div>
+				
                 <div class="group">
 				    <div class="container">
                       <div class="row">
@@ -75,15 +76,6 @@
                       </div>
                 </div>
 				</div>
-                
-                
-                
-            
-                
-                
-                
-                
-                
                 
                 
                 
@@ -111,12 +103,11 @@
                 </div>
                 
 				<div class="group">
-					<input type="submit" class="button" value="Create Ticket">
+					<input type="submit" class="button" value="Create-Ticket">
 				</div>
 				<div class="hr"></div>
 			</div>
-            
-              
+
 		</div>
 	</div>
 </div>

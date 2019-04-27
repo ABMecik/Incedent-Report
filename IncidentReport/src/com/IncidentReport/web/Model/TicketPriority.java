@@ -8,12 +8,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
 @Entity(name="ticketpriority")
 @Table(name="ticketpriority")
+@NamedQueries({
+	@NamedQuery(name = "FindByImportance", query = "SELECT tp FROM ticketpriority AS tp WHERE tp.importance = :importance")
+	})
 public class TicketPriority {
 	
 	@Id
@@ -21,7 +26,7 @@ public class TicketPriority {
 	@Column(name="id", updatable = false, nullable = false)
 	private int id;
 
-	private String name;
+	@Column(unique = true)
 	private int importance;
 	
 	
@@ -39,14 +44,6 @@ public class TicketPriority {
 	}
 
 
-	public String getName() {
-		return name;
-	}
-
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 
 	public int getImportance() {
