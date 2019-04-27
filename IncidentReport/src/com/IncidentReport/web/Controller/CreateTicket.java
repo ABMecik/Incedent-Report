@@ -3,7 +3,9 @@ package com.IncidentReport.web.Controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -46,15 +48,15 @@ public class CreateTicket extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		
+		String rPage = "/index.jsp";
 		if(session.getAttribute("user")==null) {
-			RequestDispatcher reqDispatcher = getServletConfig().getServletContext()
-					.getRequestDispatcher("/index.jsp");
-			reqDispatcher.forward(request, response);
+			displayPage(request, response, "/index.jsp");
 		}
 		else {
-			RequestDispatcher reqDispatcher = getServletConfig().getServletContext()
-					.getRequestDispatcher("/create-ticket.jsp");
-			reqDispatcher.forward(request, response);
+
+			displayPage(request, response, "/create-ticket.jsp");
 		}
 		
 	}
@@ -104,104 +106,100 @@ public class CreateTicket extends HttpServlet {
 			}
 		}
 		
-		boolean s = generateTicket(title, decription, location, date, dbPath, isAnonim);
 		
-		if(s) {
+		
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		if(user != null) {
 			
-			HttpSession session = request.getSession();
-			User user = (User) session.getAttribute("user");
+			TicketService ts = new TicketService();
+			Ticket ticket = new Ticket(title,decription,location,isAnonim,dbPath);
+			ticket.setCreated_at(date);
+			boolean s = ts.createNewTicket(ticket);
 			
-			
-			part.write(savePath);
-			
-			setTicketDetails(title, priority, date, user);
+			if(s) {
+				
+				part.write(savePath);
+				
 
-			forward(request, response);
+				ts = new TicketService();
+				
+				
+				ticket = ts.findTicket(title,date);
+				
+				PriorityService ps = new PriorityService();
+				boolean pps = ps.checkIsValid(priority);
+				if(!pps) {
+					ps = new PriorityService();
+					ps.createNewPriority(priority);
+				}
+				ps = new PriorityService();
+				TicketPriority ttp = ps.findPriority(priority);
+				
+				StatusService ss = new StatusService();
+				boolean ssi = ss.checkIsValid("Waiting");
+				if(!ssi) {
+					ss = new StatusService();
+					ss.createNewStatus("Waiting","Waiting for fronthand's response");
+				}
+				ss = new StatusService();
+				TicketStatus tts = ss.findStatus("Waiting");
+				
+				
+				ts = new TicketService();
+				
+				System.out.println("ticket : " + ticket.getId());
+				System.out.println("user : " + user.getId());
+				System.out.println("Status: " + tts.getId());
+				System.out.println("Priority : " + ttp.getId());
+
+				ts.setTicketFKeys(ticket.getId(), user.getId(), tts.getId(), ttp.getId());
+
+				
+
+				forward(request, response, "/index.jsp", user);
+			}else {
+				
+				openIndex(request, response, "/index.jsp", user);
+			}
 		}else {
-			sendRedirect(request, response);
+			displayPage(request, response, "/index.jsp");
 		}
+		
+		
 		
 	}
 
-	/**
-	 * @param title
-	 * @param decription
-	 * @param location
-	 * @param date
-	 * @param dbPath
-	 * @param isAnonim
-	 * @return
-	 */
-	private boolean generateTicket(String title, String decription, String location, Date date, String dbPath,
-			boolean isAnonim) {
-		boolean s;
-		TicketService ts = new TicketService();
-		Ticket ticket = new Ticket(title,decription,location,isAnonim,dbPath);
-		ticket.setCreated_at(date);
-		s = ts.createNewTicket(ticket);
-		return s;
-	}
 
-	/**
-	 * @param title
-	 * @param priority
-	 * @param date
-	 * @param user
-	 */
-	private void setTicketDetails(String title, int priority, Date date, User user) {
-		TicketService ts;
-		Ticket ticket;
-		ts = new TicketService();
-		
-		
-		ticket = ts.findTicket(title,date);
-		
-		
-		PriorityService ps = new PriorityService();
-		boolean pps = ps.checkIsValid(priority);
-		if(!pps) {
-			ps = new PriorityService();
-			ps.createNewPriority(priority);
-		}
-		ps = new PriorityService();
-		TicketPriority ttp = ps.findPriority(priority);
-		
-		StatusService ss = new StatusService();
-		boolean ssi = ss.checkIsValid("Waiting");
-		if(!ssi) {
-			ss = new StatusService();
-			ss.createNewStatus("Waiting","Waiting for fronthand's response");
-		}
-		ss = new StatusService();
-		TicketStatus tts = ss.findStatus("Waiting");
-		
-		
-		ts = new TicketService();
-		
-		System.out.println("ticket : " + ticket.getId());
-		System.out.println("user : " + user.getId());
-		System.out.println("Status: " + tts.getId());
-		System.out.println("Priority : " + ttp.getId());
 
-		ts.setTicketFKeys(ticket.getId(), user.getId(), tts.getId(), ttp.getId());
-		
-		return;
-	}
 	
 
-	private void sendRedirect(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+
+	private void openIndex(HttpServletRequest request, HttpServletResponse response, String rPage, User user) throws ServletException, IOException {
+		List<Ticket> tickets = new ArrayList<Ticket>();
+		TicketService ts = new TicketService();
 		
+		tickets = ts.findUserTickets(user.getId());
+
+		request.setAttribute("tickets", tickets);
+
+		
+		displayPage(request, response, rPage);
+	}
+	
+	private void displayPage(HttpServletRequest request, HttpServletResponse response, String rPage)
+			throws ServletException, IOException {
 		RequestDispatcher reqDispatcher = getServletConfig().getServletContext()
-				.getRequestDispatcher("/index.jsp");
+				.getRequestDispatcher(rPage);
 		reqDispatcher.forward(request, response);
-		
 	}
 
-	private void forward(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+	
+	private void forward(HttpServletRequest request, HttpServletResponse response, String rPage, User user) throws ServletException, IOException {
 		request.setAttribute("success", "Series added");
-		RequestDispatcher reqDispatcher = getServletConfig().getServletContext()
-				.getRequestDispatcher("/index.jsp");
-		reqDispatcher.forward(request, response);
+		openIndex(request, response, rPage, user);
 		
 	}
 

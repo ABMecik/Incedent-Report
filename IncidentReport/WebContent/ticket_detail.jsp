@@ -9,8 +9,8 @@
 
 <head>
 	<title>Welcome</title>
-	<link rel="stylesheet" type="text/css" href="ticket_detail.css">
-    <script src="photo.js"></script>
+	<link rel="stylesheet" type="text/css" href="resources/css/ticket_detail.css">
+    <script src="resources/js/photo.js"></script>
 </head>
 <body>
 

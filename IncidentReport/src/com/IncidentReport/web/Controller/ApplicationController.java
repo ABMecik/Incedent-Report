@@ -1,6 +1,7 @@
 package com.IncidentReport.web.Controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -11,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.IncidentReport.web.Model.Ticket;
 import com.IncidentReport.web.Model.User;
+import com.IncidentReport.web.Services.TicketService;
 
 
 
@@ -39,10 +42,35 @@ public class ApplicationController  extends HttpServlet {
 		User user = (User) session.getAttribute("user");
 
 		
+		if(session.getAttribute("user")==null) {
+			displayPage(request, response, "/index.jsp");
+		}
+		else {
+			openIndex(request, response, "/index.jsp", user);
+		}
+		
+		
+	}
+
+	private void openIndex(HttpServletRequest request, HttpServletResponse response, String rPage, User user) throws ServletException, IOException {
+		
+		List<Ticket> tickets = new ArrayList<Ticket>();
+		TicketService ts = new TicketService();
+		
+		tickets = ts.findUserTickets(user.getId());
+
+		request.setAttribute("tickets", tickets);
+		
+		displayPage(request, response, rPage);
+	}
+	
+	private void displayPage(HttpServletRequest request, HttpServletResponse response, String rPage)
+			throws ServletException, IOException {
 		RequestDispatcher reqDispatcher = getServletConfig().getServletContext()
-				.getRequestDispatcher("/index.jsp");
+				.getRequestDispatcher(rPage);
 		reqDispatcher.forward(request, response);
 	}
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -50,8 +78,7 @@ public class ApplicationController  extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-		
-		
+
 	}
 
 

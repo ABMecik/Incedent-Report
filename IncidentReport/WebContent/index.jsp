@@ -11,6 +11,7 @@
 <head>
 <title>Welcome</title>
 <link rel="stylesheet" type="text/css" href="resources/css/navbar.css">
+<link rel="stylesheet" type="text/css" href="resources/css/user_dashboard.css">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -124,10 +125,147 @@
     </ul>
 </nav>
 
+
     
-<h1>Welcome ${user.getUsername()}</h1>
+    <div class="login-wrap">
+	<div class="login-html">
+        <div class="container">
+            <div class="row">
+            <p></p>
+            <h1>Your Tickets</h1>
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="panel panel-default panel-table">
+                      <div class="panel-heading">
+                        <div class="row">
+                          <div class="col col-xs-6">
+                            <h3 class="panel-title">Panel Heading</h3>
+                          </div>
+                          <form action="CreateTicket" method="POST">
+                            <div class="col col-xs-6 text-right">
+                                <button type="button" id="bttn-create" class="btn btn-sm btn-primary btn-create"><b>Create New Ticket</b></button>
+                            </div>
+                           </form>
+                        </div>
+                      </div>
+                      <div class="panel-body">
+                        <table class="table table-striped table-bordered table-list" cellspacing="20">
+                          <thead>
+                            <tr>
+                                <th class="hidden-xs">ID</th>
+                                <th>Title</th>
+                                <th>Date Created</th>
+                                <th>Status</th>
+                                <th>Priority</th>
+                                <th>Detail</th>
+                                <th><em class="fa fa-cog"></em></th>
+                            </tr> 
+                          </thead>
+                          <tbody>
+                          
+                          <%
+                          
+                          %>
+                          <c:forEach var="ticket" items="${tickets}">
+                              <tr>
+                                <td class="hidden-xs" align="center">${ticket.getId()}</td>
+                                <td align="center">${ticket.getTitle()}</td>
+                                <td align="center">${ticket.getCreated_at()}</td>
+                                <td align="center">
+                                  <a class="btn btn-danger"><em class="fa fa-check"></em></a>
+                                </td>                                    
+                                <td align="center">H</td>
+                                <td align="center">
+                                    <form action="TicketDetail" method="POST">
+                                    	<input type="hidden", name="ticketID" value="${ticket.getId()}">
+                                        <button type="submit" class="btn text-color" value="TicketDetail">
+                                            <i class="fa fa-cog"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                                <td align="center">
+                                    <form action="TicketDelete" method="POST">
+                                    	<input type="hidden", name="ticketID" value="${ticket.getId()}">
+                                        <button type="submit" class="btn text-color" value="TicketDelete">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                              </tr>
+						</c:forEach>
+						<!-- 
+                              <tr>
+                                <td class="hidden-xs" align="center">2</td>
+                                <td align="center">Broken lights</td>
+                                <td align="center">04/29/2019</td>
+                                <td align="center">
+                                  <a class="btn btn-danger"><em class="fa fa-times"></em></a>
+                                </td> 
+                                <td align="center">L</td>
+                                <td align="center">
+                                    <form action="Detail" method="POST">
+                                        <button type="submit" class="btn text-color" value="Detail">
+                                            <i class="fa fa-cog"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                                <td align="center">
+                                    <form action="Delete" method="POST">
+                                        <button type="submit" class="btn text-color" value="Delete">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                              </tr>
+                                  -->                     
+                          </tbody>
+                        </table>
+                      </div>
+        </div></div></div>
+         
+		</div>
+	</div>
+</div>
+  
+    
+
 <%} %>
 </body>
 </html>
 
 
+
+<!---
+fa-question -beklemede
+fa-times -reddet
+fa-check -kabul et
+fa-exchange -islemde
+fa-flag-checkered -bitti
+
+
+<button type="submit" class="btn text-color" value="Status">
+    <i class="fa fa-question"></i>
+</button>
+
+
+<button type="submit" class="btn text-color" value="Status">
+    <i class="fa fa-times"></i>
+</button>
+
+
+<button type="submit" class="btn text-color" value="Status">
+    <i class="fa fa-check"></i>
+</button>
+
+
+<button type="submit" class="btn text-color" value="Status">
+    <i class="fa fa-exchange"></i>
+</button>
+
+
+<button type="submit" class="btn text-color" value="Status">
+    <i class="fa fa-flag-checkered"></i>
+</button>
+
+
+
+--->

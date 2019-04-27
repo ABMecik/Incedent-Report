@@ -1,6 +1,7 @@
 package com.IncidentReport.web.Services;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 
@@ -83,6 +84,28 @@ public class TicketService {
 		catch(Exception e){
 			System.out.println(e);
 			em.close();
+		}
+		
+	}
+
+
+
+	public List<Ticket> findUserTickets(int id) {
+		try {
+			em.getTransaction().begin();
+			
+			User user = em.find(User.class, id);
+			List<Ticket> myt = user.getTickets();
+			
+			em.getTransaction().commit();
+			em.close();
+			return myt;
+		}
+		catch(Exception e){
+			System.out.println("its here");
+			System.out.println(e);
+			em.close();
+			return null;
 		}
 		
 	}

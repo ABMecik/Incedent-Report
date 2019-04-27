@@ -1,6 +1,7 @@
 package com.IncidentReport.web.Controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -12,8 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.IncidentReport.web.Model.Role;
+import com.IncidentReport.web.Model.Ticket;
 import com.IncidentReport.web.Model.User;
 import com.IncidentReport.web.Services.RoleService;
+import com.IncidentReport.web.Services.TicketService;
 import com.IncidentReport.web.Services.UserService;
 
 
@@ -85,19 +88,34 @@ public class Register extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
 
-			RequestDispatcher reqDispatcher = getServletConfig().getServletContext()
-					.getRequestDispatcher("/index.jsp");
-			reqDispatcher.forward(request, response);
+			openIndex(request, response, "/index.jsp", user);
 		}else {
 			
 			request.setAttribute("warning", "Username or Email alredy valid");
-			RequestDispatcher reqDispatcher = getServletConfig().getServletContext()
-					.getRequestDispatcher("/index.jsp");
-			reqDispatcher.forward(request, response);
+			displayPage(request, response, "/index.jsp");
 		}
 		
 		
 		
+	}
+	
+	private void openIndex(HttpServletRequest request, HttpServletResponse response, String rPage, User user) throws ServletException, IOException {
+		List<Ticket> tickets = new ArrayList<Ticket>();
+		TicketService ts = new TicketService();
+		
+		tickets = ts.findUserTickets(user.getId());
+
+		request.setAttribute("tickets", tickets);
+		
+		
+		displayPage(request, response, rPage);
+	}
+	
+	private void displayPage(HttpServletRequest request, HttpServletResponse response, String rPage)
+			throws ServletException, IOException {
+		RequestDispatcher reqDispatcher = getServletConfig().getServletContext()
+				.getRequestDispatcher(rPage);
+		reqDispatcher.forward(request, response);
 	}
 
 }

@@ -13,7 +13,7 @@
 <head>
 	<title>Welcome</title>
 	<link rel="stylesheet" type="text/css" href="resources/css/navbar.css">
-    <script src="navbar.js"></script>
+    <script src="resources/js/navbar.js"></script>
 
 </head>
 <body>
