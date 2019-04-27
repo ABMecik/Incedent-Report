@@ -65,15 +65,19 @@ public class CreateTicket extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+		response.setContentType("text/html; charset=UTF-8");
 		
-		HttpSession session = request.getSession();
+		
+		
+		
+		
 		String title = request.getParameter("title");
 		String decription = request.getParameter("decription");
 		String location = request.getParameter("location");
 		int priority = Integer.parseInt(request.getParameter("priority"));
 		String anonim = request.getParameter("anonim");
 		Part part = request.getPart("photo");
-		User user = (User) session.getAttribute("user");
+		
 		
 		
 		SimpleDateFormat sd = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -100,58 +104,106 @@ public class CreateTicket extends HttpServlet {
 			}
 		}
 		
+		boolean s = generateTicket(title, decription, location, date, dbPath, isAnonim);
 		
-		
-		TicketService ts = new TicketService();
-		Ticket ticket = new Ticket(title,decription,location,isAnonim,dbPath);
-		
-		ticket.setCreated_at(date);
-		
-		boolean s = ts.createNewTicket(ticket);
 		if(s) {
+			
+			HttpSession session = request.getSession();
+			User user = (User) session.getAttribute("user");
+			
+			
 			part.write(savePath);
 			
-			ts = new TicketService();
-			
-			
-			ticket = ts.findTicket(title,date);
-			
-			
-			PriorityService ps = new PriorityService();
-			boolean pps = ps.checkIsValid(priority);
-			if(!pps) {
-				ps = new PriorityService();
-				ps.createNewPriority(priority);
-			}
-			ps = new PriorityService();
-			TicketPriority ttp = ps.findPriority(priority);
-			
-			StatusService ss = new StatusService();
-			boolean ssi = ss.checkIsValid("Waiting");
-			if(!ssi) {
-				ss = new StatusService();
-				ss.createNewStatus("Waiting","Waiting for fronthand's response");
-			}
-			ss = new StatusService();
-			TicketStatus tts = ss.findStatus("Waiting");
-			
-			
-			ts = new TicketService();
+			setTicketDetails(title, priority, date, user);
 
-			ts.setTicketFKeys(ticket.getId(), user.getId(), tts.getId(), ttp.getId());
-			
-			System.out.println("ticket : " + ticket.getId());
-			System.out.println("user : " + user.getId());
-			System.out.println("Status: " + tts.getId());
-			System.out.println("Priority : " + ttp.getId());
+			forward(request, response);
+		}else {
+			sendRedirect(request, response);
 		}
 		
+	}
+
+	/**
+	 * @param title
+	 * @param decription
+	 * @param location
+	 * @param date
+	 * @param dbPath
+	 * @param isAnonim
+	 * @return
+	 */
+	private boolean generateTicket(String title, String decription, String location, Date date, String dbPath,
+			boolean isAnonim) {
+		boolean s;
+		TicketService ts = new TicketService();
+		Ticket ticket = new Ticket(title,decription,location,isAnonim,dbPath);
+		ticket.setCreated_at(date);
+		s = ts.createNewTicket(ticket);
+		return s;
+	}
+
+	/**
+	 * @param title
+	 * @param priority
+	 * @param date
+	 * @param user
+	 */
+	private void setTicketDetails(String title, int priority, Date date, User user) {
+		TicketService ts;
+		Ticket ticket;
+		ts = new TicketService();
+		
+		
+		ticket = ts.findTicket(title,date);
+		
+		
+		PriorityService ps = new PriorityService();
+		boolean pps = ps.checkIsValid(priority);
+		if(!pps) {
+			ps = new PriorityService();
+			ps.createNewPriority(priority);
+		}
+		ps = new PriorityService();
+		TicketPriority ttp = ps.findPriority(priority);
+		
+		StatusService ss = new StatusService();
+		boolean ssi = ss.checkIsValid("Waiting");
+		if(!ssi) {
+			ss = new StatusService();
+			ss.createNewStatus("Waiting","Waiting for fronthand's response");
+		}
+		ss = new StatusService();
+		TicketStatus tts = ss.findStatus("Waiting");
+		
+		
+		ts = new TicketService();
+		
+		System.out.println("ticket : " + ticket.getId());
+		System.out.println("user : " + user.getId());
+		System.out.println("Status: " + tts.getId());
+		System.out.println("Priority : " + ttp.getId());
+
+		ts.setTicketFKeys(ticket.getId(), user.getId(), tts.getId(), ttp.getId());
+		
+		return;
+	}
+	
+
+	private void sendRedirect(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		RequestDispatcher reqDispatcher = getServletConfig().getServletContext()
 				.getRequestDispatcher("/index.jsp");
 		reqDispatcher.forward(request, response);
-
 		
 	}
+
+	private void forward(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("success", "Series added");
+		RequestDispatcher reqDispatcher = getServletConfig().getServletContext()
+				.getRequestDispatcher("/index.jsp");
+		reqDispatcher.forward(request, response);
+		
+	}
+
 
 }
