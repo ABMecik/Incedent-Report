@@ -57,7 +57,6 @@ public class Ticket {
 	
 	@ManyToOne
 	@JoinColumn(name="created_by")
-	@Column(nullable=false)
 	private User created_by;
 
 	public Ticket() {
