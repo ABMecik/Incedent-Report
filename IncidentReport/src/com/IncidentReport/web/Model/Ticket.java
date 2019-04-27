@@ -46,7 +46,7 @@ public class Ticket {
 	private Department dept;
 	
 	@ManyToOne
-	@JoinColumn(name="user")
+	@JoinColumn(name="staff")
 	private User staff;
 	
 	
@@ -55,10 +55,10 @@ public class Ticket {
 	
 	private boolean isAnonim;
 	
-	//@ManyToOne
-	//@JoinColumn(name="user")
-	//@Column(nullable=false)
-	//private User created_by;
+	@ManyToOne
+	@JoinColumn(name="created_by")
+	@Column(nullable=false)
+	private User created_by;
 
 	public Ticket() {
 		super();
@@ -166,6 +166,14 @@ public class Ticket {
 
 	public void setAnonim(boolean isAnonim) {
 		this.isAnonim = isAnonim;
+	}
+
+	public User getCreated_by() {
+		return created_by;
+	}
+
+	public void setCreated_by(User created_by) {
+		this.created_by = created_by;
 	}
 
 	

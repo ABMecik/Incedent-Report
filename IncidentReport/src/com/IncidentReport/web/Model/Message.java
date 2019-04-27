@@ -23,14 +23,12 @@ public class Message {
 	
 	
 	@ManyToOne
-	@JoinColumn(name="user")
-	@Column(nullable=false)
-	private User fromuser;
-	
-	@ManyToOne
-	@JoinColumn(name="user")
-	@Column(nullable=false)
-	private User touser;
+    @JoinColumn(name = "sender")
+    private User sender;
+
+    @ManyToOne
+    @JoinColumn(name = "receiver")
+    private User receiver;
 	
 	@ManyToOne
 	@JoinColumn(name="ticket")
@@ -64,20 +62,20 @@ public class Message {
 		Desc = desc;
 	}
 
-	public User getFromuser() {
-		return fromuser;
+	public User getSender() {
+		return sender;
 	}
 
-	public void setFromuser(User fromuser) {
-		this.fromuser = fromuser;
+	public void setSender(User sender) {
+		this.sender = sender;
 	}
 
-	public User getTouser() {
-		return touser;
+	public User getReceiver() {
+		return receiver;
 	}
 
-	public void setTouser(User touser) {
-		this.touser = touser;
+	public void setReceiver(User receiver) {
+		this.receiver = receiver;
 	}
 
 	public Ticket getRelatedticket() {
@@ -87,8 +85,7 @@ public class Message {
 	public void setRelatedticket(Ticket relatedticket) {
 		this.relatedticket = relatedticket;
 	}
-	
-	
+
 	
 	
 	

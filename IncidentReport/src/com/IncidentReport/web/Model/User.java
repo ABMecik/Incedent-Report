@@ -66,15 +66,14 @@ public class User{
 	@OneToMany(mappedBy="staff")
 	private List<Ticket> todo = new ArrayList<Ticket>();
 
-	//@OneToMany(mappedBy="created_by")
-	//private List<Ticket> tickets = new ArrayList<Ticket>();
+	@OneToMany(mappedBy="created_by")
+	private List<Ticket> tickets = new ArrayList<Ticket>();
 	
-	@OneToMany(mappedBy="touser")
-	private List<Message> recivedmsgs = new ArrayList<Message>();
-	
-	
-	@OneToMany(mappedBy="fromuser")
-	private List<Message> forwardmsgs = new ArrayList<Message>();
+	@OneToMany(mappedBy="receiver")
+    private List<Message> messagesRecived;
+
+    @OneToMany(mappedBy="sender")
+    private List<Message> messagesSended;
 	
 	public User() {
 		super();
@@ -94,28 +93,71 @@ public class User{
 	public void setTodo(List<Ticket> todo) {
 		this.todo = todo;
 	}
+	
+	
 
-
-	public List<Message> getRecivedmsgs() {
-		return recivedmsgs;
-	}
-
-
-	public void setRecivedmsgs(List<Message> recivedmsgs) {
-		this.recivedmsgs = recivedmsgs;
-	}
+	
+	
 
 
 
-
-	public List<Message> getForwardmsgs() {
-		return forwardmsgs;
+	public List<Ticket> getTickets() {
+		return tickets;
 	}
 
 
 
-	public void setForwardmsgs(List<Message> forwardmsgs) {
-		this.forwardmsgs = forwardmsgs;
+
+
+
+
+
+	public void setTickets(List<Ticket> tickets) {
+		this.tickets = tickets;
+	}
+
+
+
+
+
+
+
+
+	public List<Message> getMessagesRecived() {
+		return messagesRecived;
+	}
+
+
+
+
+
+
+
+
+	public void setMessagesRecived(List<Message> messagesRecived) {
+		this.messagesRecived = messagesRecived;
+	}
+
+
+
+
+
+
+
+
+	public List<Message> getMessagesSended() {
+		return messagesSended;
+	}
+
+
+
+
+
+
+
+
+	public void setMessagesSended(List<Message> messagesSended) {
+		this.messagesSended = messagesSended;
 	}
 
 
@@ -132,10 +174,6 @@ public class User{
 		this.username = username;
 		this.password = password;
 	}
-
-
-
-
 
 
 
