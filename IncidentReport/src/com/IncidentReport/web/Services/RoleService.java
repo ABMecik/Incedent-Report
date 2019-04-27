@@ -63,7 +63,7 @@ public class RoleService {
 			User user = em.find(User.class, userID);
 			Role role = em.find(Role.class, roleID);
 
-			user.getUroles().add(role);
+			user.setRole(role);
 			role.getUsers().add(user);
 			
 			em.flush();

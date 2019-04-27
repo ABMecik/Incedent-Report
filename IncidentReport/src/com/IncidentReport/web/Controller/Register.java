@@ -87,6 +87,7 @@ public class Register extends HttpServlet {
 			
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
+			session.setAttribute("role", user.getRole().getName());
 
 			openIndex(request, response, "/index.jsp", user);
 		}else {

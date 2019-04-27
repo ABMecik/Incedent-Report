@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity(name="role")
@@ -30,7 +31,7 @@ public class Role {
 	private String name;
 	
 	
-	@ManyToMany(mappedBy="uroles", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="role")
 	private List<User> users = new ArrayList<User>();
 
 

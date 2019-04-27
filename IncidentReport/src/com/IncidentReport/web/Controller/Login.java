@@ -59,6 +59,7 @@ public class Login extends HttpServlet {
 		if(user != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
+			session.setAttribute("role", user.getRole().getName());
 			
 			openIndex(request, response, "/index.jsp", user);
 			

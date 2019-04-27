@@ -46,10 +46,10 @@ public class User {
 	@Column(nullable = false)
 	private Date created_at;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "user_roles", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "role_id") })
-	private List<Role> uroles = new ArrayList<Role>();
+
+	@ManyToOne
+	@JoinColumn(name = "role")
+	private Role role;
 
 	@ManyToOne
 	@JoinColumn(name = "department")
@@ -84,7 +84,7 @@ public class User {
 	}
 
 	public User(int id, String name, String surname, String email, String username, String password, Date created_at,
-			List<Role> uroles, Department dept, String title) {
+			Role role, Department dept, String title) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -93,7 +93,7 @@ public class User {
 		this.username = username;
 		this.password = password;
 		this.created_at = created_at;
-		this.uroles = uroles;
+		this.role = role;
 		this.dept = dept;
 		this.title = title;
 	}
@@ -170,14 +170,7 @@ public class User {
 	public void setCreated_at(Date created_at) {
 		this.created_at = created_at;
 	}
-
-	public List<Role> getUroles() {
-		return uroles;
-	}
-
-	public void setUroles(List<Role> uroles) {
-		this.uroles = uroles;
-	}
+	
 
 	public String getTitle() {
 		return title;
@@ -217,6 +210,14 @@ public class User {
 
 	public void setMessagesSended(List<Message> messagesSended) {
 		this.messagesSended = messagesSended;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
 	}
 	
 	

@@ -18,29 +18,36 @@
 </head>
 <body>
 
-    <nav class="main-navigation">
-        <div class="navbar-header animated fadeInUp">
-            <a class="navbar-brand" href="#">No More Incidents</a>
-        </div>
-        <ul class="nav-list">
-            <li class="nav-list-item">
-                <a href="index" class="nav-link">Dashboard</a>
-            </li>
-            <li class="nav-list-item">
-                <a href="create-ticket" class="nav-link">Create Ticket</a>
-            </li>
-            <li class="nav-list-item">
-                <a href="#" class="nav-link">My Profile</a>
-            </li>
-            <li class="nav-list-item">
-                <form class="form-inline" action="Logout">
-                    <button type="submit" class="btn text-color" value="Logout">
-                        <i class="fa fa-sign-out"></i>
-                    </button>
-                </form>
-            </li>
-        </ul>
-    </nav>
+
+	<nav class="main-navigation">
+		<div class="navbar-header animated fadeInUp">
+			<a class="navbar-brand" href="index">No More Incidents</a>
+		</div>
+		<ul class="nav-list">
+
+			<%
+    			if (session.getAttribute("role").equals("Front Desk")) {
+			%>
+				<li class="nav-list-item"><a href="controlboard"
+					class="nav-link">Controlboard</a>
+				</li>
+
+			<%} %>
+
+			<li class="nav-list-item"><a href="create-ticket"
+				class="nav-link">Create Ticket</a></li>
+			<li class="nav-list-item"><a href="index" class="nav-link">Dashboard</a>
+			</li>
+			<li class="nav-list-item">
+				<form class="form-inline" action="Logout">
+					<button type="submit" class="btn text-color" value="Logout">
+						<i class="fa fa-sign-out"></i>
+					</button>
+				</form>
+			</li>
+		</ul>
+	</nav>
+
     
     <form action="CreateTicket" method="POST" enctype='multipart/form-data'>
 
