@@ -282,50 +282,78 @@
 								</div>
 							</div>
 							<table class="table">
-		  <thead class="thead-light">
-		    <tr>
-		      <th scope="col">ID</th>
-		      <th scope="col">Title</th>
-		      <th scope="col">Date Created</th>
-		      <th scope="col">Status</th>
-		      <th scope="col">Priority</th>
-		      <th scope="col">Detail</th>
-		      <th scope="col"><em class="fa fa-cog"></em></th>
-              <th scope="col"></th>
-		    </tr>
-              		  </thead>
-		  <c:forEach var="ticket" items="${tickets}">
-											<tr>
-												<td class="hidden-xs" align="center">${ticket.getId()}</td>
-												<td align="center">${ticket.getTitle()}</td>
-												<td align="center">${ticket.getCreated_at()}</td>
-												<td align="center"><a class="btn btn-danger"><em
-														class="fa fa-check"></em></a></td>
-												<td align="center">H</td>
-												<td align="center">
-													<form action="TicketDetail" method="GET">
-														<input type="hidden" , name="ticketID" value="${ticket.getId()}">
-														<button type="submit" class="btn text-color" value="TicketDetail">
-															<i class="fa fa-cog"></i>
-														</button>
-													</form>
-												</td>
-												<td align="center">
-													<form action="TicketDelete" method="POST">
-														<input type="hidden" , name="ticketID"
-															value="${ticket.getId()}">
-														<button type="submit" class="btn text-color"
-															value="TicketDelete">
-															<i class="fa fa-trash"></i>
-														</button>
-														
-													</form>
-												</td>
-											</tr>
-										</c:forEach>
-
-									</tbody>
-						</div>
+								  <thead class="thead-light">
+								    <tr >
+								      <th scope="col" >ID</th>
+								      <th scope="col">Title</th>
+								      <th scope="col">Date Created</th>
+								      <th scope="col">Status</th>
+								      <th scope="col">Priority</th>
+								      <th scope="col">Detail</th>
+								      <th scope="col"><em class="fa fa-cog"></em></th>
+						              <th scope="col"></th>
+								    </tr>
+						           </thead>
+						        <tbody>
+		        				 <tr >
+								  <c:forEach var="ticket" items="${tickets}">
+									<tr >
+										<td class="hidden-xs" align="center">${ticket.getId()}</td>
+										<td align="center">${ticket.getTitle()}</td>
+										<td align="center">${ticket.getCreated_at()}</td>
+										<td align="center">
+											<div class="progress">
+												<c:choose>
+													<c:when test="${ticket.getStatus().getName()=='Waiting'}">
+														<div data-percentage="25%" style="width: 25%;" class="progress-bar progress-bar-success" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+													</c:when>
+													<c:when
+														test="${ticket.getStatus().getName()=='Processing'}">
+														<div data-percentage="50%" style="width: 50%;" class="progress-bar progress-bar-success" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+													</c:when>
+													<c:when
+														test="${ticket.getStatus().getName()=='Approved'}">
+														<div data-percentage="75%" style="width: 75%;" class="progress-bar progress-bar-success" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+													</c:when>
+													<c:when
+														test="${ticket.getStatus().getName()=='Declined'}">
+														<div data-percentage="0%" style="width: 0%;" class="progress-bar progress-bar-success" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+													</c:when>
+													<c:when
+														test="${ticket.getStatus().getName()=='Finished'}">
+														<div data-percentage="100%" style="width: 100%;" class="progress-bar progress-bar-success" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+													</c:when>
+													<c:when
+														test="${ticket.getStatus().getName()=='closed'}">
+														<div data-percentage="100%" style="width: 100%;" class="progress-bar progress-bar-success" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+													</c:when>
+												</c:choose>
+						                    </div>
+										</td>
+										<td align="center">H</td>
+										<td align="center">
+											<form action="TicketDetail" method="GET">
+												<input type="hidden" , name="ticketID" value="${ticket.getId()}">
+												<button type="submit" class="btn text-color" value="TicketDetail">
+													<i class="fa fa-cog"></i>
+												</button>
+											</form>
+										</td>
+										<td align="center">
+											<form action="TicketDelete" method="POST">
+												<input type="hidden" , name="ticketID"
+													value="${ticket.getId()}">
+												<button type="submit" class="btn text-color"
+													value="TicketDelete">
+													<i class="fa fa-trash"></i>
+												</button>
+												
+											</form>
+										</td>
+									</tr>
+								</c:forEach>
+					 		</tr>
+						  </tbody>
 					</div>
 				</div>
 
