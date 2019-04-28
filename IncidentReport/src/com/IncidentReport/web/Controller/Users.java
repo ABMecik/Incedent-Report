@@ -52,34 +52,19 @@ public class Users extends HttpServlet {
 		}
 		else {
 			String role = (String) session.getAttribute("role");
-			if(role.equals("User")) {
+			if(!role.equals("Admin")) {
 				request.setAttribute("warning", "No have permission");
 				displayPage(request, response, "/index.jsp");
 			}else {
 				
-				if(role.equals("Front Desk")) {
-					TicketService ts = new TicketService();
-					UserService us = new UserService();
-					List<Ticket> ftickets = ts.AllTickets();
-					List<User> managers = us.findRoleList("Manager");
 
-					request.setAttribute("managers", managers);
-					request.setAttribute("ftickets", ftickets);
-					displayPage(request, response, "/controlboard.jsp");
-				}
-				
-				if(role.equals("Manager")) {
-					
-					TicketService ts = new TicketService();
-					UserService us = new UserService();
-					List<Ticket> mtickets = ts.managerReleated(user.getId());
-					List<User> staffs = us.deptReleated(user.getDept().getName(), "staff");
-					
-					request.setAttribute("staffs", staffs);
-					request.setAttribute("mtickets", mtickets);
-					displayPage(request, response, "/controlboard.jsp");
-				}
-				
+				UserService us = new UserService();
+
+				List<User> users = us.allUsers();
+
+				request.setAttribute("users", users);
+
+				displayPage(request, response, "/controlboard.jsp");
 				
 			}
 		}

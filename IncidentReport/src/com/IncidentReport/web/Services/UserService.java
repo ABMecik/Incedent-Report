@@ -189,7 +189,7 @@ public class UserService {
 
 
 
-	private List<User> allUsers() {
+	public List<User> allUsers() {
 		try {
 			em.getTransaction().begin();
 			List<User> u = em.createNamedQuery("allUsers", User.class).getResultList();
@@ -209,10 +209,18 @@ public class UserService {
 	public List<User> deptReleated(String department, String role) {
 		List<User> users = this.allUsers();
 		List<User> sUsers = new ArrayList<User>();
+		if(department == null) {
+			department = "";
+		}
+		if(role == null) {
+			role = "";
+		}
 		
 		for(User user : users) {
-			if(user.getDept().getName().equals(department) && user.getRole().getName().equals(role)) {
-				sUsers.add(user);
+			if(user.getDept() != null && user.getRole() != null) {
+				if(user.getDept().getName().equals(department) && user.getRole().getName().equals(role)) {
+					sUsers.add(user);
+				}
 			}
 		}
 		

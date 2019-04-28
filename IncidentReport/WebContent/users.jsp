@@ -84,6 +84,7 @@
                             </tr> 
                           </thead>
                           <tbody>
+                          <c:forEach var="user" items="${users}">
                             <form action="SetUser" method="POST">
                               <tr>
                                 <td class="hidden-xs" align="center">1</td>
@@ -120,7 +121,8 @@
                                     </div>  
                                 </td>
                               </tr>
-                            </form>                    
+                            </form>
+                            </c:forEach>                   
                           </tbody>
                         </table>
                       </div>
