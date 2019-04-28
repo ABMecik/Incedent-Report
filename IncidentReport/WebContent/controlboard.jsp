@@ -97,25 +97,24 @@
 							</form>
 							
 							
-							<div class="panel-body">
-								<table class="table table-striped table-bordered table-list"
-									cellspacing="40">
-									<thead>
-										<tr>
-											<th></th>
-											<th class="hidden-xs">ID</th>
-											<th>Title</th>
-											<th>Date Created</th>
-											<th>Detail</th>
-											<th>Status</th>
-											<th>Priority</th>
-											<th>Notes</th>
-											<th>Send To</th>
-										</tr>
-									</thead>
-									<tbody>
-
-										<c:forEach var="ticket" items="${ftickets}">
+							<table class="table">
+		  <thead class="thead-light">
+		    <tr>
+		      <th scope="col"></th>
+		      <th scope="col">ID</th>
+		      <th scope="col">Title</th>
+		      <th scope="col">Date Created</th>
+		      <th scope="col">Detail</th>
+		      <th scope="col">Status</th>
+		      <th scope="col">Priority</th>
+		      <th scope="col">Notes</th>
+		      <th scope="col">Send To</th>
+		      <th scope="col"></th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		         <tr >
+                <c:forEach var="ticket" items="${ftickets}">
 											<tr>
 												<td align="center">
 													<div class="sonar-wrapper">
@@ -173,7 +172,7 @@
 														<div class="container">
 															<div class="row">
 																<div class="form-group mb-2">
-																	<select class="form-control" name="set-status">
+																	<select class="form-control" name="set-status" style="width: 100px">
 																		<option selected="${ticket.getStatus().getName()}"
 																			value="${ticket.getStatus().getName()}">${ticket.getStatus().getName()}</option>
 																		<option value="Waiting">Waiting</option>
@@ -190,7 +189,7 @@
 														<div class="container">
 															<div class="row">
 																<div class="form-group mb-2">
-																	<select class="form-control" name="set-priority">
+																	<select class="form-control" name="set-priority" style="width: 50px">
 																		<option
 																			selected="${ticket.getPriority().getImportance()}"
 																			value="${ticket.getPriority().getImportance()}">${ticket.getPriority().getImportance()}</option>
@@ -211,15 +210,15 @@
 													</td>
 													<td align="center">
 														<div class="form-group" id="add-note" name="notes">
-															<textarea class="form-control" rows="5" id="comment"
-																name="notes"></textarea>
+															<textarea class="form-control" rows="2" id="comment"
+																name="notes" style="width: 200px"></textarea>
 														</div>
 													</td>
 													<td align="center">
 														<div class="container">
 															<div class="row">
-																<div class="col-sm-4">
-																	<select class="form-control" name="set-manager">
+																<div class="form-group mb-2"">
+																	<select class="form-control" name="set-manager" style="width: 100px">
 																		<option value="" selected disabled hidden>Choose</option>
 																		<c:forEach var="manager" items="${managers}">
 																			<option value="${manager.getId()}">${manager.getName()}
@@ -233,17 +232,15 @@
 													</td>
 													<td align="center">
 														<div class="group">
-															<input type="submit" class="button" id="bttn-create"
-																value="UpdateTicket">
+															<input class="btn btn-primary" type="button" value="UpdateTicket">
 														</div>
 													</td>
 												</form>
 											</tr>
 										</c:forEach>
-
-									</tbody>
-								</table>
-							</div>
+            </tr>
+		  </tbody>
+		</table>
 						</div>
 					</div>
 				</div>
@@ -290,22 +287,20 @@
 
 							</form>
 
-							<div class="panel-body">
-								<table class="table table-striped table-bordered table-list"
-									cellspacing="40">
-									<thead>
-										<tr>
-											<th></th>
-											<th class="hidden-xs">ID</th>
-											<th>Title</th>
-											<th>Date Created</th>
-											<th>Detail</th>
-											<th>Notes</th>
-											<th>Close</th>
-											<th>Send To</th>
-										</tr>
-									</thead>
-									<tbody>
+							<table class="table">
+		  <thead class="thead-light">
+		    <tr>
+		      <th scope="col"></th>
+		      <th scope="col">ID</th>
+		      <th scope="col">Title</th>
+		      <th scope="col">Date Created</th>
+		      <th scope="col">Detail</th>
+		      <th scope="col">Notes</th>
+		      <th scope="col">Send To</th>
+		      <th scope="col"></th>
+		    </tr>
+		  </thead>
+		  <tbody>
 
 
 										<c:forEach var="ticket" items="${mtickets}">
@@ -387,8 +382,8 @@
 																		<option value="${ticket.getFrontdesk().getId()}">Front
 																			Desk</option>
 																		<c:forEach var="staff" items="${staffs}">
-																			<option value="${staff.getId()}">${staff.getName()}
-																				${staff.getSurname()}</option>
+																			<option value="${staff.getId()}">${manager.getName()}
+																				${manager.getSurname()}</option>
 																		</c:forEach>
 																	</select>
 																</div>
@@ -405,8 +400,7 @@
 											</tr>
 										</c:forEach>
 									</tbody>
-								</table>
-							</div>
+		</table>
 						</div>
 					</div>
 				</div>
