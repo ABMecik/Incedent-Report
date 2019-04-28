@@ -191,6 +191,9 @@
 				<li class="nav-list-item"><a href="users"
 					class="nav-link">Users</a>
 				</li>
+				<li class="nav-list-item"><a href="dpanel"
+					class="nav-link">Add</a>
+				</li>
 
 			<%} %>
 

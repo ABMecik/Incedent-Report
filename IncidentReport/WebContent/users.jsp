@@ -22,7 +22,7 @@
 </head>
 <body>
 
-    <nav class="main-navigation">
+	<nav class="main-navigation">
 		<div class="navbar-header animated fadeInUp">
 			<a class="navbar-brand" href="index">No More Incidents</a>
 		</div>
@@ -42,6 +42,9 @@
 			%>
 				<li class="nav-list-item"><a href="users"
 					class="nav-link">Users</a>
+				</li>
+				<li class="nav-list-item"><a href="dpanel"
+					class="nav-link">Add</a>
 				</li>
 
 			<%} %>

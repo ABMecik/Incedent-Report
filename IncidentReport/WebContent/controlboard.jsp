@@ -38,14 +38,25 @@
 		<ul class="nav-list">
 
 			<%
-				if (session.getAttribute("role").equals("Front Desk") || session.getAttribute("role").equals("Manager")) {
+    			if (session.getAttribute("role").equals("Front Desk") || session.getAttribute("role").equals("Manager")|| session.getAttribute("role").equals("Staff")) {
 			%>
-			<li class="nav-list-item"><a href="controlboard"
-				class="nav-link">Controlboard</a></li>
+				<li class="nav-list-item"><a href="controlboard"
+					class="nav-link">Controlboard</a>
+				</li>
 
+			<%} %>
+			
 			<%
-				}
+    			if (session.getAttribute("role").equals("Admin")) {
 			%>
+				<li class="nav-list-item"><a href="users"
+					class="nav-link">Users</a>
+				</li>
+				<li class="nav-list-item"><a href="dpanel"
+					class="nav-link">Add</a>
+				</li>
+
+			<%} %>
 
 			<li class="nav-list-item"><a href="create-ticket"
 				class="nav-link">Create Ticket</a></li>
@@ -141,6 +152,11 @@
 																test="${ticket.getStatus().getName()=='Finished'}">
 																<div class="sonar-emitter"
 																	style="background-color: blue">
+															</c:when>
+															<c:when
+																test="${ticket.getStatus().getName()=='closed'}">
+																<div class="sonar-emitter"
+																	style="background-color: black">
 															</c:when>
 														</c:choose>
 
@@ -304,33 +320,38 @@
 						<div class="sonar-wrapper">
 
 							<!-- Color Control System -->
-							<c:choose>
-								<c:when test="${ticket.getStatus().getName()=='Waiting'}">
-									<div class="sonar-emitter"
-										style="background-color: white">
-								</c:when>
-								<c:when
-									test="${ticket.getStatus().getName()=='Processing'}">
-									<div class="sonar-emitter"
-										style="background-color: lightgreen">
-								</c:when>
-								<c:when
-									test="${ticket.getStatus().getName()=='Approved'}">
-									<div class="sonar-emitter"
-										style="background-color: yellow">
-								</c:when>
-								<c:when
-									test="${ticket.getStatus().getName()=='Declined'}">
-									<div class="sonar-emitter" style="background-color: red">
-								</c:when>
-								<c:when
-									test="${ticket.getStatus().getName()=='Finished'}">
-									<div class="sonar-emitter"
-										style="background-color: blue">
-								</c:when>
-							</c:choose>
+														<c:choose>
+															<c:when test="${ticket.getStatus().getName()=='Waiting'}">
+																<div class="sonar-emitter"
+																	style="background-color: white">
+															</c:when>
+															<c:when
+																test="${ticket.getStatus().getName()=='Processing'}">
+																<div class="sonar-emitter"
+																	style="background-color: lightgreen">
+															</c:when>
+															<c:when
+																test="${ticket.getStatus().getName()=='Approved'}">
+																<div class="sonar-emitter"
+																	style="background-color: yellow">
+															</c:when>
+															<c:when
+																test="${ticket.getStatus().getName()=='Declined'}">
+																<div class="sonar-emitter" style="background-color: red">
+															</c:when>
+															<c:when
+																test="${ticket.getStatus().getName()=='Finished'}">
+																<div class="sonar-emitter"
+																	style="background-color: blue">
+															</c:when>
+															<c:when
+																test="${ticket.getStatus().getName()=='closed'}">
+																<div class="sonar-emitter"
+																	style="background-color: black">
+															</c:when>
+														</c:choose>
 
-							<!-- Color Control System -->
+														<!-- Color Control System -->
 
 
 							<div class="sonar-wave"></div>
@@ -463,7 +484,7 @@
                                     <div class="sonar-wrapper">
                                         
                                         
-                                        <!-- Color Control System -->
+                                       <!-- Color Control System -->
 														<c:choose>
 															<c:when test="${ticket.getStatus().getName()=='Waiting'}">
 																<div class="sonar-emitter"
@@ -487,6 +508,11 @@
 																test="${ticket.getStatus().getName()=='Finished'}">
 																<div class="sonar-emitter"
 																	style="background-color: blue">
+															</c:when>
+															<c:when
+																test="${ticket.getStatus().getName()=='closed'}">
+																<div class="sonar-emitter"
+																	style="background-color: black">
 															</c:when>
 														</c:choose>
 

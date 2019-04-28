@@ -22,30 +22,46 @@
 </head>
 <body>
 
-    <nav class="main-navigation">
-        <div class="navbar-header animated fadeInUp">
-            <a class="navbar-brand" href="#">No More Incidents</a>
-        </div>
-        <ul class="nav-list">
-            <li class="nav-list-item">
-                <a href="#" class="nav-link">Dashboard</a>
-            </li>
-            <li class="nav-list-item">
-                <a href="#" class="nav-link">Create Ticket</a>
-            </li>
-            <li class="nav-list-item">
-                <a href="#" class="nav-link">My Profile</a>
-            </li>
-            <li class="nav-list-item">
-                <form class="form-inline" action="Logout">
-                    <button type="submit" class="btn text-color" value="Logout">
-                        <i class="fa fa-sign-out"></i>
-                    </button>
-                </form>
-            </li>
+	<nav class="main-navigation">
+		<div class="navbar-header animated fadeInUp">
+			<a class="navbar-brand" href="index">No More Incidents</a>
+		</div>
+		<ul class="nav-list">
 
-        </ul>
-    </nav>
+			<%
+    			if (session.getAttribute("role").equals("Front Desk") || session.getAttribute("role").equals("Manager")|| session.getAttribute("role").equals("Staff")) {
+			%>
+				<li class="nav-list-item"><a href="controlboard"
+					class="nav-link">Controlboard</a>
+				</li>
+
+			<%} %>
+			
+			<%
+    			if (session.getAttribute("role").equals("Admin")) {
+			%>
+				<li class="nav-list-item"><a href="users"
+					class="nav-link">Users</a>
+				</li>
+				<li class="nav-list-item"><a href="dpanel"
+					class="nav-link">Add</a>
+				</li>
+
+			<%} %>
+
+			<li class="nav-list-item"><a href="create-ticket"
+				class="nav-link">Create Ticket</a></li>
+			<li class="nav-list-item"><a href="index" class="nav-link">Dashboard</a>
+			</li>
+			<li class="nav-list-item">
+				<form class="form-inline" action="Logout">
+					<button type="submit" class="btn text-color" value="Logout">
+						<i class="fa fa-sign-out"></i>
+					</button>
+				</form>
+			</li>
+		</ul>
+	</nav>
     
     
     <div class="login-wrap" style="margin-left: 1px">
