@@ -72,14 +72,22 @@ public class controlboard extends HttpServlet {
 					TicketService ts = new TicketService();
 					UserService us = new UserService();
 					List<Ticket> mtickets = ts.managerReleated(user.getId());
-					List<User> staffs = us.deptReleated(user.getDept().getName(), "staff");
+					List<User> staffs = us.deptReleated(user.getDept().getName(), "Staff");
 					
 					request.setAttribute("staffs", staffs);
 					request.setAttribute("mtickets", mtickets);
 					displayPage(request, response, "/controlboard.jsp");
 				}
 				
-				
+				if(role.equals("Staff")) {
+					
+
+					TicketService ts = new TicketService();
+					List<Ticket> stickets = ts.staffsTickets(user.getId());
+
+					request.setAttribute("stickets", stickets);
+					displayPage(request, response, "/controlboard.jsp");
+				}
 			}
 		}
 	}

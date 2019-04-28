@@ -211,6 +211,7 @@ public class UserService {
 	public List<User> deptReleated(String department, String role) {
 		List<User> users = this.allUsers();
 		List<User> sUsers = new ArrayList<User>();
+		
 		if(department == null) {
 			department = "";
 		}
@@ -374,6 +375,8 @@ public class UserService {
 		
 		return us;
 	}
+
+
 	
 
 }

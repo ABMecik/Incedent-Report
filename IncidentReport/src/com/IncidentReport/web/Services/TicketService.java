@@ -28,6 +28,7 @@ public class TicketService {
 
 
 	public boolean createNewTicket(Ticket ticket) {
+		ticket.setEvidance_path("resources/image/img/processing.png");
 		try {
 
 			em.getTransaction().begin();
@@ -317,6 +318,58 @@ public class TicketService {
 		
 		
 		return mtickets;
+	}
+
+
+
+	public List<Ticket> staffsTickets(int staffID) {
+		List<Ticket> stickets = new ArrayList<Ticket>();
+		List<Ticket> allTickets = this.AllTickets();
+		
+		for(Ticket ticket : allTickets) {
+			if(ticket.getStaff() != null) {
+				if(ticket.getStaff().getId() == staffID) {
+					stickets.add(ticket);
+				}
+			}
+		}
+		
+		
+		return stickets;
+	}
+
+
+
+	public void updateStaffInput(int ticketID, String dbPath) {
+		try {
+			em.getTransaction().begin();
+			
+			Ticket t = em.find(Ticket.class, ticketID);
+			t.setEvidance_path(dbPath);
+	
+			em.getTransaction().commit();
+			em.close();
+
+		}
+		catch(Exception e){
+			em.close();
+		}
+		
+	}
+
+
+
+	public List<Ticket> staffReleatedSelection(int staffID, List<Ticket> allTickets) {
+		List<Ticket> stickets = new ArrayList<Ticket>();
+		
+		for(Ticket ticket : allTickets) {
+			if(ticket.getStaff().getId() == staffID) {
+				stickets.add(ticket);
+			}
+		}
+		
+		
+		return stickets;
 	}
 
 

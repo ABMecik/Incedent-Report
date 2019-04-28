@@ -80,13 +80,13 @@ public class SearchTicket extends HttpServlet {
 					List<User> managers = us.findRoleList("Manager");
 					
 					TicketService ts = new TicketService();
-					if(sTitle != null && sStatus != null) {
+					if(sTitle != null && sStatus != "ANY") {
 						ftickets = ts.findByStatusAndLikeTitle(sTitle,sStatus);
 					}
-					else if(sTitle == null && sStatus != null) {
+					else if(sTitle == null && sStatus != "ANY") {
 						ftickets = ts.findByStatus(sStatus);
 					}
-					else if(sTitle != null && sStatus == null) {
+					else if(sTitle != null && sStatus == "ANY") {
 						ftickets = ts.findLikeTitle(sTitle);
 					}else {
 						ftickets = ts.AllTickets();
@@ -106,17 +106,17 @@ public class SearchTicket extends HttpServlet {
 					TicketService ts = new TicketService();
 					List<Ticket> mtickets;
 					
-					if(sTitle != null && sStatus != null) {
+					if(sTitle != null && sStatus != "ANY") {
 						List<Ticket> allTickets = ts.findByStatusAndLikeTitle(sTitle,sStatus);
 						ts = new TicketService();
 						mtickets = ts.deptReleatedSelection(user.getDept().getName(), allTickets);
 					}
-					else if(sTitle == null && sStatus != null) {
+					else if(sTitle == null && sStatus != "ANY") {
 						List<Ticket> allTickets = ts.findByStatus(sStatus);
 						ts = new TicketService();
 						mtickets = ts.deptReleatedSelection(user.getDept().getName(), allTickets);
 					}
-					else if(sTitle != null && sStatus == null) {
+					else if(sTitle != null && sStatus == "ANY") {
 						List<Ticket> allTickets = ts.findLikeTitle(sTitle);
 						ts = new TicketService();
 						mtickets = ts.deptReleatedSelection(user.getDept().getName(), allTickets);
@@ -127,6 +127,38 @@ public class SearchTicket extends HttpServlet {
 					
 					request.setAttribute("staffs", staffs);
 					request.setAttribute("mtickets", mtickets);
+					displayPage(request, response, "/controlboard.jsp");
+
+				}
+				
+				else if(searchType.equals("ssf")) {
+					
+
+					
+					TicketService ts = new TicketService();
+					List<Ticket> stickets;
+					
+					if(sTitle != null && sStatus != "ANY") {
+						List<Ticket> allTickets = ts.findByStatusAndLikeTitle(sTitle,sStatus);
+						ts = new TicketService();
+						stickets = ts.staffReleatedSelection(user.getId(), allTickets);
+					}
+					else if(sTitle == null && sStatus != "ANY") {
+						List<Ticket> allTickets = ts.findByStatus(sStatus);
+						ts = new TicketService();
+						stickets = ts.staffReleatedSelection(user.getId(), allTickets);
+					}
+					else if(sTitle != null && sStatus == "ANY") {
+						List<Ticket> allTickets = ts.findLikeTitle(sTitle);
+						ts = new TicketService();
+						stickets = ts.staffReleatedSelection(user.getId(), allTickets);
+					}else {
+						stickets = ts.staffsTickets(user.getId());;
+					}
+					
+					
+;
+					request.setAttribute("stickets", stickets);
 					displayPage(request, response, "/controlboard.jsp");
 
 				}

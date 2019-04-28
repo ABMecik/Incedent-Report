@@ -2,15 +2,18 @@ package com.IncidentReport.web.Controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import com.IncidentReport.web.Model.Department;
 import com.IncidentReport.web.Model.Message;
@@ -23,11 +26,13 @@ import com.IncidentReport.web.Services.PriorityService;
 import com.IncidentReport.web.Services.StatusService;
 import com.IncidentReport.web.Services.TicketService;
 import com.IncidentReport.web.Services.UserService;
+import com.IncidentReport.web.Uploader.UploadImage;
 
 /**
  * Servlet implementation class UpdateTicket
  */
 @WebServlet({ "/UpdateTicket", "/Update-Ticket", "/updateticket", "/update-ticket" })
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, maxFileSize = 1024 * 1024 * 10, maxRequestSize = 1024 * 1024 * 50)
 public class UpdateTicket extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -151,6 +156,31 @@ public class UpdateTicket extends HttpServlet {
 					
 					callPage(request, response, role, user);
 				}
+				
+				else if(updateType.equals("tsf")) {
+					String comment = request.getParameter("notes");
+					Part part = request.getPart("staff-image");
+					
+					
+					Date date = new Date();
+					String appPath = request.getServletContext().getRealPath("");
+					UploadImage UI = new UploadImage();
+					String dbPath = UI.UploadNewImage(part, date, appPath);
+					
+					ts = new TicketService();
+					UserService us = new UserService();
+					User reciver = us.findById(ticket.getManager().getId());
+					
+					MessageService ms = new MessageService();
+					Message newMS = new Message();
+					ms.insert(user,reciver,ticket,comment);
+					
+					ts = new TicketService();
+					ts.updateStaffInput(ticketID,dbPath);
+					
+					callPage(request, response, role, user);
+					
+				}
 			}
 			
 			
@@ -183,6 +213,14 @@ public class UpdateTicket extends HttpServlet {
 			
 			request.setAttribute("staffs", staffs);
 			request.setAttribute("mtickets", mtickets);
+			displayPage(request, response, "/controlboard.jsp");
+		}else if(role.equals("Staff")) {
+			
+
+			TicketService ts = new TicketService();
+			List<Ticket> stickets = ts.staffsTickets(user.getId());
+
+			request.setAttribute("stickets", stickets);
 			displayPage(request, response, "/controlboard.jsp");
 		}
 	}

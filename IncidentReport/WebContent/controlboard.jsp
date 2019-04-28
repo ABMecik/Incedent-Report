@@ -26,6 +26,7 @@
 <head>
 <title>Welcome</title>
 <link rel="stylesheet" type="text/css" href="resources/css/dashboard.css">
+<script src="resources/js/staff_open_image.js"></script>
 </head>
 <body>
 
@@ -79,6 +80,7 @@
 							<form action="SearchTicket" method="POST" class="form-inline">
 								<div class="form-group mb-2">
 									<select class="form-control" name="lStatus">
+										<option selected="ANY" value="ANY">ANY</option>
 										<option value="Waiting">Waiting</option>
 										<option value="Processing">Processing</option>
 										<option value="Approved">Approved</option>
@@ -271,7 +273,8 @@
 
 							<form action="SearchTicket" method="POST" class="form-inline">
 								<div class="form-group mb-2">
-									<select class="form-control" name="status">
+									<select class="form-control" name="lstatus">
+										<option selected="ANY" value="ANY">ANY</option>
 										<option value="Waiting">Waiting</option>
 										<option value="Processing">Processing</option>
 										<option value="Approved">Approved</option>
@@ -280,7 +283,7 @@
 									</select>
 								</div>
 								<div class="form-group mb-2">
-										<input type="text" class="form-control" name="title" placeholder="Search by title" /> 
+										<input type="text" class="form-control" name="ltitle" placeholder="Search by title" /> 
 										<input type="submit" value="SearchTicket" class="btn btn-primary" />
 										<input type="hidden" name="searchType" value="ms">
 								</div>
@@ -384,8 +387,8 @@
 																		<option value="${ticket.getFrontdesk().getId()}">Front
 																			Desk</option>
 																		<c:forEach var="staff" items="${staffs}">
-																			<option value="${staff.getId()}">${manager.getName()}
-																				${manager.getSurname()}</option>
+																			<option value="${staff.getId()}">${staff.getName()}
+																				${staff.getSurname()}</option>
 																		</c:forEach>
 																	</select>
 																</div>
@@ -415,7 +418,152 @@
 
 
 	<%
-		}
+		}else if (session.getAttribute("role").equals("Staff")) {
 	%>
+	
+	
+    <div class="login-wrap" style="margin-left: 1px">
+	<div class="login-html">
+        <div class="container">
+            <div class="row">
+            <p></p>
+            <h1>Manage Tickets</h1>
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="panel panel-default panel-table">
+                      <div class="panel-heading">
+                        <div class="row">
+                        </div>
+                        
+                        <form action="SearchTicket" method="POST" class="form-inline">
+								<div class="form-group mb-2">
+									<select class="form-control" name="lstatus">
+										<option selected="ANY" value="ANY">ANY</option>
+										<option value="Waiting">Waiting</option>
+										<option value="Processing">Processing</option>
+										<option value="Approved">Approved</option>
+										<option value="Declined">Declined</option>
+										<option value="Finished">Finished</option>
+									</select>
+								</div>
+								<div class="form-group mb-2">
+										<input type="text" class="form-control" name="ltitle" placeholder="Search by title" /> 
+										<input type="submit" value="SearchTicket" class="btn btn-primary" />
+										<input type="hidden" name="searchType" value="ssf">
+								</div>
+
+							</form>
+                        
+                        
+                      </div>
+                      <div class="panel-body" >
+                        <table class="table table-striped table-bordered table-list" cellspacing="40">
+                          <thead>
+                            <tr>
+                                <th></th>
+                                <th class="hidden-xs">ID</th>
+                                <th>Title</th>
+                                <th>Date Created</th>
+                                <th>Detail</th>
+                                <th>Notes</th>
+                                <th>Photo</th>
+                            </tr> 
+                          </thead>
+                          <tbody>
+                            
+                            <c:forEach var="ticket" items="${stickets}">
+                              <tr>
+                                <td align="center">
+                                    <div class="sonar-wrapper">
+                                        
+                                        
+                                        <!-- Color Control System -->
+														<c:choose>
+															<c:when test="${ticket.getStatus().getName()=='Waiting'}">
+																<div class="sonar-emitter"
+																	style="background-color: white">
+															</c:when>
+															<c:when
+																test="${ticket.getStatus().getName()=='Processing'}">
+																<div class="sonar-emitter"
+																	style="background-color: lightgreen">
+															</c:when>
+															<c:when
+																test="${ticket.getStatus().getName()=='Approved'}">
+																<div class="sonar-emitter"
+																	style="background-color: yellow">
+															</c:when>
+															<c:when
+																test="${ticket.getStatus().getName()=='Declined'}">
+																<div class="sonar-emitter" style="background-color: red">
+															</c:when>
+															<c:when
+																test="${ticket.getStatus().getName()=='Finished'}">
+																<div class="sonar-emitter"
+																	style="background-color: blue">
+															</c:when>
+														</c:choose>
+
+														<!-- Color Control System -->
+                                        
+                                        <div class="sonar-wave"></div>
+                                      </div>
+                                    </div>  
+                                </td>
+                                <td class="hidden-xs" align="center">${ticket.getId()}</td>
+								<td align="center">${ticket.getTitle()}</td>
+								<td align="center">${ticket.getCreated_at()}</td>
+                                <td align="center">
+                                
+                                    <form action="TicketDetail" method="GET">
+										<input type="hidden" , name="ticketID"
+											value="${ticket.getId()}">
+										<button type="submit" class="btn text-color"
+											value="TicketDetail">
+											<i class="fa fa-cog"></i>
+										</button>
+									</form>
+													
+                                  <form action="UpdateTicket" method="POST"  enctype='multipart/form-data'>
+                                  <input type="hidden" name="ticketID" value="${ticket.getId()}">
+                                  <input type="hidden" name="UpdateType" value="tsf">
+                                  <td align="center">
+                                    <div class="form-group" id="add-note" name="notes">
+                                      <textarea class="form-control" rows="5" id="comment" name="notes"></textarea>
+                                    </div>
+                                  </td>
+                                  <td align="center">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div>
+                                        <label class=newbtn>
+                                            <img id="blah" src="http://placehold.it/150x150">
+                                            <input id="pic" class='pis' onchange="readURL(this);" name="staff-image" type="file" >
+                                        </label>
+                                        </div>
+                                        </div>
+                                    </div>
+                                  </td>
+                                <td align="center">
+                                    <div class="group" >
+                                        <input type="submit" class="button" id="bttn-create" value="UpdateTicket">
+                                    </div>  
+                                </td>
+                                </form>
+                              </tr>
+                            </c:forEach>            
+                          </tbody>
+                        </table>
+                      </div>
+        </div></div></div>
+         
+		</div>
+	</div>
+</div>
+	
+	
+	<%} %>
+	
+	
+	
 </body>
 </html>

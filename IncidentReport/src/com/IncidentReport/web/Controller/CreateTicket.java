@@ -24,6 +24,7 @@ import com.IncidentReport.web.Model.User;
 import com.IncidentReport.web.Services.PriorityService;
 import com.IncidentReport.web.Services.StatusService;
 import com.IncidentReport.web.Services.TicketService;
+import com.IncidentReport.web.Uploader.UploadImage;
 
 
 /**
@@ -82,22 +83,9 @@ public class CreateTicket extends HttpServlet {
 		
 		
 		
-		SimpleDateFormat sd = new SimpleDateFormat("yyyyMMddHHmmss");
+		
 		Date date = new Date();
 		
-		String fileName = "" + sd.format(date).toString();
-		
-		String appPath = request.getServletContext().getRealPath("");
-		
-		String imgPath = "uploads" + File.separator + "images" + File.separator + "evidance" + File.separator;
-		
-		String savePath = (appPath +imgPath + fileName.trim() + part.getSubmittedFileName().trim());
-		
-		String dbPath = imgPath + fileName.trim() + part.getSubmittedFileName().trim();
-		
-		File file = new File(savePath);
-		file.getParentFile().mkdirs();
-	
 		
 		boolean isAnonim = false;
 		if(anonim != null) {
@@ -111,6 +99,16 @@ public class CreateTicket extends HttpServlet {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		if(user != null) {
+
+			String dbPath = null;
+			if(part != null) {
+				String appPath = request.getServletContext().getRealPath("");
+				UploadImage UI = new UploadImage();
+				dbPath = UI.UploadNewImage(part, date, appPath);
+			}
+			else {
+				dbPath = "/resources/image/img/processing.png";
+			}
 			
 			TicketService ts = new TicketService();
 			Ticket ticket = new Ticket(title,decription,location,isAnonim,dbPath);
@@ -118,11 +116,6 @@ public class CreateTicket extends HttpServlet {
 			boolean s = ts.createNewTicket(ticket);
 			
 			if(s) {
-				
-				part.write(savePath);
-				System.out.println(savePath);
-				
-
 				ts = new TicketService();
 				
 				
@@ -170,10 +163,6 @@ public class CreateTicket extends HttpServlet {
 		
 		
 	}
-
-
-
-	
 
 
 

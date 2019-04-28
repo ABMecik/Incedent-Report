@@ -43,6 +43,7 @@ public class Ticket {
 	private Date created_at;
 	private Date timeout;
 	private String photo_path;
+	private String evidance_path;
 
 	@ManyToOne
 	@JoinColumn(name = "staff")
@@ -227,6 +228,14 @@ public class Ticket {
 
 	public void setManager(User manager) {
 		this.manager = manager;
+	}
+
+	public String getEvidance_path() {
+		return evidance_path;
+	}
+
+	public void setEvidance_path(String evidance_path) {
+		this.evidance_path = evidance_path;
 	}
 	
 	
