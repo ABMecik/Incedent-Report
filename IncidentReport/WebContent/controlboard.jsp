@@ -456,21 +456,21 @@
                         
                       </div>
                       <div class="panel-body" >
-                        <table class="table table-striped table-bordered table-list" cellspacing="40">
-                          <thead>
-                            <tr>
-                                <th></th>
-                                <th class="hidden-xs">ID</th>
-                                <th>Title</th>
-                                <th>Date Created</th>
-                                <th>Detail</th>
-                                <th>Notes</th>
-                                <th>Photo</th>
-                            </tr> 
-                          </thead>
-                          <tbody>
-                            
-                            <c:forEach var="ticket" items="${stickets}">
+                           		<table class="table">
+		  <thead class="thead-light">
+		    <tr>
+		      <th scope="col"></th>
+		      <th scope="col">Title</th>
+		      <th scope="col">Date Created</th>
+		      <th scope="col">Detail</th>
+		      <th scope="col">Notes</th>
+		      <th scope="col">Photo</th>
+		      <th scope="col"></th>
+		    </tr>
+		  </thead>
+		  <tbody>
+
+										<c:forEach var="ticket" items="${stickets}">
                               <tr>
                                 <td align="center">
                                     <div class="sonar-wrapper">
@@ -550,9 +550,9 @@
                                 </td>
                                 </form>
                               </tr>
-                            </c:forEach>            
-                          </tbody>
-                        </table>
+                            </c:forEach>       
+									</tbody>
+		</table>
                       </div>
         </div></div></div>
          
