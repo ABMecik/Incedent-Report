@@ -112,7 +112,40 @@
                           </tbody>
                         </table>
                       </div>
-        </div></div></div>
+        </div></div>
+        
+        <div class="col-md-10 col-md-offset-1">
+                    <div class="panel panel-default panel-table">
+                      <div class="panel-heading">
+                        <div class="row">
+                        </div>
+                      </div>
+                      <div class="panel-body">
+                        <table class="table table-striped table-bordered table-list" cellspacing="20">
+                          <thead>
+                            <tr></tr>                            
+                            <tr></tr>
+                            <tr></tr>
+                          </thead>
+                          <tbody>
+                                <td class="hidden-xs" align="center">Sender</td>
+                                <td class="hidden-xs" align="center">Message</td>
+                                <tr></tr>
+                                <td align="center">Volkan Ozer</td>
+                                <td align="center">Bu bizim isimiz degil.</td>
+                                 
+                          </tbody>
+                        </table>
+                      </div>
+        </div></div>
+                
+        
+        
+        
+        
+        
+        
+        </div>
          
 		</div>
 	</div>
