@@ -25,10 +25,7 @@
 
 <head>
 <title>Welcome</title>
-<link rel="stylesheet" type="text/css"
-	href="resources/css/dashboard.css">
-<link rel="stylesheet" type="text/css"
-	href="resources/css/manager_dashboard.css">
+<link rel="stylesheet" type="text/css" href="resources/css/dashboard.css">
 </head>
 <body>
 
@@ -173,7 +170,7 @@
 													<td align="center">
 														<div class="container">
 															<div class="row">
-																<div class="col-sm-4">
+																<div class="form-group mb-2">
 																	<select class="form-control" name="set-status">
 																		<option selected="${ticket.getStatus().getName()}"
 																			value="${ticket.getStatus().getName()}">${ticket.getStatus().getName()}</option>
@@ -190,7 +187,7 @@
 													<td align="center">
 														<div class="container">
 															<div class="row">
-																<div class="col-sm-4">
+																<div class="form-group mb-2">
 																	<select class="form-control" name="set-priority">
 																		<option
 																			selected="${ticket.getPriority().getImportance()}"
