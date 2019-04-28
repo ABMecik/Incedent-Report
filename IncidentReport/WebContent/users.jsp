@@ -1,3 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="com.IncidentReport.web.Model.Role"%>
+<%@page import="com.IncidentReport.web.Model.User"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 
@@ -9,35 +17,48 @@
 
 <head>
 	<title>Welcome</title>
-	<link rel="stylesheet" type="text/css" href="admin_user.css">
+	<link rel="stylesheet" type="text/css" href="resources/css/user.css">
     <script src="staff_open_image.js"></script>
 </head>
 <body>
 
     <nav class="main-navigation">
-        <div class="navbar-header animated fadeInUp">
-            <a class="navbar-brand" href="#">No More Incidents</a>
-        </div>
-        <ul class="nav-list">
-            <li class="nav-list-item">
-                <a href="#" class="nav-link">Dashboard</a>
-            </li>
-            <li class="nav-list-item">
-                <a href="#" class="nav-link">Create Ticket</a>
-            </li>
-            <li class="nav-list-item">
-                <a href="#" class="nav-link">My Profile</a>
-            </li>
-            <li class="nav-list-item">
-                <form class="form-inline" action="Logout">
-                    <button type="submit" class="btn text-color" value="Logout">
-                        <i class="fa fa-sign-out"></i>
-                    </button>
-                </form>
-            </li>
+		<div class="navbar-header animated fadeInUp">
+			<a class="navbar-brand" href="index">No More Incidents</a>
+		</div>
+		<ul class="nav-list">
 
-        </ul>
-    </nav>
+			<%
+    			if (session.getAttribute("role").equals("Front Desk") || session.getAttribute("role").equals("Manager")|| session.getAttribute("role").equals("Staff")) {
+			%>
+				<li class="nav-list-item"><a href="controlboard"
+					class="nav-link">Controlboard</a>
+				</li>
+
+			<%} %>
+			
+			<%
+    			if (session.getAttribute("role").equals("Admin")) {
+			%>
+				<li class="nav-list-item"><a href="users"
+					class="nav-link">Users</a>
+				</li>
+
+			<%} %>
+
+			<li class="nav-list-item"><a href="create-ticket"
+				class="nav-link">Create Ticket</a></li>
+			<li class="nav-list-item"><a href="index" class="nav-link">Dashboard</a>
+			</li>
+			<li class="nav-list-item">
+				<form class="form-inline" action="Logout">
+					<button type="submit" class="btn text-color" value="Logout">
+						<i class="fa fa-sign-out"></i>
+					</button>
+				</form>
+			</li>
+		</ul>
+	</nav>
     
     
     <div class="login-wrap" style="margin-left: 1px">

@@ -124,10 +124,19 @@
 		<ul class="nav-list">
 
 			<%
-    			if (session.getAttribute("role").equals("Front Desk") || session.getAttribute("role").equals("Manager")) {
+    			if (session.getAttribute("role").equals("Front Desk") || session.getAttribute("role").equals("Manager")|| session.getAttribute("role").equals("Staff")) {
 			%>
 				<li class="nav-list-item"><a href="controlboard"
 					class="nav-link">Controlboard</a>
+				</li>
+
+			<%} %>
+			
+			<%
+    			if (session.getAttribute("role").equals("Admin")) {
+			%>
+				<li class="nav-list-item"><a href="users"
+					class="nav-link">Users</a>
 				</li>
 
 			<%} %>
