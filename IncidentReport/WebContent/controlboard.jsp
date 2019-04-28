@@ -80,18 +80,16 @@
 							<form action="SearchTicket" method="POST" class="form-inline">
 								<div class="form-group mb-2">
 									<select class="form-control" name="lStatus">
-										<option selected="ANY" value="ANY">ANY</option>
-										<option value="Waiting">Waiting</option>
-										<option value="Processing">Processing</option>
-										<option value="Approved">Approved</option>
-										<option value="Declined">Declined</option>
-										<option value="Finished">Finished</option>
+										<option value="-1"> ANY </option>
+										<c:forEach var="status" items="${statuses}">
+											<option value="${status.getId()}">${status.getName()}</option>
+										</c:forEach>
 									</select>
 								</div>
 								<div class="form-group mb-2">
 										<input type="text" class="form-control" name="lTitle" placeholder="Search by title" /> 
-										<input type="submit" value="SearchTicket" class="btn btn-primary" />
 										<input type="hidden" name="searchType" value="fs">
+										<input type="submit" value="SearchTicket" class="btn btn-primary" />
 								</div>
 
 							</form>
@@ -271,18 +269,16 @@
 							<form action="SearchTicket" method="POST" class="form-inline">
 								<div class="form-group mb-2">
 									<select class="form-control" name="lStatus">
-										<option selected="ANY" value="ANY">ANY</option>
-										<option value="Waiting">Waiting</option>
-										<option value="Processing">Processing</option>
-										<option value="Approved">Approved</option>
-										<option value="Declined">Declined</option>
-										<option value="Finished">Finished</option>
+										<option value="-1"> ANY </option>
+										<c:forEach var="status" items="${statuses}">
+											<option value="${status.getId()}">${status.getName()}</option>
+										</c:forEach>
 									</select>
 								</div>
 								<div class="form-group mb-2">
 										<input type="text" class="form-control" name="lTitle" placeholder="Search by title" /> 
-										<input type="submit" value="SearchTicket" class="btn btn-primary" />
 										<input type="hidden" name="searchType" value="ms">
+										<input type="submit" value="SearchTicket" class="btn btn-primary" />
 								</div>
 
 							</form>
@@ -382,8 +378,8 @@
 																		<option value="${ticket.getFrontdesk().getId()}">Front
 																			Desk</option>
 																		<c:forEach var="staff" items="${staffs}">
-																			<option value="${staff.getId()}">${manager.getName()}
-																				${manager.getSurname()}</option>
+																			<option value="${staff.getId()}">${staff.getName()}
+																				${staff.getSurname()}</option>
 																		</c:forEach>
 																	</select>
 																</div>
@@ -428,21 +424,19 @@
                         <div class="row">
                         </div>
                         
-                        <form action="SearchTicket" method="POST" class="form-inline">
+							<form action="SearchTicket" method="POST" class="form-inline">
 								<div class="form-group mb-2">
 									<select class="form-control" name="lStatus">
-										<option selected="ANY" value="ANY">ANY</option>
-										<option value="Waiting">Waiting</option>
-										<option value="Processing">Processing</option>
-										<option value="Approved">Approved</option>
-										<option value="Declined">Declined</option>
-										<option value="Finished">Finished</option>
+										<option value="-1"> ANY </option>
+										<c:forEach var="status" items="${statuses}">
+											<option value="${status.getId()}">${status.getName()}</option>
+										</c:forEach>
 									</select>
 								</div>
 								<div class="form-group mb-2">
 										<input type="text" class="form-control" name="lTitle" placeholder="Search by title" /> 
+										<input type="hidden" name="searchType" value="ss">
 										<input type="submit" value="SearchTicket" class="btn btn-primary" />
-										<input type="hidden" name="searchType" value="ssf">
 								</div>
 
 							</form>

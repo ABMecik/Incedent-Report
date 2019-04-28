@@ -17,6 +17,7 @@ import javax.persistence.Table;
 @Entity(name="ticketstatus")
 @Table(name="ticketstatus")
 @NamedQueries({
+	@NamedQuery(name = "allTicketStatus", query = "SELECT ts FROM ticketstatus ts"),
 	@NamedQuery(name = "FindStatusByName", query = "SELECT ts FROM ticketstatus AS ts WHERE ts.name = :name")
 	})
 public class TicketStatus {

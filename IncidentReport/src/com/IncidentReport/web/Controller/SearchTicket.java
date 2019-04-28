@@ -69,7 +69,12 @@ public class SearchTicket extends HttpServlet {
 			}else {
 				String searchType = request.getParameter("searchType");
 				String sTitle = request.getParameter("lTitle");
-				String sStatus = request.getParameter("lStatus");
+				int sStatus = Integer.parseInt(request.getParameter("lStatus"));
+				
+				StatusService ssTS = new StatusService();
+				List<TicketStatus> statuses = ssTS.allStatuses();
+				request.setAttribute("statuses", statuses);
+				
 				
 				if(searchType.equals("fs")) {
 					
@@ -80,13 +85,14 @@ public class SearchTicket extends HttpServlet {
 					List<User> managers = us.findRoleList("Manager");
 					
 					TicketService ts = new TicketService();
-					if(sTitle != null && sStatus != "ANY") {
+					
+					if(sTitle != null && sStatus != -1) {
 						ftickets = ts.findByStatusAndLikeTitle(sTitle,sStatus);
 					}
-					else if(sTitle == null && sStatus != "ANY") {
+					else if(sTitle == null && sStatus != -1) {
 						ftickets = ts.findByStatus(sStatus);
 					}
-					else if(sTitle != null && sStatus == "ANY") {
+					else if(sTitle != null && sStatus == -1) {
 						ftickets = ts.findLikeTitle(sTitle);
 					}else {
 						ftickets = ts.AllTickets();
@@ -106,17 +112,17 @@ public class SearchTicket extends HttpServlet {
 					TicketService ts = new TicketService();
 					List<Ticket> mtickets;
 					
-					if(sTitle != null && sStatus != "ANY") {
+					if(sTitle != null && sStatus != -1) {
 						List<Ticket> allTickets = ts.findByStatusAndLikeTitle(sTitle,sStatus);
 						ts = new TicketService();
 						mtickets = ts.deptReleatedSelection(user.getDept().getName(), allTickets);
 					}
-					else if(sTitle == null && sStatus != "ANY") {
+					else if(sTitle == null && sStatus != -1) {
 						List<Ticket> allTickets = ts.findByStatus(sStatus);
 						ts = new TicketService();
 						mtickets = ts.deptReleatedSelection(user.getDept().getName(), allTickets);
 					}
-					else if(sTitle != null && sStatus == "ANY") {
+					else if(sTitle != null && sStatus == -1) {
 						List<Ticket> allTickets = ts.findLikeTitle(sTitle);
 						ts = new TicketService();
 						mtickets = ts.deptReleatedSelection(user.getDept().getName(), allTickets);
@@ -131,24 +137,24 @@ public class SearchTicket extends HttpServlet {
 
 				}
 				
-				else if(searchType.equals("ssf")) {
+				else if(searchType.equals("ss")) {
 					
 
 					
 					TicketService ts = new TicketService();
 					List<Ticket> stickets;
 					
-					if(sTitle != null && sStatus != "ANY") {
+					if(sTitle != null && sStatus != -1) {
 						List<Ticket> allTickets = ts.findByStatusAndLikeTitle(sTitle,sStatus);
 						ts = new TicketService();
 						stickets = ts.staffReleatedSelection(user.getId(), allTickets);
 					}
-					else if(sTitle == null && sStatus != "ANY") {
+					else if(sTitle == null && sStatus != -1) {
 						List<Ticket> allTickets = ts.findByStatus(sStatus);
 						ts = new TicketService();
 						stickets = ts.staffReleatedSelection(user.getId(), allTickets);
 					}
-					else if(sTitle != null && sStatus == "ANY") {
+					else if(sTitle != null && sStatus == -1) {
 						List<Ticket> allTickets = ts.findLikeTitle(sTitle);
 						ts = new TicketService();
 						stickets = ts.staffReleatedSelection(user.getId(), allTickets);

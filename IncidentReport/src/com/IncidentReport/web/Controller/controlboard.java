@@ -14,7 +14,9 @@ import javax.servlet.http.HttpSession;
 
 import com.IncidentReport.web.Model.Role;
 import com.IncidentReport.web.Model.Ticket;
+import com.IncidentReport.web.Model.TicketStatus;
 import com.IncidentReport.web.Model.User;
+import com.IncidentReport.web.Services.StatusService;
 import com.IncidentReport.web.Services.TicketService;
 import com.IncidentReport.web.Services.UserService;
 
@@ -55,6 +57,10 @@ public class controlboard extends HttpServlet {
 				request.setAttribute("warning", "No have permission");
 				openIndex(request, response,"/index.jsp",user);
 			}else {
+				
+				StatusService ssTS = new StatusService();
+				List<TicketStatus> statuses = ssTS.allStatuses();
+				request.setAttribute("statuses", statuses);
 				
 				if(role.equals("Front Desk")) {
 					TicketService ts = new TicketService();

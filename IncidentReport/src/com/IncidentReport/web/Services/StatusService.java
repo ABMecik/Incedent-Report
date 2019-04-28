@@ -1,10 +1,14 @@
 package com.IncidentReport.web.Services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import com.IncidentReport.web.Listener.EMF;
 import com.IncidentReport.web.Model.TicketPriority;
 import com.IncidentReport.web.Model.TicketStatus;
+import com.IncidentReport.web.Model.User;
 
 public class StatusService {
 
@@ -74,6 +78,24 @@ public class StatusService {
 		catch(Exception e){
 			em.close();
 			return null;
+		}
+	}
+
+
+
+	public List<TicketStatus> allStatuses() {
+		List<TicketStatus> ts = new ArrayList<TicketStatus>();
+		try {
+			em.getTransaction().begin();
+			ts = em.createNamedQuery("allTicketStatus", TicketStatus.class).getResultList();
+			em.getTransaction().commit();
+			em.close();
+			
+			return ts;
+		}
+		catch(Exception e){
+			em.close();
+			return ts;
 		}
 	}
 }

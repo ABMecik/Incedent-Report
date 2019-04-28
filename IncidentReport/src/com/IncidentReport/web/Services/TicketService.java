@@ -252,12 +252,12 @@ public class TicketService {
 
 
 
-	public List<Ticket> findByStatusAndLikeTitle(String sTitle, String sStatus) {
+	public List<Ticket> findByStatusAndLikeTitle(String sTitle, int sStatus) {
 		List<Ticket> allTickets = this.findLikeTitle(sTitle);
 		List<Ticket> sTickets = new ArrayList<Ticket>();
 		
 		for(Ticket ticket : allTickets) {
-			if(ticket.getStatus().getName().equals(sStatus)) {
+			if(ticket.getStatus().getId() == sStatus) {
 				sTickets.add(ticket);
 			}
 		}
@@ -267,12 +267,12 @@ public class TicketService {
 
 
 
-	public List<Ticket> findByStatus(String sStatus) {
+	public List<Ticket> findByStatus(int sStatus) {
 		List<Ticket> allTickets = this.AllTickets();
 		List<Ticket> sTickets = new ArrayList<Ticket>();
 		
 		for(Ticket ticket : allTickets) {
-			if(ticket.getStatus().getName().equals(sStatus)) {
+			if(ticket.getStatus().getId() == sStatus) {
 				sTickets.add(ticket);
 			}
 		}
@@ -337,13 +337,15 @@ public class TicketService {
 		
 	}
 
-	
+
 	public List<Ticket> deptReleatedSelection(String dept, List<Ticket> allTickets) {
 		List<Ticket> mtickets = new ArrayList<Ticket>();
 		
 		for(Ticket ticket : allTickets) {
-			if(ticket.getDepartment().getName().equals(dept)) {
-				mtickets.add(ticket);
+			if(ticket.getDepartment() != null) {
+				if(ticket.getDepartment().getName().equals(dept)) {
+					mtickets.add(ticket);
+				}
 			}
 		}
 		
@@ -356,17 +358,16 @@ public class TicketService {
 		List<Ticket> stickets = new ArrayList<Ticket>();
 		
 		for(Ticket ticket : allTickets) {
-			if(ticket.getStaff().getId() == staffID) {
-				stickets.add(ticket);
+			if(ticket.getStaff() != null) {
+				if(ticket.getStaff().getId() == staffID) {
+					stickets.add(ticket);
+				}
 			}
 		}
 		
 		
 		return stickets;
 	}
-
-
-
 
 
 
