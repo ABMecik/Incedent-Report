@@ -230,7 +230,7 @@
 													</td>
 													<td align="center">
 														<div class="group">
-															<input class="btn btn-primary" type="button" value="UpdateTicket">
+															<input class="btn btn-primary" type="submit" value="UpdateTicket">
 														</div>
 													</td>
 												</form>
@@ -292,110 +292,108 @@
 		      <th scope="col">Date Created</th>
 		      <th scope="col">Detail</th>
 		      <th scope="col">Notes</th>
+		      <th scope="col">Close</th>
 		      <th scope="col">Send To</th>
 		      <th scope="col"></th>
 		    </tr>
 		  </thead>
 		  <tbody>
+			<c:forEach var="ticket" items="${mtickets}">
+				<tr>
+					<td align="center">
+						<div class="sonar-wrapper">
+
+							<!-- Color Control System -->
+							<c:choose>
+								<c:when test="${ticket.getStatus().getName()=='Waiting'}">
+									<div class="sonar-emitter"
+										style="background-color: white">
+								</c:when>
+								<c:when
+									test="${ticket.getStatus().getName()=='Processing'}">
+									<div class="sonar-emitter"
+										style="background-color: lightgreen">
+								</c:when>
+								<c:when
+									test="${ticket.getStatus().getName()=='Approved'}">
+									<div class="sonar-emitter"
+										style="background-color: yellow">
+								</c:when>
+								<c:when
+									test="${ticket.getStatus().getName()=='Declined'}">
+									<div class="sonar-emitter" style="background-color: red">
+								</c:when>
+								<c:when
+									test="${ticket.getStatus().getName()=='Finished'}">
+									<div class="sonar-emitter"
+										style="background-color: blue">
+								</c:when>
+							</c:choose>
+
+							<!-- Color Control System -->
 
 
-										<c:forEach var="ticket" items="${mtickets}">
-											<tr>
-												<td align="center">
-													<div class="sonar-wrapper">
+							<div class="sonar-wave"></div>
+						</div>
+						</div>
+					</td>
+					<td class="hidden-xs" align="center">${ticket.getId()}</td>
+					<td align="center">${ticket.getTitle()}</td>
+					<td align="center">${ticket.getCreated_at()}</td>
+					<td align="center">
+						<form action="TicketDetail" method="GET">
+							<input type="hidden" , name="ticketID"
+								value="${ticket.getId()}">
+							<button type="submit" class="btn text-color"
+								value="TicketDetail">
+								<i class="fa fa-cog"></i>
+							</button>
+						</form>
+					</td>
 
-														<!-- Color Control System -->
-														<c:choose>
-															<c:when test="${ticket.getStatus().getName()=='Waiting'}">
-																<div class="sonar-emitter"
-																	style="background-color: white">
-															</c:when>
-															<c:when
-																test="${ticket.getStatus().getName()=='Processing'}">
-																<div class="sonar-emitter"
-																	style="background-color: lightgreen">
-															</c:when>
-															<c:when
-																test="${ticket.getStatus().getName()=='Approved'}">
-																<div class="sonar-emitter"
-																	style="background-color: yellow">
-															</c:when>
-															<c:when
-																test="${ticket.getStatus().getName()=='Declined'}">
-																<div class="sonar-emitter" style="background-color: red">
-															</c:when>
-															<c:when
-																test="${ticket.getStatus().getName()=='Finished'}">
-																<div class="sonar-emitter"
-																	style="background-color: blue">
-															</c:when>
-														</c:choose>
-
-														<!-- Color Control System -->
-
-
-														<div class="sonar-wave"></div>
-													</div>
-													</div>
-												</td>
-												<td class="hidden-xs" align="center">${ticket.getId()}</td>
-												<td align="center">${ticket.getTitle()}</td>
-												<td align="center">${ticket.getCreated_at()}</td>
-												<td align="center">
-													<form action="TicketDetail" method="GET">
-														<input type="hidden" , name="ticketID"
-															value="${ticket.getId()}">
-														<button type="submit" class="btn text-color"
-															value="TicketDetail">
-															<i class="fa fa-cog"></i>
-														</button>
-													</form>
-												</td>
-
-												<form action="UpdateTicket" method="POST">
-													<input type="hidden" name="UpdateType" value="mf">
-													<input type="hidden" name="ticketID"
-														value="${ticket.getId()}">
-
-													<td align="center">
-														<div class="form-group" id="add-note" name="notes">
-															<textarea class="form-control" rows="5" id="comment"
-																name="notes"></textarea>
-														</div>
-													</td>
-													<td align="center">
-														<div class="form-check">
-															<input type="checkbox" class="form-check-input"
-																name="close-ticket">
-														</div>
-													</td>
-													<td align="center">
-														<div class="container">
-															<div class="row">
-																<div class="col-sm-4">
-																	<select class="form-control" name="set-staff">
-																		<option value="" selected disabled hidden>Choose</option>
-																		<option value="${ticket.getFrontdesk().getId()}">Front
-																			Desk</option>
-																		<c:forEach var="staff" items="${staffs}">
-																			<option value="${staff.getId()}">${staff.getName()}
-																				${staff.getSurname()}</option>
-																		</c:forEach>
-																	</select>
-																</div>
-															</div>
-														</div>
-													</td>
-													<td align="center">
-														<div class="group">
-															<input type="submit" class="button" id="bttn-create"
-																value="UpdateTicket">
-														</div>
-													</td>
-												</form>
-											</tr>
-										</c:forEach>
-									</tbody>
+					<form action="UpdateTicket" method="POST">
+						<input type="hidden" name="UpdateType" value="mf">
+						<input type="hidden" name="ticketID"
+							value="${ticket.getId()}">
+						<td align="center">
+							<div class="form-group" id="add-note" name="notes">
+								<textarea class="form-control" rows="2" id="comment"
+									name="notes" style="width: 200px"></textarea>
+							</div>
+						</td>
+						<td align="center">
+							<div class="form-check">
+								<input type="checkbox" class="form-check-input"
+									name="close-ticket">
+							</div>
+						</td>
+						<td align="center">
+							<div class="container">
+								<div class="row">
+									<div class="form-group mb-2">
+										<select class="form-control" name="set-staff" style="width: 100px">
+											<option value="" selected disabled hidden>Choose</option>
+											<option value="${ticket.getFrontdesk().getId()}">Front
+												Desk</option>
+											<c:forEach var="staff" items="${staffs}">
+												<option value="${staff.getId()}">${staff.getName()}
+													${staff.getSurname()}</option>
+											</c:forEach>
+										</select>
+									</div>
+								</div>
+							</div>
+						</td>
+						
+						<td align="center">
+							<div class="group">
+								<input class="btn btn-primary" type="submit" value="UpdateTicket">
+							</div>
+						</td>
+					</form>
+				</tr>
+			</c:forEach>
+		</tbody>
 		</table>
 						</div>
 					</div>
@@ -448,6 +446,7 @@
 		  <thead class="thead-light">
 		    <tr>
 		      <th scope="col"></th>
+		      <th scope="col">ID</th>
 		      <th scope="col">Title</th>
 		      <th scope="col">Date Created</th>
 		      <th scope="col">Detail</th>
@@ -515,16 +514,16 @@
                                   <input type="hidden" name="ticketID" value="${ticket.getId()}">
                                   <input type="hidden" name="UpdateType" value="tsf">
                                   <td align="center">
-                                    <div class="form-group" id="add-note" name="notes">
-                                      <textarea class="form-control" rows="5" id="comment" name="notes"></textarea>
-                                    </div>
-                                  </td>
+									<div class="form-group" id="add-note" name="notes">
+										<textarea class="form-control" rows="2" id="comment"
+											name="notes" style="width: 200px"></textarea>
+									</div>
+								</td>
                                   <td align="center">
                                     <div class="container">
                                         <div class="row">
                                             <div>
                                         <label class=newbtn>
-                                            <img id="blah" src="http://placehold.it/150x150">
                                             <input id="pic" class='pis' onchange="readURL(this);" name="staff-image" type="file" >
                                         </label>
                                         </div>
@@ -532,10 +531,10 @@
                                     </div>
                                   </td>
                                 <td align="center">
-                                    <div class="group" >
-                                        <input type="submit" class="button" id="bttn-create" value="UpdateTicket">
-                                    </div>  
-                                </td>
+							<div class="group">
+								<input class="btn btn-primary" type="submit" value="UpdateTicket">
+							</div>
+						</td>
                                 </form>
                               </tr>
                             </c:forEach>       

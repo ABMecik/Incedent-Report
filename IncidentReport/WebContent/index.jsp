@@ -274,36 +274,24 @@
 							<div class="panel-heading">
 								<div class="row">
 									<div class="col col-xs-6">
-										<h3 class="panel-title">Panel Heading</h3>
+										<h3></h3>
 									</div>
-									<form action="CreateTicket" method="POST">
-										<div class="col col-xs-6 text-right">
-											<button type="button" id="bttn-create"
-												class="btn btn-sm btn-primary btn-create">
-												<b>Create New Ticket</b>
-											</button>
-										</div>
-									</form>
 								</div>
 							</div>
-							<div class="panel-body">
-								<table class="table table-striped table-bordered table-list"
-									cellspacing="20">
-									<thead>
-										<tr>
-											<th class="hidden-xs">ID</th>
-											<th>Title</th>
-											<th>Date Created</th>
-											<th>Status</th>
-											<th>Priority</th>
-											<th>Detail</th>
-											<th><em class="fa fa-cog"></em></th>
-										</tr>
-									</thead>
-									<tbody>
-
-
-										<c:forEach var="ticket" items="${tickets}">
+							<table class="table">
+		  <thead class="thead-light">
+		    <tr>
+		      <th scope="col">ID</th>
+		      <th scope="col">Title</th>
+		      <th scope="col">Date Created</th>
+		      <th scope="col">Status</th>
+		      <th scope="col">Priority</th>
+		      <th scope="col">Detail</th>
+		      <th scope="col"><em class="fa fa-cog"></em></th>
+              <th scope="col"></th>
+		    </tr>
+              		  </thead>
+		  <c:forEach var="ticket" items="${tickets}">
 											<tr>
 												<td class="hidden-xs" align="center">${ticket.getId()}</td>
 												<td align="center">${ticket.getTitle()}</td>
@@ -327,14 +315,13 @@
 															value="TicketDelete">
 															<i class="fa fa-trash"></i>
 														</button>
+														
 													</form>
 												</td>
 											</tr>
 										</c:forEach>
 
 									</tbody>
-								</table>
-							</div>
 						</div>
 					</div>
 				</div>
