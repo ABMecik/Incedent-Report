@@ -65,7 +65,7 @@ public class UpdateTicket extends HttpServlet {
 			String role = (String) session.getAttribute("role");
 			if(role.equals("User")) {
 				request.setAttribute("warning", "No have permission");
-				displayPage(request, response, "/index.jsp");
+				openIndex(request, response,"/index.jsp",user);
 			}else {
 				String updateType = request.getParameter("UpdateType");
 				int ticketID = Integer.parseInt(request.getParameter("ticketID"));

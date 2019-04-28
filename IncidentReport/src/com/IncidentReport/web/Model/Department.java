@@ -11,12 +11,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
 @Entity(name="department")
 @Table(name="department")
+@NamedQueries({
+	@NamedQuery(name = "allDepartments", query = "SELECT d FROM department d")
+})
 public class Department {
 
 	

@@ -29,6 +29,59 @@
 </head>
 <body>
 	<%if (session.getAttribute("user") == null){%>
+	
+	
+	<c:if test="${info != null}">
+		<div class="note" id="note">
+			<div class="row">
+				<div class="error-notice">
+					<div class="oaerror info">
+						<strong>Info -</strong> ${info}
+					</div>
+				</div>
+			</div>
+		</div>
+	</c:if>
+
+
+
+	<c:if test="${warning != null}">
+		<div class="note" id="note">
+			<div class="row">
+				<div class="error-notice">
+					<div class="oaerror warning">
+						<strong>Sorry -</strong> ${warning}
+					</div>
+				</div>
+			</div>
+		</div>
+	</c:if>
+
+
+	<c:if test="${error != null}">
+		<div class="note" id="note">
+			<div class="row">
+				<div class="error-notice">
+					<div class="oaerror danger">
+						<strong>Error -</strong> ${error}
+					</div>
+				</div>
+			</div>
+		</div>
+	</c:if>
+
+	<c:if test="${success != null}">
+		<div class="note" id="note">
+			<div class="row">
+				<div class="error-notice">
+					<div class="oaerror success">
+						<strong>Success -</strong> ${success}
+					</div>
+				</div>
+			</div>
+		</div>
+	</c:if>
+	
 
 	<div class="login-wrap">
 		<div class="login-html">
@@ -155,6 +208,59 @@
 		</ul>
 	</nav>
 
+
+	
+	<c:if test="${info != null}">
+		<div class="note" id="note">
+			<div class="row">
+				<div class="error-notice">
+					<div class="oaerror info">
+						<strong>Info -</strong> ${info}
+					</div>
+				</div>
+			</div>
+		</div>
+	</c:if>
+
+
+
+	<c:if test="${warning != null}">
+		<div class="note" id="note">
+			<div class="row">
+				<div class="error-notice">
+					<div class="oaerror warning">
+						<strong>Sorry -</strong> ${warning}
+					</div>
+				</div>
+			</div>
+		</div>
+	</c:if>
+
+
+	<c:if test="${error != null}">
+		<div class="note" id="note">
+			<div class="row">
+				<div class="error-notice">
+					<div class="oaerror danger">
+						<strong>Error -</strong> ${error}
+					</div>
+				</div>
+			</div>
+		</div>
+	</c:if>
+
+	<c:if test="${success != null}">
+		<div class="note" id="note">
+			<div class="row">
+				<div class="error-notice">
+					<div class="oaerror success">
+						<strong>Success -</strong> ${success}
+					</div>
+				</div>
+			</div>
+		</div>
+	</c:if>
+	
 
 
 	<div class="login-wrap">

@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import com.IncidentReport.web.Listener.EMF;
+import com.IncidentReport.web.Model.Department;
 import com.IncidentReport.web.Model.Role;
 import com.IncidentReport.web.Model.Ticket;
 import com.IncidentReport.web.Model.User;
@@ -190,9 +191,10 @@ public class UserService {
 
 
 	public List<User> allUsers() {
+		List<User> u = new ArrayList<User>();
 		try {
 			em.getTransaction().begin();
-			List<User> u = em.createNamedQuery("allUsers", User.class).getResultList();
+			u = em.createNamedQuery("allUsers", User.class).getResultList();
 			em.getTransaction().commit();
 			em.close();
 			
@@ -200,7 +202,7 @@ public class UserService {
 		}
 		catch(Exception e){
 			em.close();
-			return null;
+			return u;
 		}
 	}
 
@@ -247,6 +249,29 @@ public class UserService {
 			em.close();
 			return null;
 		}
+	}
+
+
+
+	public boolean UpdateUserRD(int userID, int departmentID, int roleID) {
+		try {
+			em.getTransaction().begin();
+			User u = em.find(User.class, userID);
+			Department d = em.find(Department.class, departmentID);
+			Role r = em.find(Role.class, roleID);
+			
+			u.setRole(r);
+			u.setDept(d);
+			
+			em.getTransaction().commit();
+			em.close();
+			return true;
+		}
+		catch(Exception e){
+			em.close();
+			return false;
+		}
+		
 	}
 	
 

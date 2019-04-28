@@ -1,8 +1,12 @@
 package com.IncidentReport.web.Services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import com.IncidentReport.web.Listener.EMF;
+import com.IncidentReport.web.Model.Department;
 import com.IncidentReport.web.Model.Role;
 import com.IncidentReport.web.Model.User;
 
@@ -97,6 +101,24 @@ public class RoleService {
 		catch(Exception e){
 			em.close();
 			return null;
+		}
+	}
+
+
+
+	public List<Role> allRoles() {
+		List<Role> r = new ArrayList<Role>();
+		try {
+			em.getTransaction().begin();
+			r = em.createNamedQuery("allRoles", Role.class).getResultList();
+			em.getTransaction().commit();
+			em.close();
+			
+			return r;
+		}
+		catch(Exception e){
+			em.close();
+			return r;
 		}
 	}
 

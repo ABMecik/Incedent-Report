@@ -65,7 +65,7 @@ public class SearchTicket extends HttpServlet {
 			String role = (String) session.getAttribute("role");
 			if(role.equals("User")) {
 				request.setAttribute("warning", "No have permission");
-				displayPage(request, response, "/index.jsp");
+				openIndex(request, response,"/index.jsp",user);
 			}else {
 				String searchType = request.getParameter("searchType");
 				String sTitle = request.getParameter("lTitle");

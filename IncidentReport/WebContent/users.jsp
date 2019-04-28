@@ -86,17 +86,19 @@
                           <tbody>
                           <c:forEach var="user" items="${users}">
                             <form action="SetUser" method="POST">
+                            <input type="hidden" name="set-user-id" value="${user.getId()}">
                               <tr>
-                                <td class="hidden-xs" align="center">1</td>
-                                <td align="center">Artun Burak Mecik</td>                                    
+                                <td class="hidden-xs" align="center">${user.getId()}</td>
+                                <td align="center">${user.getName()} ${user.getSurname()}</td>                                    
                                   <td align="center">
                                         <div class="container">
                                             <div class="row">
                                                 <div class="col-sm-4">
                                                     <select class="form-control" name="set-user-department">
-                                                        <option value="" selected disabled hidden>Choose</option>
-                                                        <option value="IT">IT</option>
-                                                        <option value="HR">HR</option>
+                                                        <option selected="${user.getDept().getName()}" value="${user.getDept().getId()}">${user.getDept().getName()}</option>
+                                                        <c:forEach var="dept" items="${departments}">
+                                                        <option value="${dept.getId()}">${dept.getName()}</option>
+                                                        </c:forEach>
                                                     </select>
                                                 </div>
                                             </div>
@@ -107,9 +109,10 @@
                                             <div class="row">
                                                 <div class="col-sm-4">
                                                     <select class="form-control" name="set-user-role">
-                                                        <option value="" selected disabled hidden>Choose</option>
-                                                        <option value="SE">Software Developer</option>
-                                                        <option value="R">Recruiter</option>
+                                                        <option selected="${user.getRole().getName()}" value="${user.getRole().getId()}">${user.getRole().getName()}</option>
+                                                        <c:forEach var="role" items="${roles}">
+                                                        <option value="${role.getId()}">${role.getName()}</option>
+                                                        </c:forEach>
                                                     </select>
                                                 </div>
                                             </div>
@@ -117,7 +120,7 @@
                                   </td>
                                   <td align="center">
                                     <div class="group" >
-                                        <input type="submit" class="button" id="bttn-set-user" value="Set User">
+                                        <input type="submit" class="button" id="bttn-set-user" value="SetUser">
                                     </div>  
                                 </td>
                               </tr>
