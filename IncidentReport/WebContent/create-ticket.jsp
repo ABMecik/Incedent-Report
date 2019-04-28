@@ -97,7 +97,7 @@
                       <div class="image-upload-wrap">
                         <input class="file-upload-input" type='file' id="photo" name="photo" onchange="readURL(this);" accept="image/*" />
                         <div class="drag-text">
-                          <h3>Drag and drop a file or select add Image</h3>
+                          <h3>Drag and drop a file</h3>
                         </div>
                       </div>
                       <div class="file-upload-content">
@@ -112,6 +112,7 @@
 				<div class="group">
 					<input type="submit" class="button" value="Create-Ticket">
 				</div>
+				
 				<div class="hr"></div>
 			</div>
 

@@ -156,7 +156,7 @@ a{color:inherit;text-decoration:none}
 	width: 100%;
 	margin:auto;
 	max-width:auto;
-	min-height:820px;
+	min-height:auto;
 	position:relative;
 	background:url(https://maxcdn.icons8.com/app/uploads/2016/03/material-1-1000x563.jpg) no-repeat center;
 	background-size: cover;
@@ -164,7 +164,7 @@ a{color:inherit;text-decoration:none}
 }
 .login-html{
 	width:100%;
-	height:100%;
+	height:auto;
 	position:absolute;
 	padding:90px 70px 50px 70px;
 	background:rgba(0,0,0,0.5);
