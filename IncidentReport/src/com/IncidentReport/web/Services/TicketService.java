@@ -305,23 +305,6 @@ public class TicketService {
 		}
 	}
 
-
-
-	public List<Ticket> deptReleatedSelection(String dept, List<Ticket> allTickets) {
-		List<Ticket> mtickets = new ArrayList<Ticket>();
-		
-		for(Ticket ticket : allTickets) {
-			if(ticket.getDepartment().getName().equals(dept)) {
-				mtickets.add(ticket);
-			}
-		}
-		
-		
-		return mtickets;
-	}
-
-
-
 	public List<Ticket> staffsTickets(int staffID) {
 		List<Ticket> stickets = new ArrayList<Ticket>();
 		List<Ticket> allTickets = this.AllTickets();
@@ -357,6 +340,19 @@ public class TicketService {
 		
 	}
 
+	
+	public List<Ticket> deptReleatedSelection(String dept, List<Ticket> allTickets) {
+		List<Ticket> mtickets = new ArrayList<Ticket>();
+		
+		for(Ticket ticket : allTickets) {
+			if(ticket.getDepartment().getName().equals(dept)) {
+				mtickets.add(ticket);
+			}
+		}
+		
+		
+		return mtickets;
+	}
 
 
 	public List<Ticket> staffReleatedSelection(int staffID, List<Ticket> allTickets) {

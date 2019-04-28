@@ -273,7 +273,7 @@
 
 							<form action="SearchTicket" method="POST" class="form-inline">
 								<div class="form-group mb-2">
-									<select class="form-control" name="lstatus">
+									<select class="form-control" name="lStatus">
 										<option selected="ANY" value="ANY">ANY</option>
 										<option value="Waiting">Waiting</option>
 										<option value="Processing">Processing</option>
@@ -283,7 +283,7 @@
 									</select>
 								</div>
 								<div class="form-group mb-2">
-										<input type="text" class="form-control" name="ltitle" placeholder="Search by title" /> 
+										<input type="text" class="form-control" name="lTitle" placeholder="Search by title" /> 
 										<input type="submit" value="SearchTicket" class="btn btn-primary" />
 										<input type="hidden" name="searchType" value="ms">
 								</div>
@@ -436,7 +436,7 @@
                         
                         <form action="SearchTicket" method="POST" class="form-inline">
 								<div class="form-group mb-2">
-									<select class="form-control" name="lstatus">
+									<select class="form-control" name="lStatus">
 										<option selected="ANY" value="ANY">ANY</option>
 										<option value="Waiting">Waiting</option>
 										<option value="Processing">Processing</option>
@@ -446,7 +446,7 @@
 									</select>
 								</div>
 								<div class="form-group mb-2">
-										<input type="text" class="form-control" name="ltitle" placeholder="Search by title" /> 
+										<input type="text" class="form-control" name="lTitle" placeholder="Search by title" /> 
 										<input type="submit" value="SearchTicket" class="btn btn-primary" />
 										<input type="hidden" name="searchType" value="ssf">
 								</div>

@@ -171,6 +171,7 @@ public class UpdateTicket extends HttpServlet {
 					UserService us = new UserService();
 					User reciver = us.findById(ticket.getManager().getId());
 					
+					
 					MessageService ms = new MessageService();
 					Message newMS = new Message();
 					ms.insert(user,reciver,ticket,comment);
