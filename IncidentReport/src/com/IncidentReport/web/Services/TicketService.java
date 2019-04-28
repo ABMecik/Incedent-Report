@@ -60,7 +60,6 @@ public class TicketService {
 		}
 		catch(Exception e){
 			System.out.println(e.toString());
-			System.out.println("error");
 			em.close();
 			return null;
 		}
@@ -105,7 +104,6 @@ public class TicketService {
 			return myt;
 		}
 		catch(Exception e){
-			System.out.println("its here");
 			System.out.println(e);
 			em.close();
 			return null;
@@ -143,7 +141,6 @@ public class TicketService {
 			return myt;
 		}
 		catch(Exception e){
-			System.out.println("its here");
 			System.out.println(e);
 			em.close();
 			return null;

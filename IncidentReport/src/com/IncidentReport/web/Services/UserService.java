@@ -142,7 +142,7 @@ public class UserService {
 			return k.getUsername();
 		}
 		catch(Exception e){
-			System.out.println("miss");
+			System.out.println(e);
 			em.close();
 			return null;
 		}
@@ -159,7 +159,7 @@ public class UserService {
 			return k;
 		}
 		catch(Exception e){
-			System.out.println("miss");
+			System.out.println(e);
 			em.close();
 			return null;
 		}
@@ -175,7 +175,6 @@ public class UserService {
 			for(User user : users) {
 				
 				if(user.getRole().getName().equals(role)) {
-					System.out.println("user : " + user.getUsername());
 					u.add(user);
 				}
 			}
