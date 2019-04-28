@@ -61,7 +61,7 @@
 	</nav>
 
     
-    <form action="CreateTicket" method="POST" enctype='multipart/form-data'>
+    <form action="NewTicket" method="POST" enctype='multipart/form-data'>
 
     <div class="login-wrap">
 	<div class="login-html">
@@ -122,7 +122,7 @@
                 </div>
                 
 				<div class="group">
-					<input type="submit" class="button" value="Create-Ticket">
+					<input type="submit" class="button" value="Create Ticket">
 				</div>
 				
 				<div class="hr"></div>

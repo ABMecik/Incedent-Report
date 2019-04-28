@@ -1,8 +1,6 @@
 package com.IncidentReport.web.Controller;
 
-import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,18 +24,18 @@ import com.IncidentReport.web.Services.StatusService;
 import com.IncidentReport.web.Services.TicketService;
 import com.IncidentReport.web.Uploader.UploadImage;
 
-
 /**
- * Servlet implementation class CreateTicket
+ * Servlet implementation class NewTicket
  */
-@WebServlet({ "/CreateTicket", "/Create-Ticket", "/create-ticket", "/createticket" })
-public class CreateTicket extends HttpServlet {
+@WebServlet({ "/NewTicket", "/newticket", "/New-Ticket", "/new-ticket" })
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, maxFileSize = 1024 * 1024 * 10, maxRequestSize = 1024 * 1024 * 50)
+public class NewTicket extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CreateTicket() {
+    public NewTicket() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -48,19 +46,6 @@ public class CreateTicket extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
-		
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
-		
-		String rPage = "/index.jsp";
-		if(session.getAttribute("user")==null) {
-			displayPage(request, response, "/index.jsp");
-		}
-		else {
-
-			displayPage(request, response, "/create-ticket.jsp");
-		}
-		
 	}
 
 	/**
@@ -69,10 +54,103 @@ public class CreateTicket extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+		
+		response.setContentType("text/html; charset=UTF-8");
+		
+		
+		
+		
+		
+		String title = request.getParameter("title");
+		String decription = request.getParameter("decription");
+		String location = request.getParameter("location");
+		int priority = Integer.parseInt(request.getParameter("priority"));
+		String anonim = request.getParameter("anonim");
+		Part part = request.getPart("photo");
+		
+		
+		
+		
+		Date date = new Date();
+		
+		
+		boolean isAnonim = false;
+		if(anonim != null) {
+			if(anonim.equals("on")) {
+				isAnonim = true;
+			}
+		}
+		
+		
+		
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		if(user != null) {
+
+			String dbPath = null;
+			if(part != null) {
+				String appPath = request.getServletContext().getRealPath("");
+				UploadImage UI = new UploadImage();
+				dbPath = UI.UploadNewImage(part, date, appPath);
+			}
+			else {
+				dbPath = "/resources/image/img/processing.png";
+			}
+			
+			TicketService ts = new TicketService();
+			Ticket ticket = new Ticket(title,decription,location,isAnonim,dbPath);
+			ticket.setCreated_at(date);
+			boolean s = ts.createNewTicket(ticket);
+			
+			if(s) {
+				ts = new TicketService();
+				
+				
+				ticket = ts.findTicket(title,date);
+				
+				PriorityService ps = new PriorityService();
+				boolean pps = ps.checkIsValid(priority);
+				if(!pps) {
+					ps = new PriorityService();
+					ps.createNewPriority(priority);
+				}
+				ps = new PriorityService();
+				TicketPriority ttp = ps.findPriority(priority);
+				
+				StatusService ss = new StatusService();
+				boolean ssi = ss.checkIsValid("Waiting");
+				if(!ssi) {
+					ss = new StatusService();
+					ss.createNewStatus("Waiting","Waiting for fronthand's response");
+				}
+				ss = new StatusService();
+				TicketStatus tts = ss.findStatus("Waiting");
+				
+				
+				ts = new TicketService();
+				
+				System.out.println("ticket : " + ticket.getId());
+				System.out.println("user : " + user.getId());
+				System.out.println("Status: " + tts.getId());
+				System.out.println("Priority : " + ttp.getId());
+
+				ts.setTicketFKeys(ticket.getId(), user.getId(), tts.getId(), ttp.getId());
+
+				
+
+				forward(request, response, "/index.jsp", user);
+			}else {
+				
+				openIndex(request, response, "/index.jsp", user);
+			}
+		}else {
+			displayPage(request, response, "/index.jsp");
+		}
+		
+		
 	}
-
-
-
+	
+	
 	private void openIndex(HttpServletRequest request, HttpServletResponse response, String rPage, User user) throws ServletException, IOException {
 		List<Ticket> tickets = new ArrayList<Ticket>();
 		TicketService ts = new TicketService();
@@ -100,5 +178,5 @@ public class CreateTicket extends HttpServlet {
 		
 	}
 
-
 }
+
