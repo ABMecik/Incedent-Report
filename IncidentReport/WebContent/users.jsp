@@ -72,6 +72,31 @@
                       <div class="panel-heading">
                         <div class="row">
                         </div>
+                        
+                        <form action="SearchUser" method="POST" class="form-inline">
+								<div class="form-group mb-2">
+									<select class="form-control" name="suDepartment">
+										<option value="-1"> ANY </option>
+                                        <c:forEach var="dept" items="${departments}">
+                                        	<option value="${dept.getId()}">${dept.getName()}</option>
+                                        </c:forEach>
+                                    </select>
+								</div>
+								<div class="form-group mb-2">
+									<select class="form-control" name="suRole">
+										<option value="-1"> ANY </option>
+                                        <c:forEach var="role" items="${roles}">
+                                        	<option value="${role.getId()}">${role.getName()}</option>
+                                        </c:forEach>
+                                    </select>
+								</div>
+								<div class="form-group mb-2">
+										<input type="text" class="form-control" name="suNS" placeholder="Search by name or surname" /> 
+										<input type="submit" value="SearchUser" class="btn btn-primary" />
+								</div>
+
+							</form>
+							
                       </div>
                       <div class="panel-body" >
                         <table class="table table-striped table-bordered table-list" cellspacing="40">

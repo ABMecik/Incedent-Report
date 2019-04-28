@@ -231,11 +231,12 @@ public class UserService {
 	}
 	
 	
-	private List<User> findByName(String name, String surname) {
+	public List<User> findByName(String name, String surname) {
+		List<User> u = new ArrayList<User>();
 		try {
 			em.getTransaction().begin();
 			
-			List<User> u = em.createNamedQuery("FindByLikeName", User.class)
+			u = em.createNamedQuery("FindByLikeName", User.class)
 					.setParameter("name", "%"+name+"%")
 					.setParameter("surname", "%"+surname+"%")
 					.getResultList();
@@ -247,7 +248,7 @@ public class UserService {
 		}
 		catch(Exception e){
 			em.close();
-			return null;
+			return u;
 		}
 	}
 
@@ -272,6 +273,106 @@ public class UserService {
 			return false;
 		}
 		
+	}
+
+
+
+	public List<User> findByNameAndRole(String suNS, int suR) {
+		List<User> u = this.findByName(suNS, suNS);
+		List<User> us = new ArrayList<User>();
+		
+		for(User user : u) {
+			if(user.getRole().getId() == suR) {
+				us.add(user);
+			}
+		}
+		
+		return us;
+	}
+
+
+
+	public List<User> findByDepartment(int suD) {
+		List<User> u = this.allUsers();
+		List<User> us = new ArrayList<User>();
+		
+		for(User user : u) {
+			if(user.getDept() != null) {
+				if(user.getDept().getId() == suD) {
+					us.add(user);
+				}
+			}
+		}
+		
+		return us;
+	}
+
+
+
+	public List<User> findByDepartmentAndRole(int suR, int suD) {
+		List<User> u = this.findByRole(suR);
+		List<User> us = new ArrayList<User>();
+		
+		for(User user : u) {
+			if(user.getDept() != null) {
+				if(user.getDept().getId() == suD) {
+					us.add(user);
+				}
+			}
+		}
+		
+		return us;
+	}
+
+
+
+	public List<User> findByNameAndDepartment(String suNS, int suD) {
+		List<User> u = this.findByName(suNS, suNS);
+		List<User> us = new ArrayList<User>();
+		
+		for(User user : u) {
+			if(user.getDept() != null) {
+				if(user.getDept().getId() == suD) {
+					us.add(user);
+				}
+			}
+		}
+		
+		return us;
+	}
+
+
+
+	public List<User> findByNameDepartmentAndRole(String suNS, int suD, int suR) {
+		List<User> u = this.findByNameAndRole(suNS, suR);
+		List<User> us = new ArrayList<User>();
+		
+		for(User user : u) {
+			if(user.getDept() != null) {
+				if(user.getDept().getId() == suD) {
+					us.add(user);
+				}
+			}
+		}
+		
+		return us;
+	}
+
+
+
+	public List<User> findByRole(int suR) {
+		List<User> u = this.allUsers();
+		List<User> us = new ArrayList<User>();
+		
+		for(User user : u) {
+			if(user.getDept() != null) {
+				if(user.getRole().getId() == suR) {
+					us.add(user);
+				}
+			}
+		}
+		
+		return us;
 	}
 	
 
