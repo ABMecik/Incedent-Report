@@ -1,3 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="com.IncidentReport.web.Model.Role"%>
+<%@page import="com.IncidentReport.web.Model.User"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 
@@ -113,7 +121,9 @@
                         </table>
                       </div>
         </div></div>
-        
+        <%
+    			if (session.getAttribute("role").equals("Front Desk") || session.getAttribute("role").equals("Manager")|| session.getAttribute("role").equals("Staff")) {
+			%>
         <div class="col-md-10 col-md-offset-1">
                     <div class="panel panel-default panel-table">
                       <div class="panel-heading">
@@ -130,9 +140,13 @@
                           <tbody>
                                 <td class="hidden-xs" align="center">Sender</td>
                                 <td class="hidden-xs" align="center">Message</td>
-                                <tr></tr>
-                                <td align="center">Volkan Ozer</td>
-                                <td align="center">Bu bizim isimiz degil.</td>
+                                
+                                <c:forEach var="message" items="${ticket.getMessages()}">
+                                	<tr>
+	                                <td align="center">${message.getSender().getRole().getName()}</td>
+	                                <td align="center">${message.getComment()}</td>
+	                                </tr>
+                                </c:forEach>
                                  
                           </tbody>
                         </table>
@@ -140,7 +154,7 @@
         </div></div>
                 
         
-        
+        <%} %>
         
         
         

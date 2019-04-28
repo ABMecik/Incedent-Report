@@ -120,6 +120,7 @@ public class CreateTicket extends HttpServlet {
 			if(s) {
 				
 				part.write(savePath);
+				System.out.println(savePath);
 				
 
 				ts = new TicketService();

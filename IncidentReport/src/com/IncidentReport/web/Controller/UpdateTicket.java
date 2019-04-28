@@ -114,7 +114,7 @@ public class UpdateTicket extends HttpServlet {
 					Message newMS = new Message();
 					ms.insert(user,manager,ticket,comment);
 					
-					callPage(request, response, role);
+					callPage(request, response, role, user);
 				}
 				
 				else if(updateType.equals("mf")) {
@@ -149,7 +149,7 @@ public class UpdateTicket extends HttpServlet {
 						ts.assignStaff(reciver, ticketID);
 					}
 					
-					callPage(request, response, role);
+					callPage(request, response, role, user);
 				}
 			}
 			
@@ -164,7 +164,7 @@ public class UpdateTicket extends HttpServlet {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	private void callPage(HttpServletRequest request, HttpServletResponse response, String role) throws ServletException, IOException {
+	private void callPage(HttpServletRequest request, HttpServletResponse response, String role,User user) throws ServletException, IOException {
 		
 		if(role.equals("Front Desk")) {
 			TicketService ts = new TicketService();
@@ -173,6 +173,16 @@ public class UpdateTicket extends HttpServlet {
 			List<User> managers = us.findRoleList("Manager");
 			request.setAttribute("managers", managers);
 			request.setAttribute("ftickets", ftickets);
+			displayPage(request, response, "/controlboard.jsp");
+			
+		}else if (role.equals("Manager")) {
+			TicketService ts = new TicketService();
+			UserService us = new UserService();
+			List<Ticket> mtickets = ts.managerReleated(user.getId());
+			List<User> staffs = us.deptReleated(user.getDept().getName(), "staff");
+			
+			request.setAttribute("staffs", staffs);
+			request.setAttribute("mtickets", mtickets);
 			displayPage(request, response, "/controlboard.jsp");
 		}
 	}

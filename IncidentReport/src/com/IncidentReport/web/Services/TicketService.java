@@ -254,6 +254,75 @@ public class TicketService {
 
 
 
+	public List<Ticket> findByStatusAndLikeTitle(String sTitle, String sStatus) {
+		List<Ticket> allTickets = this.findLikeTitle(sTitle);
+		List<Ticket> sTickets = new ArrayList<Ticket>();
+		
+		for(Ticket ticket : allTickets) {
+			if(ticket.getStatus().getName().equals(sStatus)) {
+				sTickets.add(ticket);
+			}
+		}
+		
+		return sTickets;
+	}
+
+
+
+	public List<Ticket> findByStatus(String sStatus) {
+		List<Ticket> allTickets = this.AllTickets();
+		List<Ticket> sTickets = new ArrayList<Ticket>();
+		
+		for(Ticket ticket : allTickets) {
+			if(ticket.getStatus().getName().equals(sStatus)) {
+				sTickets.add(ticket);
+			}
+		}
+		
+		return sTickets;
+		
+	}
+
+
+
+	public List<Ticket> findLikeTitle(String sTitle) {
+		try {
+			em.getTransaction().begin();
+			
+			List<Ticket> t = em.createNamedQuery("findLikeTitle", Ticket.class)
+					.setParameter("title", "%"+sTitle+"%")
+					.getResultList();
+			
+			em.getTransaction().commit();
+			em.close();
+			
+			return t;
+		}
+		catch(Exception e){
+			em.close();
+			return null;
+		}
+	}
+
+
+
+	public List<Ticket> deptReleatedSelection(String dept, List<Ticket> allTickets) {
+		List<Ticket> mtickets = new ArrayList<Ticket>();
+		
+		for(Ticket ticket : allTickets) {
+			if(ticket.getDepartment().getName().equals(dept)) {
+				mtickets.add(ticket);
+			}
+		}
+		
+		
+		return mtickets;
+	}
+
+
+
+
+
 
 
 

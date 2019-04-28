@@ -219,5 +219,27 @@ public class UserService {
 		
 		return sUsers;
 	}
+	
+	
+	private List<User> findByName(String name, String surname) {
+		try {
+			em.getTransaction().begin();
+			
+			List<User> u = em.createNamedQuery("FindByLikeName", User.class)
+					.setParameter("name", "%"+name+"%")
+					.setParameter("surname", "%"+surname+"%")
+					.getResultList();
+			
+			em.getTransaction().commit();
+			em.close();
+			
+			return u;
+		}
+		catch(Exception e){
+			em.close();
+			return null;
+		}
+	}
+	
 
 }
