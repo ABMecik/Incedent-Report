@@ -1,3 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="com.IncidentReport.web.Model.Role"%>
+<%@page import="com.IncidentReport.web.Model.User"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 
@@ -9,7 +17,7 @@
 
 <head>
 	<title>Welcome</title>
-	<link rel="stylesheet" type="text/css" href="admin_user.css">
+	<link rel="stylesheet" type="text/css" href="resources/css/dpanel.css">
     <script src="staff_open_image.js"></script>
 </head>
 <body>
@@ -53,15 +61,16 @@
                         </div>
                       </div>
                       <div class="panel-body" >
-                        <table class="table table-striped table-bordered table-list" cellspacing="40">
+                        <table class="table table-striped table-bordered table-list" cellspacing="50">
                           <thead>
                             <tr>
                                 <th>Department</th>
                                 <th>Role</th>
+                                <th>Create</th>
                             </tr> 
                           </thead>
                           <tbody>
-                            <form action="SetRole" method="POST">
+                            <form action="CreateIMRD" method="POST">
                               <tr>
                                   <td align="center">
                                     <div class="form-group">
@@ -74,8 +83,8 @@
                                     </div>
                                   </td>
                                   <td align="center">
-                                    <div class="group" >
-                                        <input type="submit" class="button" id="bttn-set-role" value="Set Role">
+                                    <div class="form-group" >
+                                        <input type="submit" class="button" id="bttn-set-role" value="Create">
                                     </div>  
                                 </td>
                               </tr>

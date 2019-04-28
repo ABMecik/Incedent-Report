@@ -20,6 +20,7 @@ import javax.persistence.Table;
 @Entity(name="department")
 @Table(name="department")
 @NamedQueries({
+	@NamedQuery(name="FindByDepartmentName", query="SELECT d FROM department AS d WHERE d.name = :name"),
 	@NamedQuery(name = "allDepartments", query = "SELECT d FROM department d")
 })
 public class Department {
