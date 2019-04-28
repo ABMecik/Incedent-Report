@@ -204,4 +204,20 @@ public class UserService {
 		}
 	}
 
+
+
+	public List<User> deptReleated(String department, String role) {
+		List<User> users = this.allUsers();
+		List<User> sUsers = new ArrayList<User>();
+		
+		for(User user : users) {
+			if(user.getDept().getName().equals(department) && user.getRole().getName().equals(role)) {
+				sUsers.add(user);
+			}
+		}
+		
+		
+		return sUsers;
+	}
+
 }

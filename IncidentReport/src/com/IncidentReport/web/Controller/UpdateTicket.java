@@ -13,10 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.IncidentReport.web.Model.Department;
+import com.IncidentReport.web.Model.Message;
 import com.IncidentReport.web.Model.Ticket;
 import com.IncidentReport.web.Model.TicketPriority;
 import com.IncidentReport.web.Model.TicketStatus;
 import com.IncidentReport.web.Model.User;
+import com.IncidentReport.web.Services.MessageService;
 import com.IncidentReport.web.Services.PriorityService;
 import com.IncidentReport.web.Services.StatusService;
 import com.IncidentReport.web.Services.TicketService;
@@ -68,6 +70,8 @@ public class UpdateTicket extends HttpServlet {
 				String updateType = request.getParameter("UpdateType");
 				int ticketID = Integer.parseInt(request.getParameter("ticketID"));
 				
+				TicketService ts = new TicketService();
+				Ticket ticket = ts.findById(ticketID);
 				
 				if(updateType.equals("uf")) {
 
@@ -75,7 +79,6 @@ public class UpdateTicket extends HttpServlet {
 					int pSt = Integer.parseInt(request.getParameter("set-priority"));
 					String comment = request.getParameter("notes");
 					int managerID = Integer.parseInt(request.getParameter("set-manager"));
-
 					
 					PriorityService ps = new PriorityService();
 					boolean pps = ps.checkIsValid(pSt);
@@ -101,9 +104,50 @@ public class UpdateTicket extends HttpServlet {
 					
 					Department department = manager.getDept();
 					
-					TicketService ts = new TicketService();
+					ts = new TicketService();
 					
 					ts.updateTicketSPMD(ticketID,status,priority,manager,department,user);
+					ts = new TicketService();
+					
+					
+					MessageService ms = new MessageService();
+					Message newMS = new Message();
+					ms.insert(user,manager,ticket,comment);
+					
+					callPage(request, response, role);
+				}
+				
+				else if(updateType.equals("mf")) {
+					
+					String comment = request.getParameter("notes");
+					int receiverID = Integer.parseInt(request.getParameter("set-staff"));
+					String close = request.getParameter("close-ticket");
+					
+					if(close != null) {
+						StatusService ss = new StatusService();
+						boolean ssi = ss.checkIsValid("closed");
+						if(!ssi) {
+							ss = new StatusService();
+							ss.createNewStatus("closed","");
+						}
+						ss = new StatusService();
+						TicketStatus status = ss.findStatus("closed");
+						
+						ts = new TicketService();
+						ts.setStatus(ticketID, status);
+					}
+					UserService us = new UserService();
+					
+					User reciver = us.findById(receiverID);
+					
+					MessageService ms = new MessageService();
+					Message newMS = new Message();
+					ms.insert(user,reciver,ticket,comment);
+					
+					if(reciver.getRole().getName().equals("Staff")) {
+						ts = new TicketService();
+						ts.assignStaff(reciver, ticketID);
+					}
 					
 					callPage(request, response, role);
 				}

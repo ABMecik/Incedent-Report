@@ -1,5 +1,6 @@
 package com.IncidentReport.web.Services;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -175,6 +176,83 @@ public class TicketService {
 		}
 		
 	}
+
+
+
+	public List<Ticket> deptReleated(int department) {
+		try {
+			em.getTransaction().begin();
+			
+			List<Ticket> t = em.createNamedQuery("deptTickets", Ticket.class).setParameter("department", department).getResultList();
+			
+			em.getTransaction().commit();
+			em.close();
+			
+			return t;
+		}
+		catch(Exception e){
+			System.out.println(e.toString());
+			em.close();
+			return null;
+		}
+	}
+
+
+
+	public void setStatus(int ticketID, TicketStatus status) {
+		try {
+			em.getTransaction().begin();
+			
+			Ticket t = em.find(Ticket.class, ticketID);
+			t.setStatus(status);
+			
+			em.getTransaction().commit();
+			em.close();
+
+		}
+		catch(Exception e){
+			em.close();
+		}
+		
+	}
+
+
+
+	public void assignStaff(User staff, int ticketID) {
+		try {
+			em.getTransaction().begin();
+			
+			Ticket t = em.find(Ticket.class, ticketID);
+			t.setStaff(staff);
+			
+			em.getTransaction().commit();
+			em.close();
+
+		}
+		catch(Exception e){
+			em.close();
+		}
+		
+	}
+
+
+
+	public List<Ticket> managerReleated(int managerID) {
+		List<Ticket> tickets = this.AllTickets();
+		List<Ticket> sTickets = new ArrayList<Ticket>();
+		
+		for(Ticket ticket : tickets) {
+			if(ticket.getManager() != null) {
+				if(ticket.getManager().getId() == managerID) {
+					sTickets.add(ticket);
+				}
+			}
+		}
+		
+		return sTickets;
+	}
+
+
 
 
 
