@@ -1,5 +1,8 @@
 package com.IncidentReport.web.Services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import com.IncidentReport.web.Listener.EMF;
@@ -42,6 +45,19 @@ public class MessageService {
 			return false;
 		}
 		
+	}
+
+	
+	public List<Message> findRelatedMessages(Ticket ticket, int userID) {
+		List<Message> messages = new ArrayList<Message>();
+		
+		for(Message ms : ticket.getMessages()) {
+			if(ms.getReceiver().getId() == userID || ms.getSender().getId() == userID) {
+				messages.add(ms);
+			}
+		}
+		
+		return messages;
 	}
 
 }

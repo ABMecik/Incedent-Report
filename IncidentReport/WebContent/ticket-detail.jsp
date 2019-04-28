@@ -175,7 +175,7 @@
                                 <td class="hidden-xs" align="center">Sender</td>
                                 <td class="hidden-xs" align="center">Message</td>
                                 
-                                <c:forEach var="message" items="${ticket.getMessages()}">
+                                <c:forEach var="message" items="${messages}">
                                 	<tr>
 	                                <td align="center">${message.getSender().getRole().getName()}</td>
 	                                <td align="center">${message.getComment()}</td>

@@ -12,8 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.IncidentReport.web.Model.Message;
 import com.IncidentReport.web.Model.Ticket;
 import com.IncidentReport.web.Model.User;
+import com.IncidentReport.web.Services.MessageService;
 import com.IncidentReport.web.Services.TicketService;
 import com.IncidentReport.web.Services.UserService;
 
@@ -52,7 +54,11 @@ public class ticketdetail extends HttpServlet {
 			int ticketID = Integer.parseInt(request.getParameter("ticketID"));
 			TicketService ts = new TicketService();
 			Ticket ticket = ts.findById(ticketID);
+			
+			MessageService ms = new MessageService();
+			List<Message> messages = ms.findRelatedMessages(ticket, user.getId());
 
+			request.setAttribute("messages", messages);
 			request.setAttribute("ticket", ticket);
 			displayPage(request, response, "/ticket-detail.jsp");
 

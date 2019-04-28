@@ -7,10 +7,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity(name = "ticketmessage")
 @Table(name = "ticketmessage")
+@NamedQueries({
+	@NamedQuery(name = "findReleatedMessages", query = "SELECT m FROM ticketmessage AS m WHERE m.sender = :sender OR m.receiver = :receiver") 
+	})
 public class Message {
 
 	@Id
