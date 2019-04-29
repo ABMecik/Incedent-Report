@@ -1,13 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@page import="com.ibm.icu.text.SimpleDateFormat"%>
+<%@page import="java.util.Date" %>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="com.IncidentReport.web.Model.Role"%>
 <%@page import="com.IncidentReport.web.Model.User"%>
 <%@page import="com.IncidentReport.web.Model.Ticket"%>
 <%@page import="com.IncidentReport.web.Model.Department"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 
@@ -120,6 +122,7 @@
 										<th scope="col" align="center">ID</th>
 										<th scope="col" align="center">Title</th>
 										<th scope="col" align="center">Date Created</th>
+										<th scope="col" align="center">Date Timeout</th>
 										<th scope="col" align="center">Detail</th>
 										<th scope="col" align="center">Status</th>
 										<th scope="col" align="center">Priority</th>
@@ -133,7 +136,7 @@
 										<c:forEach var="ticket" items="${ftickets}">
 											<tr>
 												<td align="center">
-													<div class="sonar-wrapper" style="width: 100px">
+													<div class="sonar-wrapper" style="width: 80px">
 
 														<!-- Color Control System -->
 														<c:choose>
@@ -189,9 +192,24 @@
 													</div>
 
 												</td>
+												
+												<%
+													Ticket stT = (Ticket)pageContext.getAttribute("ticket");
+													SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
+												
+													Date st = stT.getCreated_at();
+													
+													String sts=formatter.format(st);
+													
+													Date ft = stT.getTimeout();
+													
+													String fts=formatter.format(ft);
+												%>
+												
 												<td class="hidden-xs" align="center">${ticket.getId()}</td>
-												<td align="center">${ticket.getTitle()}</td>
-												<td align="center">${ticket.getCreated_at()}</td>
+												<td align="center"><div class="tit" style="width: 90px">${ticket.getTitle()}</div></td>
+												<td align="center"><div class="tit" style="width: 90px"><%out.print(sts); %></div></td>
+												<td align="center"><div class="tit" style="width: 90px"><%out.print(fts); %></div></td>
 												<td align="center">
 													<form action="TicketDetail" method="GET">
 														<input type="hidden" , name="ticketID"
@@ -248,7 +266,7 @@
 													<td align="center">
 														<div class="form-group" id="add-note" name="notes">
 															<textarea class="form-control" rows="2" id="comment"
-																name="notes" style="width: 200px"></textarea>
+																name="notes" style="width: 170px"></textarea>
 														</div>
 													</td>
 													<td align="center">
@@ -334,6 +352,7 @@
 										<th scope="col" align="center">ID</th>
 										<th scope="col" align="center">Title</th>
 										<th scope="col" align="center">Date Created</th>
+										<th scope="col" align="center">Date Timeout</th>
 										<th scope="col" align="center">Detail</th>
 										<th scope="col" align="center">Notes</th>
 										<th scope="col" align="center">Close</th>
@@ -345,7 +364,7 @@
 									<c:forEach var="ticket" items="${mtickets}">
 										<tr>
 											<td align="center">
-												<div class="sonar-wrapper" style="width: 100px">
+												<div class="sonar-wrapper" style="width: 80px">
 
 													<!-- Color Control System -->
 													<c:choose>
@@ -402,9 +421,23 @@
 												</div>
 												</div>
 											</td>
-											<td class="hidden-xs" align="center">${ticket.getId()}</td>
-											<td align="center">${ticket.getTitle()}</td>
-											<td align="center">${ticket.getCreated_at()}</td>
+																							<%
+													Ticket stT = (Ticket)pageContext.getAttribute("ticket");
+													SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
+												
+													Date st = stT.getCreated_at();
+													
+													String sts=formatter.format(st);
+													
+													Date ft = stT.getTimeout();
+													
+													String fts=formatter.format(ft);
+												%>
+												
+												<td class="hidden-xs" align="center">${ticket.getId()}</td>
+												<td align="center"><div class="tit" style="width: 90px">${ticket.getTitle()}</div></td>
+												<td align="center"><div class="tit" style="width: 90px"><%out.print(sts); %></div></td>
+												<td align="center"><div class="tit" style="width: 90px"><%out.print(fts); %></div></td>
 											<td align="center">
 												<form action="TicketDetail" method="GET">
 													<input type="hidden" , name="ticketID"
@@ -422,7 +455,7 @@
 												<td align="center">
 													<div class="form-group" id="add-note" name="notes">
 														<textarea class="form-control" rows="2" id="comment"
-															name="notes" style="width: 200px"></textarea>
+															name="notes" style="width: 170px"></textarea>
 													</div>
 												</td>
 												<td align="center">
@@ -514,6 +547,7 @@
 											<th scope="col" align="center">ID</th>
 											<th scope="col" align="center">Title</th>
 											<th scope="col" align="center">Date Created</th>
+											<th scope="col" align="center">Date Timeout</th>
 											<th scope="col" align="center">Detail</th>
 											<th scope="col" align="center">Notes</th>
 											<th scope="col" align="center">Photo</th>
@@ -525,7 +559,7 @@
 										<c:forEach var="ticket" items="${stickets}">
 											<tr>
 												<td align="center">
-													<div class="sonar-wrapper" style="width: 100px">
+													<div class="sonar-wrapper" style="width: 80px">
 
 
 														<!-- Color Control System -->
@@ -583,9 +617,23 @@
 													</div>
 													</div>
 												</td>
+																								<%
+													Ticket stT = (Ticket)pageContext.getAttribute("ticket");
+													SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
+												
+													Date st = stT.getCreated_at();
+													
+													String sts=formatter.format(st);
+													
+													Date ft = stT.getTimeout();
+													
+													String fts=formatter.format(ft);
+												%>
+												
 												<td class="hidden-xs" align="center">${ticket.getId()}</td>
-												<td align="center">${ticket.getTitle()}</td>
-												<td align="center">${ticket.getCreated_at()}</td>
+												<td align="center"><div class="tit" style="width: 90px">${ticket.getTitle()}</div></td>
+												<td align="center"><div class="tit" style="width: 90px"><%out.print(sts); %></div></td>
+												<td align="center"><div class="tit" style="width: 90px"><%out.print(fts); %></div></td>
 												<td align="center">
 
 													<form action="TicketDetail" method="GET">
@@ -605,7 +653,7 @@
 														<td align="center">
 															<div class="form-group" id="add-note" name="notes">
 																<textarea class="form-control" rows="2" id="comment"
-																	name="notes" style="width: 200px"></textarea>
+																	name="notes" style="width: 170px"></textarea>
 															</div>
 														</td>
 														<td align="center">
@@ -681,6 +729,7 @@
 										<th scope="col" align="center">ID</th>
 										<th scope="col" align="center">Title</th>
 										<th scope="col" align="center">Date Created</th>
+										<th scope="col" align="center">Date Timeout</th>
 										<th scope="col" align="center">Detail</th>
 										<th scope="col" align="center">Status</th>
 										<th scope="col" align="center">Priority</th>
@@ -694,7 +743,7 @@
 										<c:forEach var="ticket" items="${atickets}">
 											<tr>
 												<td align="center">
-													<div class="sonar-wrapper" style="width: 100px">
+													<div class="sonar-wrapper" style="width: 80px">
 
 														<!-- Color Control System -->
 														<c:choose>
@@ -750,9 +799,23 @@
 													</div>
 
 												</td>
+																								<%
+													Ticket stT = (Ticket)pageContext.getAttribute("ticket");
+													SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
+												
+													Date st = stT.getCreated_at();
+													
+													String sts=formatter.format(st);
+													
+													Date ft = stT.getTimeout();
+													
+													String fts=formatter.format(ft);
+												%>
+												
 												<td class="hidden-xs" align="center">${ticket.getId()}</td>
-												<td align="center">${ticket.getTitle()}</td>
-												<td align="center">${ticket.getCreated_at()}</td>
+												<td align="center"><div class="tit" style="width: 90px">${ticket.getTitle()}</div></td>
+												<td align="center"><div class="tit" style="width: 90px"><%out.print(sts); %></div></td>
+												<td align="center"><div class="tit" style="width: 90px"><%out.print(fts); %></div></td>
 												<td align="center">
 													<form action="TicketDetail" method="GET">
 														<input type="hidden" , name="ticketID"
@@ -809,7 +872,7 @@
 													<td align="center">
 														<div class="form-group" id="add-note" name="notes">
 															<textarea class="form-control" rows="2" id="comment"
-																name="notes" style="width: 200px"></textarea>
+																name="notes" style="width: 170px"></textarea>
 														</div>
 													</td>
 													<td align="center">

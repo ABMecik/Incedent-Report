@@ -101,8 +101,12 @@
 											<td align="center">${ticket.getTitle()}</td>
 										</tr>
 										<tr>
-											<td class="hidden-xs" align="center">Date:</td>
+											<td class="hidden-xs" align="center">Create Date:</td>
 											<td align="center">${ticket.getCreated_at()}</td>
+										</tr>
+										<tr>
+											<td class="hidden-xs" align="center">Timeout:</td>
+											<td align="center">${ticket.getTimeout()}</td>
 										</tr>
 										<tr>
 											<td class="hidden-xs" align="center">Description:</td>

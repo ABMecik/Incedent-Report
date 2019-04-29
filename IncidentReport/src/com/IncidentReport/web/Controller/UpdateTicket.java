@@ -142,6 +142,10 @@ public class UpdateTicket extends HttpServlet {
 					Message newMS = new Message();
 					ms.insert(user,manager,ticket,comment);
 					
+					int timeX = 14-pSt;
+					ts = new TicketService();
+					ts.setTimeOut(ticket.getId(), timeX);
+					
 					callPage(request, response, role, user);
 				}
 				
@@ -207,6 +211,10 @@ public class UpdateTicket extends HttpServlet {
 					MessageService ms = new MessageService();
 					Message newMS = new Message();
 					ms.insert(user,manager,ticket,comment);
+					
+					int timeX = 14-pSt;
+					ts = new TicketService();
+					ts.setTimeOut(ticket.getId(), timeX);
 					
 					callPage(request, response, role, user);
 				}

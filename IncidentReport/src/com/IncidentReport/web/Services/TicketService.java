@@ -1,6 +1,7 @@
 package com.IncidentReport.web.Services;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -457,6 +458,34 @@ public class TicketService {
 			
 			ticket.setStatus(status);
 			ticket.setPriority(priority);
+			
+			em.getTransaction().commit();
+			em.close();
+
+		}
+		catch(Exception e){
+			System.out.println(e);
+			em.close();
+		}
+		
+	}
+
+
+
+	public void setTimeOut(int ticketID, int timeX) {
+		
+		
+		try {
+			em.getTransaction().begin();
+
+			Ticket ticket = em.find(Ticket.class, ticketID);
+			
+			Date dt = ticket.getCreated_at();
+			Calendar c = Calendar.getInstance(); 
+			c.setTime(dt); 
+			c.add(Calendar.DATE, timeX);
+			dt = c.getTime();
+			ticket.setTimeout(dt);
 			
 			em.getTransaction().commit();
 			em.close();

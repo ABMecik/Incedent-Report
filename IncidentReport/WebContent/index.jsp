@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@page import="com.ibm.icu.text.SimpleDateFormat"%>
+<%@page import="java.util.Date" %>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="com.IncidentReport.web.Model.Role"%>
 <%@page import="com.IncidentReport.web.Model.User"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page import="com.IncidentReport.web.Model.Ticket"%>
 <!DOCTYPE html>
 <html lang="en">
 <link
@@ -291,6 +294,7 @@
 										<th scope="col" align="center">ID</th>
 										<th scope="col" align="center">Title</th>
 										<th scope="col" align="center">Date Created</th>
+										<th scope="col" align="center">Date Timeout</th>
 										<th scope="col" align="center">Status</th>
 										<th scope="col" align="center">Priority</th>
 										<th scope="col" align="center">Detail</th>
@@ -304,8 +308,29 @@
 											<tr>
 												<td class="hidden-xs" align="center"><div class="tit"
 														style="width: 70px">${ticket.getId()}</div></td>
+														
+												<%
+													Ticket stT = (Ticket)pageContext.getAttribute("ticket");
+													SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
+												
+													Date st = stT.getCreated_at();
+													
+													String sts=formatter.format(st);
+													
+													Date ft = stT.getTimeout();
+													
+													String fts=formatter.format(ft);
+												%>		
+														
 												<td><div class="tit" style="width: 150px">${ticket.getTitle()}</div></td>
-												<td><div class="tit" style="width: 150px">${ticket.getCreated_at()}</div></td>
+												<td><div class="tit" style="width: 150px">
+												<%out.print(sts); %>
+												
+
+												</div></td>
+												<td><div class="tit" style="width: 150px">
+												<%out.print(fts); %>
+												</div></td>
 												<td align="center">
 													<div class="progress" style="width: 150px">
 														<c:choose>

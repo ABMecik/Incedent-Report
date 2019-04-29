@@ -136,7 +136,9 @@ public class NewTicket extends HttpServlet {
 
 				ts.setTicketFKeys(ticket.getId(), user.getId(), tts.getId(), ttp.getId());
 
-				
+				int timeX = 14-priority;
+				ts = new TicketService();
+				ts.setTimeOut(ticket.getId(), timeX);
 
 				forward(request, response, "/index.jsp", user);
 			}else {
