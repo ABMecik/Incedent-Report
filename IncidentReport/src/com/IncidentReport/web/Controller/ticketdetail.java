@@ -47,20 +47,46 @@ public class ticketdetail extends HttpServlet {
 		String role = (String) session.getAttribute("role");
 		
 		if(user==null) {
-			request.setAttribute("warning", "No have permission");
+			request.setAttribute("warning", "You are not authorized to do so.");
 			displayPage(request, response, "/index.jsp");
 		}
 		else {
-			int ticketID = Integer.parseInt(request.getParameter("ticketID"));
-			TicketService ts = new TicketService();
-			Ticket ticket = ts.findById(ticketID);
 			
-			MessageService ms = new MessageService();
-			List<Message> messages = ms.findRelatedMessages(ticket, user.getId());
+			if(role.equals("Principal Inspector")) {
+				int ticketID = Integer.parseInt(request.getParameter("ticketID"));
+				TicketService ts = new TicketService();
+				Ticket ticket = ts.findById(ticketID);
+				
+				MessageService ms = new MessageService();
+				List<Message> messages = ms.findRelatedMessages(ticket, user.getId());
 
-			request.setAttribute("messages", messages);
-			request.setAttribute("ticket", ticket);
-			displayPage(request, response, "/ticket-detail.jsp");
+				request.setAttribute("messages", ticket.getMessages());
+				request.setAttribute("ticket", ticket);
+				displayPage(request, response, "/ticket-detail.jsp");
+				
+			}
+			else if(role.equals("User")) {
+				int ticketID = Integer.parseInt(request.getParameter("ticketID"));
+				TicketService ts = new TicketService();
+				Ticket ticket = ts.findById(ticketID);
+				
+				MessageService ms = new MessageService();
+
+				request.setAttribute("ticket", ticket);
+				displayPage(request, response, "/ticket-detail.jsp");
+			}else {
+				int ticketID = Integer.parseInt(request.getParameter("ticketID"));
+				TicketService ts = new TicketService();
+				Ticket ticket = ts.findById(ticketID);
+				
+				MessageService ms = new MessageService();
+				List<Message> messages = ms.findRelatedMessages(ticket, user.getId());
+
+				request.setAttribute("messages", messages);
+				request.setAttribute("ticket", ticket);
+				displayPage(request, response, "/ticket-detail.jsp");
+			}
+			
 
 		}
 	}

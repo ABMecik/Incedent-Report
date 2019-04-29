@@ -22,15 +22,18 @@
 <head>
 <title>Welcome</title>
 <link rel="stylesheet" type="text/css" href="resources/css/navbar.css">
+<link rel="stylesheet" type="text/css" href="resources/css/notice.css">
 <link rel="stylesheet" type="text/css"
-	href="resources/css/user_dashboard.css">
+	href="resources/css/dashboard.css">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-	<%if (session.getAttribute("user") == null){%>
-	
-	
+	<%
+		if (session.getAttribute("user") == null) {
+	%>
+
+
 	<c:if test="${info != null}">
 		<div class="note" id="note">
 			<div class="row">
@@ -81,7 +84,7 @@
 			</div>
 		</div>
 	</c:if>
-	
+
 
 	<div class="login-wrap">
 		<div class="login-html">
@@ -168,7 +171,9 @@
 			</div>
 		</div>
 	</div>
-	<%}else{ %>
+	<%
+		} else {
+	%>
 
 	<nav class="main-navigation">
 		<div class="navbar-header animated fadeInUp">
@@ -177,25 +182,27 @@
 		<ul class="nav-list">
 
 			<%
-    			if (session.getAttribute("role").equals("Front Desk") || session.getAttribute("role").equals("Manager")|| session.getAttribute("role").equals("Staff")) {
+				if (session.getAttribute("role").equals("Front Desk") || session.getAttribute("role").equals("Manager")
+							|| session.getAttribute("role").equals("Staff") || session.getAttribute("role").equals("Principal Inspector")) {
 			%>
-				<li class="nav-list-item"><a href="controlboard"
-					class="nav-link">Controlboard</a>
-				</li>
+			<li class="nav-list-item"><a href="controlboard"
+				class="nav-link">Controlboard</a></li>
 
-			<%} %>
-			
 			<%
-    			if (session.getAttribute("role").equals("Admin")) {
+				}
 			%>
-				<li class="nav-list-item"><a href="users"
-					class="nav-link">Users</a>
-				</li>
-				<li class="nav-list-item"><a href="dpanel"
-					class="nav-link">Add</a>
-				</li>
 
-			<%} %>
+			<%
+				if (session.getAttribute("role").equals("Admin")) {
+			%>
+			<li class="nav-list-item"><a href="users" class="nav-link">Users</a>
+			</li>
+			<li class="nav-list-item"><a href="dpanel" class="nav-link">Add</a>
+			</li>
+
+			<%
+				}
+			%>
 
 			<li class="nav-list-item"><a href="create-ticket"
 				class="nav-link">Create Ticket</a></li>
@@ -211,159 +218,238 @@
 		</ul>
 	</nav>
 
+	<div class="tit" style="width: 70px">
 
-	
-	<c:if test="${info != null}">
-		<div class="note" id="note">
-			<div class="row">
-				<div class="error-notice">
-					<div class="oaerror info">
-						<strong>Info -</strong> ${info}
+		<c:if test="${info != null}">
+			<div class="note" id="note">
+				<div class="row">
+					<div class="error-notice">
+						<div class="oaerror info">
+							<strong>Info -</strong> ${info}
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</c:if>
+		</c:if>
 
 
 
-	<c:if test="${warning != null}">
-		<div class="note" id="note">
-			<div class="row">
-				<div class="error-notice">
-					<div class="oaerror warning">
-						<strong>Sorry -</strong> ${warning}
+		<c:if test="${warning != null}">
+			<div class="note" id="note">
+				<div class="row">
+					<div class="error-notice">
+						<div class="oaerror warning">
+							<strong>Sorry -</strong> ${warning}
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</c:if>
+		</c:if>
 
 
-	<c:if test="${error != null}">
-		<div class="note" id="note">
-			<div class="row">
-				<div class="error-notice">
-					<div class="oaerror danger">
-						<strong>Error -</strong> ${error}
+		<c:if test="${error != null}">
+			<div class="note" id="note">
+				<div class="row">
+					<div class="error-notice">
+						<div class="oaerror danger">
+							<strong>Error -</strong> ${error}
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</c:if>
+		</c:if>
 
-	<c:if test="${success != null}">
-		<div class="note" id="note">
-			<div class="row">
-				<div class="error-notice">
-					<div class="oaerror success">
-						<strong>Success -</strong> ${success}
+		<c:if test="${success != null}">
+			<div class="note" id="note">
+				<div class="row">
+					<div class="error-notice">
+						<div class="oaerror success">
+							<strong>Success -</strong> ${success}
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</c:if>
-	
+		</c:if>
 
+	</div>
 
-	<div class="login-wrap">
-		<div class="login-html">
+	<div class="lbox-wrap" style="margin-left: 1px">
+		<div class="lbox-html">
 			<div class="container">
 				<div class="row">
-					<p></p>
 					<h1>Your Tickets</h1>
+					<br> <br> <br> <br>
 					<div class="col-md-10 col-md-offset-1">
 						<div class="panel panel-default panel-table">
 							<div class="panel-heading">
-								<div class="row">
-									<div class="col col-xs-6">
-										<h3></h3>
-									</div>
-								</div>
+								<div class="row"></div>
 							</div>
+							<br>
 							<table class="table">
-								  <thead class="thead-light">
-								    <tr >
-								      <th scope="col" >ID</th>
-								      <th scope="col">Title</th>
-								      <th scope="col">Date Created</th>
-								      <th scope="col">Status</th>
-								      <th scope="col">Priority</th>
-								      <th scope="col">Detail</th>
-								      <th scope="col"><em class="fa fa-cog"></em></th>
-						              <th scope="col"></th>
-								    </tr>
-						           </thead>
-						        <tbody>
-		        				 <tr >
-								  <c:forEach var="ticket" items="${tickets}">
-									<tr >
-										<td class="hidden-xs" align="center">${ticket.getId()}</td>
-										<td align="center">${ticket.getTitle()}</td>
-										<td align="center">${ticket.getCreated_at()}</td>
-										<td align="center">
-											<div class="progress">
-												<c:choose>
-													<c:when test="${ticket.getStatus().getName()=='Waiting'}">
-														<div data-percentage="25%" style="width: 25%;" class="progress-bar progress-bar-success" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-													</c:when>
-													<c:when
-														test="${ticket.getStatus().getName()=='Processing'}">
-														<div data-percentage="50%" style="width: 50%;" class="progress-bar progress-bar-success" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-													</c:when>
-													<c:when
-														test="${ticket.getStatus().getName()=='Approved'}">
-														<div data-percentage="75%" style="width: 75%;" class="progress-bar progress-bar-success" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-													</c:when>
-													<c:when
-														test="${ticket.getStatus().getName()=='Declined'}">
-														<div data-percentage="0%" style="width: 0%;" class="progress-bar progress-bar-success" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-													</c:when>
-													<c:when
-														test="${ticket.getStatus().getName()=='Finished'}">
-														<div data-percentage="100%" style="width: 100%;" class="progress-bar progress-bar-success" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-													</c:when>
-													<c:when
-														test="${ticket.getStatus().getName()=='closed'}">
-														<div data-percentage="100%" style="width: 100%;" class="progress-bar progress-bar-success" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-													</c:when>
-												</c:choose>
-						                    </div>
-										</td>
-										<td align="center">H</td>
-										<td align="center">
-											<form action="TicketDetail" method="GET">
-												<input type="hidden" , name="ticketID" value="${ticket.getId()}">
-												<button type="submit" class="btn text-color" value="TicketDetail">
-													<i class="fa fa-cog"></i>
-												</button>
-											</form>
-										</td>
-										<td align="center">
-											<form action="TicketDelete" method="POST">
-												<input type="hidden" , name="ticketID"
-													value="${ticket.getId()}">
-												<button type="submit" class="btn text-color"
-													value="TicketDelete">
-													<i class="fa fa-trash"></i>
-												</button>
-												
-											</form>
-										</td>
+								<thead class="thead-light">
+									<tr>
+										<th scope="col" align="center">ID</th>
+										<th scope="col" align="center">Title</th>
+										<th scope="col" align="center">Date Created</th>
+										<th scope="col" align="center">Status</th>
+										<th scope="col" align="center">Priority</th>
+										<th scope="col" align="center">Detail</th>
+										<th scope="col" align="center">Delete</th>
 									</tr>
-								</c:forEach>
-					 		</tr>
-						  </tbody>
-					</div>
-				</div>
+								</thead>
+								<tbody>
+									<tr>
+										<c:forEach var="ticket" items="${tickets}">
+											<tr>
+												<td class="hidden-xs" align="center"><div class="tit"
+														style="width: 70px">${ticket.getId()}</div></td>
+												<td><div class="tit" style="width: 150px">${ticket.getTitle()}</div></td>
+												<td><div class="tit" style="width: 150px">${ticket.getCreated_at()}</div></td>
+												<td align="center">
+													<div class="progress" style="width: 150px">
+														<c:choose>
+															<c:when test="${ticket.getStatus().getName()=='Waiting'}">
+																<div data-percentage="25%" style="width: 25%;"
+																	class="progress-bar progress-bar-success"
+																	role="progressbar" aria-valuemin="0"
+																	aria-valuemax="100"></div>
+															</c:when>
+															<c:when
+																test="${ticket.getStatus().getName()=='Processing'}">
+																<div data-percentage="50%" style="width: 50%;"
+																	class="progress-bar progress-bar-success"
+																	role="progressbar" aria-valuemin="0"
+																	aria-valuemax="100"></div>
+															</c:when>
+															<c:when
+																test="${ticket.getStatus().getName()=='Approved'}">
+																<div data-percentage="75%" style="width: 75%;"
+																	class="progress-bar progress-bar-success"
+																	role="progressbar" aria-valuemin="0"
+																	aria-valuemax="100"></div>
+															</c:when>
+															<c:when
+																test="${ticket.getStatus().getName()=='Declined'}">
+																<div data-percentage="0%" style="width: 0%;"
+																	class="progress-bar progress-bar-success"
+																	role="progressbar" aria-valuemin="0"
+																	aria-valuemax="100"></div>
+															</c:when>
+															<c:when
+																test="${ticket.getStatus().getName()=='Finished'}">
+																<div data-percentage="100%" style="width: 100%;"
+																	class="progress-bar progress-bar-success"
+																	role="progressbar" aria-valuemin="0"
+																	aria-valuemax="100"></div>
+															</c:when>
+															<c:when test="${ticket.getStatus().getName()=='closed'}">
+																<div data-percentage="100%" style="width: 100%;"
+																	class="progress-bar progress-bar-success"
+																	role="progressbar" aria-valuemin="0"
+																	aria-valuemax="100"></div>
+															</c:when>
+														</c:choose>
+													</div>
+												</td>
+												<td align="center">
 
+
+
+													<div class="sonar-wrapper" style="width: 100px">
+
+														<!-- Color Control System -->
+														<c:choose>
+															<c:when
+																test="${ticket.getPriority().getImportance()==10}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(255, 0, 0)">
+															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==9}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(255, 90, 0)">
+															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==8}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(252, 147, 1)">
+															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==7}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(252, 210, 0)">
+															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==6}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(252, 252, 0)">
+															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==5}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(50, 252, 0)">
+															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==4}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(0, 252, 33)">
+															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==3}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(0, 252, 104)">
+															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==2}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(0, 252, 210)">
+															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==1}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(0, 176, 252)">
+															</c:when>
+														</c:choose>
+
+														<!-- Color Control System -->
+														<div class="sonar-wave"></div>
+													</div>
+
+
+
+												</td>
+												<td align="center"><div class="tit" style="width: 70px">
+														<form action="TicketDetail" method="GET">
+															<input type="hidden" , name="ticketID"
+																value="${ticket.getId()}">
+															<button type="submit" class="btn text-color"
+																value="TicketDetail">
+																<i class="fa fa-cog"></i>
+															</button>
+														</form>
+													</div></td>
+												<td align="center"><div class="tit" style="width: 70px">
+														<form action="TicketDelete" method="POST">
+															<input type="hidden" , name="ticketID"
+																value="${ticket.getId()}">
+															<button type="submit" class="btn text-color"
+																value="TicketDelete">
+																<i class="fa fa-trash"></i>
+															</button>
+
+														</form>
+													</div></td>
+											</tr>
+										</c:forEach>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+
+				</div>
 			</div>
 		</div>
 	</div>
 
 
 
-	<%} %>
+
+	<%
+		}
+	%>
+
 </body>
 </html>
 

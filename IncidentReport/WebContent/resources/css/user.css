@@ -380,6 +380,9 @@ used to vertically center elements, may need modification if you're not using de
 }
 
 
+.btn{
+    background-color: rgba(100,100,255,0.8);
+}
 
 
 

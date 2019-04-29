@@ -26,25 +26,27 @@
 		<ul class="nav-list">
 
 			<%
-    			if (session.getAttribute("role").equals("Front Desk") || session.getAttribute("role").equals("Manager")|| session.getAttribute("role").equals("Staff")) {
+				if (session.getAttribute("role").equals("Front Desk") || session.getAttribute("role").equals("Manager")
+							|| session.getAttribute("role").equals("Staff") || session.getAttribute("role").equals("Principal Inspector")) {
 			%>
-				<li class="nav-list-item"><a href="controlboard"
-					class="nav-link">Controlboard</a>
-				</li>
+			<li class="nav-list-item"><a href="controlboard"
+				class="nav-link">Controlboard</a></li>
 
-			<%} %>
-			
 			<%
-    			if (session.getAttribute("role").equals("Admin")) {
+				}
 			%>
-				<li class="nav-list-item"><a href="users"
-					class="nav-link">Users</a>
-				</li>
-				<li class="nav-list-item"><a href="dpanel"
-					class="nav-link">Add</a>
-				</li>
 
-			<%} %>
+			<%
+				if (session.getAttribute("role").equals("Admin")) {
+			%>
+			<li class="nav-list-item"><a href="users" class="nav-link">Users</a>
+			</li>
+			<li class="nav-list-item"><a href="dpanel" class="nav-link">Add</a>
+			</li>
+
+			<%
+				}
+			%>
 
 			<li class="nav-list-item"><a href="create-ticket"
 				class="nav-link">Create Ticket</a></li>

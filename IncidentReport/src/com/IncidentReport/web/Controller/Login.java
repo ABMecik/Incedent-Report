@@ -66,7 +66,7 @@ public class Login extends HttpServlet {
 		}else {
 			
 			
-			request.setAttribute("warning", "No valid username or password");
+			request.setAttribute("warning", "Invalid username or password.");
 			displayPage(request, response, "/index.jsp");
 		}
 	}

@@ -12,26 +12,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.IncidentReport.web.Model.Department;
-import com.IncidentReport.web.Model.Role;
 import com.IncidentReport.web.Model.Ticket;
 import com.IncidentReport.web.Model.User;
-import com.IncidentReport.web.Services.DepartmentService;
-import com.IncidentReport.web.Services.RoleService;
 import com.IncidentReport.web.Services.TicketService;
-import com.IncidentReport.web.Services.UserService;
 
 /**
- * Servlet implementation class Users
+ * Servlet implementation class TicketDelete
  */
-@WebServlet({ "/Users", "/users", "/User-List", "/UserList", "/user-list", "/userlist" })
-public class Users extends HttpServlet {
+@WebServlet({ "/TicketDelete", "/Ticket-Delete", "/ticketdelete", "/ticket-delete" })
+public class TicketDelete extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Users() {
+    public TicketDelete() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -42,43 +37,6 @@ public class Users extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
-		
-		
-		
-
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
-
-		
-		if(user==null) {
-			request.setAttribute("warning", "You are not authorized to do so.");
-			displayPage(request, response, "/index.jsp");
-		}
-		else {
-			String role = (String) session.getAttribute("role");
-			if(!role.equals("Admin")) {
-				request.setAttribute("warning", "You are not authorized to do so.");
-				openIndex(request, response,"/index.jsp",user);
-			}else {
-				
-
-				UserService us = new UserService();
-				DepartmentService ds = new DepartmentService();
-				RoleService rs = new RoleService();
-
-				List<Role> roles = rs.allRoles();
-				List<Department> departments = ds.allDepartments();
-				
-				List<User> users = us.allUsers();
-
-				request.setAttribute("users", users);
-				request.setAttribute("departments", departments);
-				request.setAttribute("roles", roles);
-
-				displayPage(request, response, "/users.jsp");
-				
-			}
-		}
 	}
 
 	/**
@@ -87,6 +45,30 @@ public class Users extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+		
+		
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+
+		
+		if(user==null) {
+			displayPage(request, response, "/index.jsp");
+		}
+		else {
+			
+			int ticketID = Integer.parseInt(request.getParameter("ticketID"));
+			
+			TicketService ts = new TicketService();
+			boolean tt = ts.deleteTicket(ticketID);
+			
+			if(tt) {
+				request.setAttribute("info", "Ticket Deleted");
+			}else {
+				request.setAttribute("warning", "You cannot delete the report that was processed.");
+			}
+			
+			openIndex(request, response, "/index.jsp", user);
+		}
 	}
 	
 	

@@ -371,6 +371,27 @@ public class TicketService {
 
 
 
+	public boolean deleteTicket(int ticketID) {
+		try {
+
+			em.getTransaction().begin();
+			Ticket ticket = em.find(Ticket.class, ticketID);
+			em.remove(ticket);
+			
+			em.getTransaction().commit();
+			em.close();
+			return true;
+		}
+		catch(Exception e){
+			em.close();
+			return false;
+		}
+	}
+
+
+
+
+
 
 
 

@@ -48,13 +48,13 @@ public class controlboard extends HttpServlet {
 
 		
 		if(user==null) {
-			request.setAttribute("warning", "No have permission");
+			request.setAttribute("warning", "You are not authorized to do so.");
 			displayPage(request, response, "/index.jsp");
 		}
 		else {
 			String role = (String) session.getAttribute("role");
 			if(role.equals("User")) {
-				request.setAttribute("warning", "No have permission");
+				request.setAttribute("warning", "You are not authorized to do so.");
 				openIndex(request, response,"/index.jsp",user);
 			}else {
 				
@@ -92,6 +92,18 @@ public class controlboard extends HttpServlet {
 					List<Ticket> stickets = ts.staffsTickets(user.getId());
 
 					request.setAttribute("stickets", stickets);
+					displayPage(request, response, "/controlboard.jsp");
+				}
+				
+				if(role.equals("Principal Inspector")) {
+
+					TicketService ts = new TicketService();
+					List<Ticket> atickets = ts.AllTickets();
+					UserService us = new UserService();
+					List<User> managers = us.findRoleList("Manager");
+
+					request.setAttribute("managers", managers);
+					request.setAttribute("atickets", atickets);
 					displayPage(request, response, "/controlboard.jsp");
 				}
 			}

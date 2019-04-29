@@ -67,13 +67,13 @@ public class SetUser extends HttpServlet {
 		User user = (User) session.getAttribute("user");
 		
 		if(user==null) {
-			request.setAttribute("warning", "No have permission");
+			request.setAttribute("warning", "You are not authorized to do so.");
 			displayPage(request, response, "/index.jsp");
 		}
 		else {
 			String role = (String) session.getAttribute("role");
 			if(!role.equals("Admin")) {
-				request.setAttribute("warning", "No have permission");
+				request.setAttribute("warning", "You are not authorized to do so.");
 				openIndex(request, response,"/index.jsp",user);
 			}else {
 				int sSI = Integer.parseInt(request.getParameter("set-user-id"));

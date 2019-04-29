@@ -30,25 +30,27 @@
 		<ul class="nav-list">
 
 			<%
-    			if (session.getAttribute("role").equals("Front Desk") || session.getAttribute("role").equals("Manager")|| session.getAttribute("role").equals("Staff")) {
+				if (session.getAttribute("role").equals("Front Desk") || session.getAttribute("role").equals("Manager")
+							|| session.getAttribute("role").equals("Staff") || session.getAttribute("role").equals("Principal Inspector")) {
 			%>
-				<li class="nav-list-item"><a href="controlboard"
-					class="nav-link">Controlboard</a>
-				</li>
+			<li class="nav-list-item"><a href="controlboard"
+				class="nav-link">Controlboard</a></li>
 
-			<%} %>
-			
 			<%
-    			if (session.getAttribute("role").equals("Admin")) {
+				}
 			%>
-				<li class="nav-list-item"><a href="users"
-					class="nav-link">Users</a>
-				</li>
-				<li class="nav-list-item"><a href="dpanel"
-					class="nav-link">Add</a>
-				</li>
 
-			<%} %>
+			<%
+				if (session.getAttribute("role").equals("Admin")) {
+			%>
+			<li class="nav-list-item"><a href="users" class="nav-link">Users</a>
+			</li>
+			<li class="nav-list-item"><a href="dpanel" class="nav-link">Add</a>
+			</li>
+
+			<%
+				}
+			%>
 
 			<li class="nav-list-item"><a href="create-ticket"
 				class="nav-link">Create Ticket</a></li>
@@ -63,7 +65,6 @@
 			</li>
 		</ul>
 	</nav>
-
     
     
     <div class="login-wrap">
@@ -178,6 +179,41 @@
                                 <c:forEach var="message" items="${messages}">
                                 	<tr>
 	                                <td align="center">${message.getSender().getRole().getName()}</td>
+	                                <td align="center">${message.getComment()}</td>
+	                                </tr>
+                                </c:forEach>
+                                 
+                          </tbody>
+                        </table>
+                      </div>
+        </div></div>
+                
+        
+        <%} %>
+        
+        <%
+    			if (session.getAttribute("role").equals("Principal Inspector")) {
+			%>
+        <div class="col-md-10 col-md-offset-1">
+                    <div class="panel panel-default panel-table">
+                      <div class="panel-heading">
+                        <div class="row">
+                        </div>
+                      </div>
+                      <div class="panel-body">
+                        <table class="table table-striped table-bordered table-list" cellspacing="20">
+                          <thead>
+                            <tr></tr>                            
+                            <tr></tr>
+                            <tr></tr>
+                          </thead>
+                          <tbody>
+                                <td class="hidden-xs" align="center">Sender</td>
+                                <td class="hidden-xs" align="center">Message</td>
+                                
+                                <c:forEach var="message" items="${messages}">
+                                	<tr>
+	                                <td align="center">${message.getSender().getRole().getName()} - ${message.getSender().getName()} ${message.getSender().getSurname()} - ${message.getSender().getDept().getName()}</td>
 	                                <td align="center">${message.getComment()}</td>
 	                                </tr>
                                 </c:forEach>

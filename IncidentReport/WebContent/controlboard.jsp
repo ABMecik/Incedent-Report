@@ -38,25 +38,27 @@
 		<ul class="nav-list">
 
 			<%
-    			if (session.getAttribute("role").equals("Front Desk") || session.getAttribute("role").equals("Manager")|| session.getAttribute("role").equals("Staff")) {
+				if (session.getAttribute("role").equals("Front Desk") || session.getAttribute("role").equals("Manager")
+							|| session.getAttribute("role").equals("Staff") || session.getAttribute("role").equals("Principal Inspector")) {
 			%>
-				<li class="nav-list-item"><a href="controlboard"
-					class="nav-link">Controlboard</a>
-				</li>
+			<li class="nav-list-item"><a href="controlboard"
+				class="nav-link">Controlboard</a></li>
 
-			<%} %>
-			
 			<%
-    			if (session.getAttribute("role").equals("Admin")) {
+				}
 			%>
-				<li class="nav-list-item"><a href="users"
-					class="nav-link">Users</a>
-				</li>
-				<li class="nav-list-item"><a href="dpanel"
-					class="nav-link">Add</a>
-				</li>
 
-			<%} %>
+			<%
+				if (session.getAttribute("role").equals("Admin")) {
+			%>
+			<li class="nav-list-item"><a href="users" class="nav-link">Users</a>
+			</li>
+			<li class="nav-list-item"><a href="dpanel" class="nav-link">Add</a>
+			</li>
+
+			<%
+				}
+			%>
 
 			<li class="nav-list-item"><a href="create-ticket"
 				class="nav-link">Create Ticket</a></li>
@@ -76,94 +78,110 @@
 		if (session.getAttribute("role").equals("Front Desk")) {
 	%>
 
-	<div class="login-wrap" style="margin-left: 1px">
-		<div class="login-html">
+
+
+	<div class="lbox-wrap" style="margin-left: 1px">
+		<div class="lbox-html">
 			<div class="container">
 				<div class="row">
-					<p></p>
 					<h1>Manage Tickets</h1>
+					<br> <br> <br> <br>
 					<div class="col-md-10 col-md-offset-1">
 						<div class="panel panel-default panel-table">
 							<div class="panel-heading">
 								<div class="row"></div>
 							</div>
-							
+
 							<form action="SearchTicket" method="POST" class="form-inline">
 								<div class="form-group mb-2">
 									<select class="form-control" name="lStatus">
-										<option value="-1"> ANY </option>
+										<option value="-1">ANY</option>
 										<c:forEach var="status" items="${statuses}">
 											<option value="${status.getId()}">${status.getName()}</option>
 										</c:forEach>
 									</select>
 								</div>
 								<div class="form-group mb-2">
-										<input type="text" class="form-control" name="lTitle" placeholder="Search by title" /> 
-										<input type="hidden" name="searchType" value="fs">
-										<input type="submit" value="SearchTicket" class="btn btn-primary" />
+									<input type="text" class="form-control" name="lTitle"
+										placeholder="Search by title" /> <input type="hidden"
+										name="searchType" value="fs"> <input type="submit"
+										value="SearchTicket" class="btn btn-primary" />
 								</div>
 
 							</form>
-							
-							
+
+							<br>
 							<table class="table">
-		  <thead class="thead-light">
-		    <tr>
-		      <th scope="col"></th>
-		      <th scope="col">ID</th>
-		      <th scope="col">Title</th>
-		      <th scope="col">Date Created</th>
-		      <th scope="col">Detail</th>
-		      <th scope="col">Status</th>
-		      <th scope="col">Priority</th>
-		      <th scope="col">Notes</th>
-		      <th scope="col">Send To</th>
-		      <th scope="col"></th>
-		    </tr>
-		  </thead>
-		  <tbody>
-		         <tr >
-                <c:forEach var="ticket" items="${ftickets}">
+								<thead class="thead-light">
+									<tr>
+										<th scope="col" align="center"></th>
+										<th scope="col" align="center">ID</th>
+										<th scope="col" align="center">Title</th>
+										<th scope="col" align="center">Date Created</th>
+										<th scope="col" align="center">Detail</th>
+										<th scope="col" align="center">Status</th>
+										<th scope="col" align="center">Priority</th>
+										<th scope="col" align="center">Notes</th>
+										<th scope="col" align="center">Send To</th>
+										<th scope="col" align="center"></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<c:forEach var="ticket" items="${ftickets}">
 											<tr>
 												<td align="center">
-													<div class="sonar-wrapper">
+													<div class="sonar-wrapper" style="width: 100px">
 
 														<!-- Color Control System -->
 														<c:choose>
-															<c:when test="${ticket.getStatus().getName()=='Waiting'}">
-																<div class="sonar-emitter"
-																	style="background-color: white">
-															</c:when>
 															<c:when
-																test="${ticket.getStatus().getName()=='Processing'}">
+																test="${ticket.getPriority().getImportance()==10}">
 																<div class="sonar-emitter"
-																	style="background-color: lightgreen">
+																	style="background-color: rgb(255, 0, 0)">
 															</c:when>
-															<c:when
-																test="${ticket.getStatus().getName()=='Approved'}">
+															<c:when test="${ticket.getPriority().getImportance()==9}">
 																<div class="sonar-emitter"
-																	style="background-color: yellow">
+																	style="background-color: rgb(255, 90, 0)">
 															</c:when>
-															<c:when
-																test="${ticket.getStatus().getName()=='Declined'}">
-																<div class="sonar-emitter" style="background-color: red">
-															</c:when>
-															<c:when
-																test="${ticket.getStatus().getName()=='Finished'}">
+															<c:when test="${ticket.getPriority().getImportance()==8}">
 																<div class="sonar-emitter"
-																	style="background-color: blue">
+																	style="background-color: rgb(252, 147, 1)">
 															</c:when>
-															<c:when
-																test="${ticket.getStatus().getName()=='closed'}">
+															<c:when test="${ticket.getPriority().getImportance()==7}">
 																<div class="sonar-emitter"
-																	style="background-color: black">
+																	style="background-color: rgb(252, 210, 0)">
+															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==6}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(252, 252, 0)">
+															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==5}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(50, 252, 0)">
+															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==4}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(0, 252, 33)">
+															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==3}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(0, 252, 104)">
+															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==2}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(0, 252, 210)">
+															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==1}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(0, 176, 252)">
 															</c:when>
 														</c:choose>
 
 														<!-- Color Control System -->
 														<div class="sonar-wave"></div>
 													</div>
-													</div>
+
 												</td>
 												<td class="hidden-xs" align="center">${ticket.getId()}</td>
 												<td align="center">${ticket.getTitle()}</td>
@@ -186,7 +204,8 @@
 														<div class="container">
 															<div class="row">
 																<div class="form-group mb-2">
-																	<select class="form-control" name="set-status" style="width: 100px">
+																	<select class="form-control" name="set-status"
+																		style="width: 100px">
 																		<option selected="${ticket.getStatus().getName()}"
 																			value="${ticket.getStatus().getName()}">${ticket.getStatus().getName()}</option>
 																		<option value="Waiting">Waiting</option>
@@ -203,7 +222,8 @@
 														<div class="container">
 															<div class="row">
 																<div class="form-group mb-2">
-																	<select class="form-control" name="set-priority" style="width: 50px">
+																	<select class="form-control" name="set-priority"
+																		style="width: 80px">
 																		<option
 																			selected="${ticket.getPriority().getImportance()}"
 																			value="${ticket.getPriority().getImportance()}">${ticket.getPriority().getImportance()}</option>
@@ -232,7 +252,8 @@
 														<div class="container">
 															<div class="row">
 																<div class="form-group mb-2"">
-																	<select class="form-control" name="set-manager" style="width: 100px">
+																	<select class="form-control" name="set-manager"
+																		style="width: 150px">
 																		<option value="" selected disabled hidden>Choose</option>
 																		<c:forEach var="manager" items="${managers}">
 																			<option value="${manager.getId()}">${manager.getName()}
@@ -246,15 +267,16 @@
 													</td>
 													<td align="center">
 														<div class="group">
-															<input class="btn btn-primary" type="submit" value="UpdateTicket">
+															<input class="btn btn-primary" type="submit"
+																value="UpdateTicket">
 														</div>
 													</td>
 												</form>
 											</tr>
 										</c:forEach>
-            </tr>
-		  </tbody>
-		</table>
+									</tr>
+								</tbody>
+							</table>
 						</div>
 					</div>
 				</div>
@@ -268,12 +290,13 @@
 
 
 
-	<div class="login-wrap" style="margin-left: 1px">
-		<div class="login-html">
+	<div class="lbox-wrap" style="margin-left: 1px">
+		<div class="lbox-html">
 			<div class="container">
 				<div class="row">
 					<p></p>
 					<h1>Manage Tickets</h1>
+					<br> <br> <br> <br>
 					<div class="col-md-10 col-md-offset-1">
 						<div class="panel panel-default panel-table">
 							<div class="panel-heading">
@@ -285,137 +308,151 @@
 							<form action="SearchTicket" method="POST" class="form-inline">
 								<div class="form-group mb-2">
 									<select class="form-control" name="lStatus">
-										<option value="-1"> ANY </option>
+										<option value="-1">ANY</option>
 										<c:forEach var="status" items="${statuses}">
 											<option value="${status.getId()}">${status.getName()}</option>
 										</c:forEach>
 									</select>
 								</div>
 								<div class="form-group mb-2">
-										<input type="text" class="form-control" name="lTitle" placeholder="Search by title" /> 
-										<input type="hidden" name="searchType" value="ms">
-										<input type="submit" value="SearchTicket" class="btn btn-primary" />
+									<input type="text" class="form-control" name="lTitle"
+										placeholder="Search by title" /> <input type="hidden"
+										name="searchType" value="ms"> <input type="submit"
+										value="SearchTicket" class="btn btn-primary" />
 								</div>
 
 							</form>
-
+							<br>
 							<table class="table">
-		  <thead class="thead-light">
-		    <tr>
-		      <th scope="col"></th>
-		      <th scope="col">ID</th>
-		      <th scope="col">Title</th>
-		      <th scope="col">Date Created</th>
-		      <th scope="col">Detail</th>
-		      <th scope="col">Notes</th>
-		      <th scope="col">Close</th>
-		      <th scope="col">Send To</th>
-		      <th scope="col"></th>
-		    </tr>
-		  </thead>
-		  <tbody>
-			<c:forEach var="ticket" items="${mtickets}">
-				<tr>
-					<td align="center">
-						<div class="sonar-wrapper">
+								<thead class="thead-light">
+									<tr>
+										<th scope="col" align="center"></th>
+										<th scope="col" align="center">ID</th>
+										<th scope="col" align="center">Title</th>
+										<th scope="col" align="center">Date Created</th>
+										<th scope="col" align="center">Detail</th>
+										<th scope="col" align="center">Notes</th>
+										<th scope="col" align="center">Close</th>
+										<th scope="col" align="center">Send To</th>
+										<th scope="col" align="center"></th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach var="ticket" items="${mtickets}">
+										<tr>
+											<td align="center">
+												<div class="sonar-wrapper" style="width: 100px">
 
-							<!-- Color Control System -->
-														<c:choose>
-															<c:when test="${ticket.getStatus().getName()=='Waiting'}">
-																<div class="sonar-emitter"
-																	style="background-color: white">
-															</c:when>
-															<c:when
-																test="${ticket.getStatus().getName()=='Processing'}">
-																<div class="sonar-emitter"
-																	style="background-color: lightgreen">
-															</c:when>
-															<c:when
-																test="${ticket.getStatus().getName()=='Approved'}">
-																<div class="sonar-emitter"
-																	style="background-color: yellow">
-															</c:when>
-															<c:when
-																test="${ticket.getStatus().getName()=='Declined'}">
-																<div class="sonar-emitter" style="background-color: red">
-															</c:when>
-															<c:when
-																test="${ticket.getStatus().getName()=='Finished'}">
-																<div class="sonar-emitter"
-																	style="background-color: blue">
-															</c:when>
-															<c:when
-																test="${ticket.getStatus().getName()=='closed'}">
-																<div class="sonar-emitter"
-																	style="background-color: black">
-															</c:when>
-														</c:choose>
+													<!-- Color Control System -->
+													<c:choose>
+														<c:when test="${ticket.getPriority().getImportance()==10}">
+															<div class="sonar-emitter"
+																style="background-color: rgb(255, 0, 0)">
+														</c:when>
+														<c:when test="${ticket.getPriority().getImportance()==9}">
+															<div class="sonar-emitter"
+																style="background-color: rgb(255, 90, 0)">
+														</c:when>
+														<c:when test="${ticket.getPriority().getImportance()==8}">
+															<div class="sonar-emitter"
+																style="background-color: rgb(252, 147, 1)">
+														</c:when>
+														<c:when test="${ticket.getPriority().getImportance()==7}">
+															<div class="sonar-emitter"
+																style="background-color: rgb(252, 210, 0)">
+														</c:when>
+														<c:when test="${ticket.getPriority().getImportance()==6}">
+															<div class="sonar-emitter"
+																style="background-color: rgb(252, 252, 0)">
+														</c:when>
+														<c:when test="${ticket.getPriority().getImportance()==5}">
+															<div class="sonar-emitter"
+																style="background-color: rgb(50, 252, 0)">
+														</c:when>
+														<c:when test="${ticket.getPriority().getImportance()==4}">
+															<div class="sonar-emitter"
+																style="background-color: rgb(0, 252, 33)">
+														</c:when>
+														<c:when test="${ticket.getPriority().getImportance()==3}">
+															<div class="sonar-emitter"
+																style="background-color: rgb(0, 252, 104)">
+														</c:when>
+														<c:when test="${ticket.getPriority().getImportance()==2}">
+															<div class="sonar-emitter"
+																style="background-color: rgb(0, 252, 210)">
+														</c:when>
+														<c:when test="${ticket.getPriority().getImportance()==1}">
+															<div class="sonar-emitter"
+																style="background-color: rgb(0, 176, 252)">
+														</c:when>
+													</c:choose>
 
-														<!-- Color Control System -->
+													<!-- Color Control System -->
 
 
-							<div class="sonar-wave"></div>
-						</div>
-						</div>
-					</td>
-					<td class="hidden-xs" align="center">${ticket.getId()}</td>
-					<td align="center">${ticket.getTitle()}</td>
-					<td align="center">${ticket.getCreated_at()}</td>
-					<td align="center">
-						<form action="TicketDetail" method="GET">
-							<input type="hidden" , name="ticketID"
-								value="${ticket.getId()}">
-							<button type="submit" class="btn text-color"
-								value="TicketDetail">
-								<i class="fa fa-cog"></i>
-							</button>
-						</form>
-					</td>
+													<div class="sonar-wave"></div>
+												</div>
+												</div>
+											</td>
+											<td class="hidden-xs" align="center">${ticket.getId()}</td>
+											<td align="center">${ticket.getTitle()}</td>
+											<td align="center">${ticket.getCreated_at()}</td>
+											<td align="center">
+												<form action="TicketDetail" method="GET">
+													<input type="hidden" , name="ticketID"
+														value="${ticket.getId()}">
+													<button type="submit" class="btn text-color"
+														value="TicketDetail">
+														<i class="fa fa-cog"></i>
+													</button>
+												</form>
+											</td>
 
-					<form action="UpdateTicket" method="POST">
-						<input type="hidden" name="UpdateType" value="mf">
-						<input type="hidden" name="ticketID"
-							value="${ticket.getId()}">
-						<td align="center">
-							<div class="form-group" id="add-note" name="notes">
-								<textarea class="form-control" rows="2" id="comment"
-									name="notes" style="width: 200px"></textarea>
-							</div>
-						</td>
-						<td align="center">
-							<div class="form-check">
-								<input type="checkbox" class="form-check-input"
-									name="close-ticket">
-							</div>
-						</td>
-						<td align="center">
-							<div class="container">
-								<div class="row">
-									<div class="form-group mb-2">
-										<select class="form-control" name="set-staff" style="width: 100px">
-											<option value="" selected disabled hidden>Choose</option>
-											<option value="${ticket.getFrontdesk().getId()}">Front
-												Desk</option>
-											<c:forEach var="staff" items="${staffs}">
-												<option value="${staff.getId()}">${staff.getName()}
-													${staff.getSurname()}</option>
-											</c:forEach>
-										</select>
-									</div>
-								</div>
-							</div>
-						</td>
-						
-						<td align="center">
-							<div class="group">
-								<input class="btn btn-primary" type="submit" value="UpdateTicket">
-							</div>
-						</td>
-					</form>
-				</tr>
-			</c:forEach>
-		</tbody>
-		</table>
+											<form action="UpdateTicket" method="POST">
+												<input type="hidden" name="UpdateType" value="mf"> <input
+													type="hidden" name="ticketID" value="${ticket.getId()}">
+												<td align="center">
+													<div class="form-group" id="add-note" name="notes">
+														<textarea class="form-control" rows="2" id="comment"
+															name="notes" style="width: 200px"></textarea>
+													</div>
+												</td>
+												<td align="center">
+													<div class="form-check">
+														<input type="checkbox" class="form-check-input"
+															name="close-ticket">
+													</div>
+												</td>
+												<td align="center">
+													<div class="container">
+														<div class="row">
+															<div class="form-group mb-2">
+																<select class="form-control" name="set-staff"
+																	style="width: 150px">
+																	<option value="" selected disabled hidden>Choose</option>
+																	<option value="${ticket.getFrontdesk().getId()}">Front
+																		Desk</option>
+																	<c:forEach var="staff" items="${staffs}">
+																		<option value="${staff.getId()}">${staff.getName()}
+																			${staff.getSurname()}</option>
+																	</c:forEach>
+																</select>
+															</div>
+														</div>
+													</div>
+												</td>
+
+												<td align="center">
+													<div class="group">
+														<input class="btn btn-primary" type="submit"
+															value="UpdateTicket">
+													</div>
+												</td>
+											</form>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
 						</div>
 					</div>
 				</div>
@@ -427,156 +464,390 @@
 
 
 	<%
-		}else if (session.getAttribute("role").equals("Staff")) {
+		} else if (session.getAttribute("role").equals("Staff")) {
+	%>
+
+
+	<div class="lbox-wrap" style="margin-left: 1px">
+		<div class="lbox-html">
+			<div class="container">
+				<div class="row">
+					<p></p>
+					<h1>Manage Tickets</h1>
+					<br> <br> <br> <br>
+					<div class="col-md-10 col-md-offset-1">
+						<div class="panel panel-default panel-table">
+							<div class="panel-heading">
+								<div class="row"></div>
+
+								<form action="SearchTicket" method="POST" class="form-inline">
+									<div class="form-group mb-2">
+										<select class="form-control" name="lStatus">
+											<option value="-1">ANY</option>
+											<c:forEach var="status" items="${statuses}">
+												<option value="${status.getId()}">${status.getName()}</option>
+											</c:forEach>
+										</select>
+									</div>
+									<div class="form-group mb-2">
+										<input type="text" class="form-control" name="lTitle"
+											placeholder="Search by title" /> <input type="hidden"
+											name="searchType" value="ss"> <input type="submit"
+											value="SearchTicket" class="btn btn-primary" />
+									</div>
+
+								</form>
+								<br>
+
+							</div>
+							<div class="panel-body">
+								<table class="table">
+									<thead class="thead-light">
+										<tr>
+											<th scope="col" align="center"></th>
+											<th scope="col" align="center">ID</th>
+											<th scope="col" align="center">Title</th>
+											<th scope="col" align="center">Date Created</th>
+											<th scope="col" align="center">Detail</th>
+											<th scope="col" align="center">Notes</th>
+											<th scope="col" align="center">Photo</th>
+											<th scope="col" align="center"></th>
+										</tr>
+									</thead>
+									<tbody>
+
+										<c:forEach var="ticket" items="${stickets}">
+											<tr>
+												<td align="center">
+													<div class="sonar-wrapper" style="width: 100px">
+
+
+														<!-- Color Control System -->
+														<c:choose>
+															<c:when
+																test="${ticket.getPriority().getImportance()==10}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(255, 0, 0)">
+															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==9}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(255, 90, 0)">
+															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==8}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(252, 147, 1)">
+															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==7}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(252, 210, 0)">
+															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==6}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(252, 252, 0)">
+															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==5}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(50, 252, 0)">
+															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==4}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(0, 252, 33)">
+															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==3}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(0, 252, 104)">
+															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==2}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(0, 252, 210)">
+															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==1}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(0, 176, 252)">
+															</c:when>
+														</c:choose>
+
+														<!-- Color Control System -->
+
+														<div class="sonar-wave"></div>
+													</div>
+													</div>
+												</td>
+												<td class="hidden-xs" align="center">${ticket.getId()}</td>
+												<td align="center">${ticket.getTitle()}</td>
+												<td align="center">${ticket.getCreated_at()}</td>
+												<td align="center">
+
+													<form action="TicketDetail" method="GET">
+														<input type="hidden" , name="ticketID"
+															value="${ticket.getId()}">
+														<button type="submit" class="btn text-color"
+															value="TicketDetail">
+															<i class="fa fa-cog"></i>
+														</button>
+													</form>
+
+													<form action="UpdateTicket" method="POST"
+														enctype='multipart/form-data'>
+														<input type="hidden" name="ticketID"
+															value="${ticket.getId()}"> <input type="hidden"
+															name="UpdateType" value="tsf">
+														<td align="center">
+															<div class="form-group" id="add-note" name="notes">
+																<textarea class="form-control" rows="2" id="comment"
+																	name="notes" style="width: 200px"></textarea>
+															</div>
+														</td>
+														<td align="center">
+															<div class="tit" style="width: 150px">
+																<div class="row">
+																	<input type="file" name="staff-image" multiple="">
+																</div>
+															</div>
+														</td>
+														<td align="center">
+															<div class="group">
+																<input class="btn btn-primary" type="submit"
+																	value="UpdateTicket">
+															</div>
+														</td>
+													</form>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+	<%
+		} else if (session.getAttribute("role").equals("Principal Inspector")) {
 	%>
 	
 	
-    <div class="login-wrap" style="margin-left: 1px">
-	<div class="login-html">
-        <div class="container">
-            <div class="row">
-            <p></p>
-            <h1>Manage Tickets</h1>
-                <div class="col-md-10 col-md-offset-1">
-                    <div class="panel panel-default panel-table">
-                      <div class="panel-heading">
-                        <div class="row">
-                        </div>
-                        
+	
+
+	<div class="lbox-wrap" style="margin-left: 1px">
+		<div class="lbox-html">
+			<div class="container">
+				<div class="row">
+					<h1>Manage Tickets</h1>
+					<br> <br> <br> <br>
+					<div class="col-md-10 col-md-offset-1">
+						<div class="panel panel-default panel-table">
+							<div class="panel-heading">
+								<div class="row"></div>
+							</div>
+
 							<form action="SearchTicket" method="POST" class="form-inline">
 								<div class="form-group mb-2">
 									<select class="form-control" name="lStatus">
-										<option value="-1"> ANY </option>
+										<option value="-1">ANY</option>
 										<c:forEach var="status" items="${statuses}">
 											<option value="${status.getId()}">${status.getName()}</option>
 										</c:forEach>
 									</select>
 								</div>
 								<div class="form-group mb-2">
-										<input type="text" class="form-control" name="lTitle" placeholder="Search by title" /> 
-										<input type="hidden" name="searchType" value="ss">
-										<input type="submit" value="SearchTicket" class="btn btn-primary" />
+									<input type="text" class="form-control" name="lTitle"
+										placeholder="Search by title" /> <input type="hidden"
+										name="searchType" value="fs"> <input type="submit"
+										value="SearchTicket" class="btn btn-primary" />
 								</div>
 
 							</form>
-                        
-                        
-                      </div>
-                      <div class="panel-body" >
-                           		<table class="table">
-		  <thead class="thead-light">
-		    <tr>
-		      <th scope="col"></th>
-		      <th scope="col">ID</th>
-		      <th scope="col">Title</th>
-		      <th scope="col">Date Created</th>
-		      <th scope="col">Detail</th>
-		      <th scope="col">Notes</th>
-		      <th scope="col">Photo</th>
-		      <th scope="col"></th>
-		    </tr>
-		  </thead>
-		  <tbody>
 
-										<c:forEach var="ticket" items="${stickets}">
-                              <tr>
-                                <td align="center">
-                                    <div class="sonar-wrapper">
-                                        
-                                        
-                                       <!-- Color Control System -->
+							<br>
+							<table class="table">
+								<thead class="thead-light">
+									<tr>
+										<th scope="col" align="center"></th>
+										<th scope="col" align="center">ID</th>
+										<th scope="col" align="center">Title</th>
+										<th scope="col" align="center">Date Created</th>
+										<th scope="col" align="center">Detail</th>
+										<th scope="col" align="center">Status</th>
+										<th scope="col" align="center">Priority</th>
+										<th scope="col" align="center">Notes</th>
+										<th scope="col" align="center">Send To</th>
+										<th scope="col" align="center"></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<c:forEach var="ticket" items="${atickets}">
+											<tr>
+												<td align="center">
+													<div class="sonar-wrapper" style="width: 100px">
+
+														<!-- Color Control System -->
 														<c:choose>
-															<c:when test="${ticket.getStatus().getName()=='Waiting'}">
-																<div class="sonar-emitter"
-																	style="background-color: white">
-															</c:when>
 															<c:when
-																test="${ticket.getStatus().getName()=='Processing'}">
+																test="${ticket.getPriority().getImportance()==10}">
 																<div class="sonar-emitter"
-																	style="background-color: lightgreen">
+																	style="background-color: rgb(255, 0, 0)">
 															</c:when>
-															<c:when
-																test="${ticket.getStatus().getName()=='Approved'}">
+															<c:when test="${ticket.getPriority().getImportance()==9}">
 																<div class="sonar-emitter"
-																	style="background-color: yellow">
+																	style="background-color: rgb(255, 90, 0)">
 															</c:when>
-															<c:when
-																test="${ticket.getStatus().getName()=='Declined'}">
-																<div class="sonar-emitter" style="background-color: red">
-															</c:when>
-															<c:when
-																test="${ticket.getStatus().getName()=='Finished'}">
+															<c:when test="${ticket.getPriority().getImportance()==8}">
 																<div class="sonar-emitter"
-																	style="background-color: blue">
+																	style="background-color: rgb(252, 147, 1)">
 															</c:when>
-															<c:when
-																test="${ticket.getStatus().getName()=='closed'}">
+															<c:when test="${ticket.getPriority().getImportance()==7}">
 																<div class="sonar-emitter"
-																	style="background-color: black">
+																	style="background-color: rgb(252, 210, 0)">
+															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==6}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(252, 252, 0)">
+															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==5}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(50, 252, 0)">
+															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==4}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(0, 252, 33)">
+															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==3}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(0, 252, 104)">
+															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==2}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(0, 252, 210)">
+															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==1}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(0, 176, 252)">
 															</c:when>
 														</c:choose>
 
 														<!-- Color Control System -->
-                                        
-                                        <div class="sonar-wave"></div>
-                                      </div>
-                                    </div>  
-                                </td>
-                                <td class="hidden-xs" align="center">${ticket.getId()}</td>
-								<td align="center">${ticket.getTitle()}</td>
-								<td align="center">${ticket.getCreated_at()}</td>
-                                <td align="center">
-                                
-                                    <form action="TicketDetail" method="GET">
-										<input type="hidden" , name="ticketID"
-											value="${ticket.getId()}">
-										<button type="submit" class="btn text-color"
-											value="TicketDetail">
-											<i class="fa fa-cog"></i>
-										</button>
-									</form>
-													
-                                  <form action="UpdateTicket" method="POST"  enctype='multipart/form-data'>
-                                  <input type="hidden" name="ticketID" value="${ticket.getId()}">
-                                  <input type="hidden" name="UpdateType" value="tsf">
-                                  <td align="center">
-									<div class="form-group" id="add-note" name="notes">
-										<textarea class="form-control" rows="2" id="comment"
-											name="notes" style="width: 200px"></textarea>
-									</div>
-								</td>
-                                  <td align="center">
-                                    <div class="container">
-                                        <div class="row">
-                                            <div>
-                                        <label class=newbtn>
-                                            <input id="pic" class='pis' onchange="readURL(this);" name="staff-image" type="file" >
-                                        </label>
-                                        </div>
-                                        </div>
-                                    </div>
-                                  </td>
-                                <td align="center">
-							<div class="group">
-								<input class="btn btn-primary" type="submit" value="UpdateTicket">
-							</div>
-						</td>
-                                </form>
-                              </tr>
-                            </c:forEach>       
-									</tbody>
-		</table>
-                      </div>
-        </div></div></div>
-         
+														<div class="sonar-wave"></div>
+													</div>
+
+												</td>
+												<td class="hidden-xs" align="center">${ticket.getId()}</td>
+												<td align="center">${ticket.getTitle()}</td>
+												<td align="center">${ticket.getCreated_at()}</td>
+												<td align="center">
+													<form action="TicketDetail" method="GET">
+														<input type="hidden" , name="ticketID"
+															value="${ticket.getId()}">
+														<button type="submit" class="btn text-color"
+															value="TicketDetail">
+															<i class="fa fa-cog"></i>
+														</button>
+													</form>
+												</td>
+												<form action="UpdateTicket" method="POST">
+													<input type="hidden" name="UpdateType" value="uf">
+													<input type="hidden" name="ticketID"
+														value="${ticket.getId()}">
+													<td align="center">
+														<div class="container">
+															<div class="row">
+																<div class="form-group mb-2">
+																	<select class="form-control" name="set-status"
+																		style="width: 100px">
+																		<option selected="${ticket.getStatus().getName()}"
+																			value="${ticket.getStatus().getName()}">${ticket.getStatus().getName()}</option>
+																		<option value="Waiting">Waiting</option>
+																		<option value="Processing">Processing</option>
+																		<option value="Approved">Approved</option>
+																		<option value="Declined">Declined</option>
+																		<option value="Finished">Finished</option>
+																	</select>
+																</div>
+															</div>
+														</div>
+													</td>
+													<td align="center">
+														<div class="container">
+															<div class="row">
+																<div class="form-group mb-2">
+																	<select class="form-control" name="set-priority"
+																		style="width: 80px">
+																		<option
+																			selected="${ticket.getPriority().getImportance()}"
+																			value="${ticket.getPriority().getImportance()}">${ticket.getPriority().getImportance()}</option>
+																		<option value="1">1</option>
+																		<option value="2">2</option>
+																		<option value="3">3</option>
+																		<option value="4">4</option>
+																		<option value="5">5</option>
+																		<option value="6">6</option>
+																		<option value="7">7</option>
+																		<option value="8">8</option>
+																		<option value="9">9</option>
+																		<option value="10">10</option>
+																	</select>
+																</div>
+															</div>
+														</div>
+													</td>
+													<td align="center">
+														<div class="form-group" id="add-note" name="notes">
+															<textarea class="form-control" rows="2" id="comment"
+																name="notes" style="width: 200px"></textarea>
+														</div>
+													</td>
+													<td align="center">
+														<div class="container">
+															<div class="row">
+																<div class="form-group mb-2"">
+																	<select class="form-control" name="set-manager"
+																		style="width: 150px">
+																		<option value="" selected disabled hidden>Choose</option>
+																		<option value="${ticket.getFrontdesk().getId()}">Front Desk</option>
+																		<c:forEach var="manager" items="${managers}">
+																			<option value="${manager.getId()}">${manager.getName()}
+																				${manager.getSurname()} -
+																				${manager.getDept().getName()}</option>
+																		</c:forEach>
+																	</select>
+																</div>
+															</div>
+														</div>
+													</td>
+													<td align="center">
+														<div class="group">
+															<input class="btn btn-primary" type="submit"
+																value="UpdateTicket">
+														</div>
+													</td>
+												</form>
+											</tr>
+										</c:forEach>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+
+			</div>
 		</div>
 	</div>
-</div>
+	
+	
+	
+	
+	
 	
 	
 	<%} %>
-	
-	
-	
+
+
+
 </body>
 </html>

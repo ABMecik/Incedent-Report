@@ -17,7 +17,6 @@ nav.main-navigation {
 
 nav.main-navigation ul.nav-list {
     margin: 13px;
-    padding: ;
     list-style: none;
     position: relative;
     text-align: right;
@@ -307,7 +306,28 @@ a{color:inherit;text-decoration:none}
 }
 
 
+.input{
+    background-color: rgba(180,0,255,0.5);
+}
 
+
+.lbox-wrap{
+	width: 100%;
+	margin:auto;
+	max-width:auto;
+	min-height:auto;
+	position:relative;
+	background:url(https://maxcdn.icons8.com/app/uploads/2016/03/material-1-1000x563.jpg) no-repeat center;
+	background-size: cover;
+	box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
+}
+.lbox-html{
+	width:100%;
+	height:auto;
+    margin: 0 auto;
+	position:absolute;
+	background:rgba(0,0,0,0.5);
+}
 
 
 .panel-table .panel-body{
@@ -316,8 +336,6 @@ a{color:inherit;text-decoration:none}
 
 .panel-table .panel-body .table-bordered{
   border-style: none;
-  margin: 20px;
-  padding: 20px;
 }
 
 .panel-table .panel-body .table-bordered > thead > tr > th:first-of-type {
@@ -374,7 +392,9 @@ used to vertically center elements, may need modification if you're not using de
 
 
 
-
+.btn{
+    background-color: rgba(100,100,255,0.8);
+}
 
 
 
@@ -430,3 +450,20 @@ html, body, .sonar-wrapper {
     opacity: 0;
   }
 }
+
+
+
+
+#pic{
+     display: none;
+       }
+       
+ .newbtn{
+         cursor: pointer;
+      }
+      #blah{
+  max-width:150px;
+  height:150px;
+  margin-top:15px;
+}
+

@@ -63,13 +63,13 @@ public class UpdateTicket extends HttpServlet {
 		User user = (User) session.getAttribute("user");
 		
 		if(user==null) {
-			request.setAttribute("warning", "No have permission");
+			request.setAttribute("warning", "You are not authorized to do so.");
 			displayPage(request, response, "/index.jsp");
 		}
 		else {
 			String role = (String) session.getAttribute("role");
 			if(role.equals("User")) {
-				request.setAttribute("warning", "No have permission");
+				request.setAttribute("warning", "You are not authorized to do so.");
 				openIndex(request, response,"/index.jsp",user);
 			}else {
 				String updateType = request.getParameter("UpdateType");
@@ -77,6 +77,7 @@ public class UpdateTicket extends HttpServlet {
 				
 				TicketService ts = new TicketService();
 				Ticket ticket = ts.findById(ticketID);
+
 				
 				if(updateType.equals("uf")) {
 
@@ -222,6 +223,15 @@ public class UpdateTicket extends HttpServlet {
 			List<Ticket> stickets = ts.staffsTickets(user.getId());
 
 			request.setAttribute("stickets", stickets);
+			displayPage(request, response, "/controlboard.jsp");
+		}else if(role.equals("Principal Inspector")) {
+
+			TicketService ts = new TicketService();
+			List<Ticket> atickets = ts.AllTickets();
+			UserService us = new UserService();
+			List<User> managers = us.findRoleList("Manager");
+
+			request.setAttribute("atickets", atickets);
 			displayPage(request, response, "/controlboard.jsp");
 		}
 	}
