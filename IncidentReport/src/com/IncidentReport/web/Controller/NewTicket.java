@@ -173,7 +173,7 @@ public class NewTicket extends HttpServlet {
 	
 	
 	private void forward(HttpServletRequest request, HttpServletResponse response, String rPage, User user) throws ServletException, IOException {
-		request.setAttribute("success", "Series added");
+		request.setAttribute("success", "Ticket Created.");
 		openIndex(request, response, rPage, user);
 		
 	}

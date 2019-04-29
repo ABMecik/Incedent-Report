@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.IncidentReport.web.Model.Ticket;
+import com.IncidentReport.web.Model.TicketStatus;
 import com.IncidentReport.web.Model.User;
+import com.IncidentReport.web.Services.StatusService;
 import com.IncidentReport.web.Services.TicketService;
 import com.IncidentReport.web.Services.UserService;
 
@@ -61,8 +63,80 @@ public class Login extends HttpServlet {
 			session.setAttribute("user", user);
 			session.setAttribute("role", user.getRole().getName());
 			
-			openIndex(request, response, "/index.jsp", user);
+			String role = user.getRole().getName();
 			
+			if(role.equals("User") || role.equals("Admin")) {
+				openIndex(request, response, "/index.jsp", user);
+			}else {
+				
+				StatusService ssTS = new StatusService();
+				List<TicketStatus> statuses = ssTS.allStatuses();
+				List<TicketStatus> sstatuses = null;
+				
+				if(!role.equals("Principal Inspector")) {
+					ssTS = new StatusService();
+					sstatuses = ssTS.removeReportedFromList(statuses);
+				}else {
+					sstatuses=statuses;
+				}
+				request.setAttribute("statuses", sstatuses);
+				
+				if(role.equals("Front Desk")) {
+					TicketService ts = new TicketService();
+					us = new UserService();
+					List<Ticket> ftickets = ts.AllTickets();
+					List<User> managers = us.findRoleList("Manager");
+
+					
+					ts = new TicketService();
+					List<Ticket> fftickets = ts.removeReportedsFromList(ftickets);
+					
+					request.setAttribute("managers", managers);
+					request.setAttribute("ftickets", fftickets);
+					displayPage(request, response, "/controlboard.jsp");
+				}
+				
+				if(role.equals("Manager")) {
+					
+					TicketService ts = new TicketService();
+					us = new UserService();
+					List<Ticket> mtickets = ts.managerReleated(user.getId());
+					List<User> staffs = us.deptReleated(user.getDept().getName(), "Staff");
+					
+					ts = new TicketService();
+					List<Ticket> fftickets = ts.removeReportedsFromList(mtickets);
+					
+					request.setAttribute("staffs", staffs);
+					request.setAttribute("mtickets", fftickets);
+					displayPage(request, response, "/controlboard.jsp");
+				}
+				
+				if(role.equals("Staff")) {
+					
+
+					TicketService ts = new TicketService();
+					List<Ticket> stickets = ts.staffsTickets(user.getId());
+					
+					ts = new TicketService();
+					List<Ticket> fftickets = ts.removeReportedsFromList(stickets);
+
+					request.setAttribute("stickets", fftickets);
+					displayPage(request, response, "/controlboard.jsp");
+				}
+				
+				if(role.equals("Principal Inspector")) {
+
+					TicketService ts = new TicketService();
+					List<Ticket> atickets = ts.AllTickets();
+					us = new UserService();
+					List<User> managers = us.findRoleList("Manager");
+
+					request.setAttribute("managers", managers);
+					request.setAttribute("atickets", atickets);
+					displayPage(request, response, "/controlboard.jsp");
+				}
+			}
+
 		}else {
 			
 			
