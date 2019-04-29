@@ -12,24 +12,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.IncidentReport.web.Model.Message;
 import com.IncidentReport.web.Model.Ticket;
+import com.IncidentReport.web.Model.TicketPriority;
+import com.IncidentReport.web.Model.TicketStatus;
 import com.IncidentReport.web.Model.User;
-import com.IncidentReport.web.Services.MessageService;
+import com.IncidentReport.web.Services.PriorityService;
+import com.IncidentReport.web.Services.StatusService;
 import com.IncidentReport.web.Services.TicketService;
-import com.IncidentReport.web.Services.UserService;
 
 /**
- * Servlet implementation class ticketdetail
+ * Servlet implementation class TicketReport
  */
-@WebServlet({ "/ticketdetail", "/ticket-detail", "/TicketDetail", "/Ticket-Detail" })
-public class ticketdetail extends HttpServlet {
+@WebServlet("/TicketReport")
+public class TicketReport extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ticketdetail() {
+    public TicketReport() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,46 +41,6 @@ public class ticketdetail extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
-		
-
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
-		String role = (String) session.getAttribute("role");
-		
-		if(user==null) {
-			request.setAttribute("warning", "You are not authorized to do so.");
-			displayPage(request, response, "/index.jsp");
-		}
-		else {
-			
-			if(role.equals("Principal Inspector")) {
-				int ticketID = Integer.parseInt(request.getParameter("ticketID"));
-				TicketService ts = new TicketService();
-				Ticket ticket = ts.findById(ticketID);
-				
-				MessageService ms = new MessageService();
-				List<Message> messages = ms.findRelatedMessages(ticket, user.getId());
-
-				request.setAttribute("messages", ticket.getMessages());
-				request.setAttribute("ticket", ticket);
-				displayPage(request, response, "/ticket-detail.jsp");
-				
-			}
-			else {
-				int ticketID = Integer.parseInt(request.getParameter("ticketID"));
-				TicketService ts = new TicketService();
-				Ticket ticket = ts.findById(ticketID);
-				
-				MessageService ms = new MessageService();
-				List<Message> messages = ms.findRelatedMessages(ticket, user.getId());
-
-				request.setAttribute("messages", messages);
-				request.setAttribute("ticket", ticket);
-				displayPage(request, response, "/ticket-detail.jsp");
-			}
-			
-
-		}
 	}
 
 	/**
@@ -89,7 +50,59 @@ public class ticketdetail extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 		
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+
+		
+		if(user==null) {
+			displayPage(request, response, "/index.jsp");
+		}
+		else {
+			
+			int ticketID = Integer.parseInt(request.getParameter("ticketID"));
+			
+			TicketService ts = new TicketService();
+			Ticket ticket = ts.findById(ticketID);
+			
+			ts = new TicketService();
+			
+			String sSt = "Reported";
+			int pSt = 11;
+			
+			PriorityService ps = new PriorityService();
+			boolean pps = ps.checkIsValid(pSt);
+			if(!pps) {
+				ps = new PriorityService();
+				ps.createNewPriority(pSt);
+			}
+			ps = new PriorityService();
+			TicketPriority priority = ps.findPriority(pSt);
+			
+			
+			StatusService ss = new StatusService();
+			boolean ssi = ss.checkIsValid(sSt);
+			if(!ssi) {
+				ss = new StatusService();
+				ss.createNewStatus(sSt,"");
+			}
+			ss = new StatusService();
+			TicketStatus status = ss.findStatus(sSt);
+			
+			ts = new TicketService();
+			
+			ts.setStatus(ticketID, status);
+			ts = new TicketService();
+			ts.setPriority(ticketID, priority);
+			
+			
+			request.setAttribute("info", "Ticket Reported.");
+			
+			openIndex(request, response, "/index.jsp", user);
+		}
+		
+		
 	}
+	
 	
 	
 	private void openIndex(HttpServletRequest request, HttpServletResponse response, String rPage, User user) throws ServletException, IOException {
@@ -110,5 +123,7 @@ public class ticketdetail extends HttpServlet {
 				.getRequestDispatcher(rPage);
 		reqDispatcher.forward(request, response);
 	}
+
+
 
 }

@@ -17,12 +17,14 @@ import javax.servlet.http.Part;
 
 import com.IncidentReport.web.Model.Department;
 import com.IncidentReport.web.Model.Message;
+import com.IncidentReport.web.Model.Role;
 import com.IncidentReport.web.Model.Ticket;
 import com.IncidentReport.web.Model.TicketPriority;
 import com.IncidentReport.web.Model.TicketStatus;
 import com.IncidentReport.web.Model.User;
 import com.IncidentReport.web.Services.MessageService;
 import com.IncidentReport.web.Services.PriorityService;
+import com.IncidentReport.web.Services.RoleService;
 import com.IncidentReport.web.Services.StatusService;
 import com.IncidentReport.web.Services.TicketService;
 import com.IncidentReport.web.Services.UserService;
@@ -78,13 +80,28 @@ public class UpdateTicket extends HttpServlet {
 				TicketService ts = new TicketService();
 				Ticket ticket = ts.findById(ticketID);
 
-				
-				if(updateType.equals("uf")) {
+				if(updateType.equals("ppf")) {
 
 					String sSt = request.getParameter("set-status");
 					int pSt = Integer.parseInt(request.getParameter("set-priority"));
 					String comment = request.getParameter("notes");
 					int managerID = Integer.parseInt(request.getParameter("set-manager"));
+					
+					boolean man = false;
+					
+					if(ticket.getCreated_by().getId() == managerID) {
+						man=true;
+					}
+					
+					UserService us = new UserService();
+					RoleService rs = new RoleService();
+					if(managerID == -2) {
+						Role roll = rs.findByName("Principal Inspector");
+						managerID = us.findUserIdFromAnySelectedRole(roll.getId()).getId();
+						sSt = "Reported";
+						pSt = 11;
+						man=true;
+					}
 					
 					PriorityService ps = new PriorityService();
 					boolean pps = ps.checkIsValid(pSt);
@@ -105,14 +122,85 @@ public class UpdateTicket extends HttpServlet {
 					ss = new StatusService();
 					TicketStatus status = ss.findStatus(sSt);
 					
-					UserService us = new UserService();
+					us = new UserService();
 					User manager = us.findById(managerID);
 					
 					Department department = manager.getDept();
 					
 					ts = new TicketService();
 					
-					ts.updateTicketSPMD(ticketID,status,priority,manager,department,user);
+					if(man) {
+						ts.updateTicketSPNU(ticketID,status,priority);
+					}else {
+						ts.updateTicketSPMD(ticketID,status,priority,manager,department,user);
+					}
+					
+					ts = new TicketService();
+					
+					
+					MessageService ms = new MessageService();
+					Message newMS = new Message();
+					ms.insert(user,manager,ticket,comment);
+					
+					callPage(request, response, role, user);
+				}
+				
+				if(updateType.equals("uf")) {
+
+					String sSt = request.getParameter("set-status");
+					int pSt = Integer.parseInt(request.getParameter("set-priority"));
+					String comment = request.getParameter("notes");
+					int managerID = Integer.parseInt(request.getParameter("set-manager"));
+					
+					
+					boolean man = false;
+					
+					if(ticket.getCreated_by().getId() == managerID) {
+						man=true;
+					}
+					
+					
+					UserService us = new UserService();
+					RoleService rs = new RoleService();
+					if(managerID == -2) {
+						Role roll = rs.findByName("Principal Inspector");
+						managerID = us.findUserIdFromAnySelectedRole(roll.getId()).getId();
+						sSt = "Reported";
+						pSt = 11;
+						man=true;
+					}
+					
+					PriorityService ps = new PriorityService();
+					boolean pps = ps.checkIsValid(pSt);
+					if(!pps) {
+						ps = new PriorityService();
+						ps.createNewPriority(pSt);
+					}
+					ps = new PriorityService();
+					TicketPriority priority = ps.findPriority(pSt);
+					
+					
+					StatusService ss = new StatusService();
+					boolean ssi = ss.checkIsValid(sSt);
+					if(!ssi) {
+						ss = new StatusService();
+						ss.createNewStatus(sSt,"");
+					}
+					ss = new StatusService();
+					TicketStatus status = ss.findStatus(sSt);
+					
+					us = new UserService();
+					User manager = us.findById(managerID);
+					
+					Department department = manager.getDept();
+					
+					ts = new TicketService();
+					
+					if(man) {
+						ts.updateTicketSP(ticketID,status,priority, user);
+					}else {
+						ts.updateTicketSPMD(ticketID,status,priority,manager,department,user);
+					}
 					ts = new TicketService();
 					
 					
@@ -129,6 +217,48 @@ public class UpdateTicket extends HttpServlet {
 					int receiverID = Integer.parseInt(request.getParameter("set-staff"));
 					String close = request.getParameter("close-ticket");
 					
+					
+					UserService us = new UserService();
+					RoleService rs = new RoleService();
+					boolean man = false;
+					if(receiverID == -2) {
+						man = true;
+						Role roll = rs.findByName("Principal Inspector");
+						receiverID = us.findUserIdFromAnySelectedRole(roll.getId()).getId();
+						String sSt = "Reported";
+						int pSt = 11;
+						
+						PriorityService ps = new PriorityService();
+						boolean pps = ps.checkIsValid(pSt);
+						if(!pps) {
+							ps = new PriorityService();
+							ps.createNewPriority(pSt);
+						}
+						ps = new PriorityService();
+						TicketPriority priority = ps.findPriority(pSt);
+						
+						
+						StatusService ss = new StatusService();
+						boolean ssi = ss.checkIsValid(sSt);
+						if(!ssi) {
+							ss = new StatusService();
+							ss.createNewStatus(sSt,"");
+						}
+						ss = new StatusService();
+						TicketStatus status = ss.findStatus(sSt);
+						
+						ts = new TicketService();
+						
+						ts.setStatus(ticketID, status);
+						ts = new TicketService();
+						ts.setPriority(ticketID, priority);
+						ts = new TicketService();
+						
+						close = null;
+					}
+					
+					
+					
 					if(close != null) {
 						StatusService ss = new StatusService();
 						boolean ssi = ss.checkIsValid("closed");
@@ -142,7 +272,7 @@ public class UpdateTicket extends HttpServlet {
 						ts = new TicketService();
 						ts.setStatus(ticketID, status);
 					}
-					UserService us = new UserService();
+					us = new UserService();
 					
 					User reciver = us.findById(receiverID);
 					
@@ -198,13 +328,29 @@ public class UpdateTicket extends HttpServlet {
 	 */
 	private void callPage(HttpServletRequest request, HttpServletResponse response, String role,User user) throws ServletException, IOException {
 		
+		StatusService ssTS = new StatusService();
+		List<TicketStatus> statuses = ssTS.allStatuses();
+		List<TicketStatus> sstatuses = null;
+		if(!role.equals("Principal Inspector")) {
+			ssTS = new StatusService();
+			sstatuses = ssTS.removeReportedFromList(statuses);
+		}else {
+			sstatuses=statuses;
+		}
+		request.setAttribute("statuses", sstatuses);
+		
 		if(role.equals("Front Desk")) {
 			TicketService ts = new TicketService();
 			UserService us = new UserService();
 			List<Ticket> ftickets = ts.AllTickets();
 			List<User> managers = us.findRoleList("Manager");
+			
+			
+			ts = new TicketService();
+			List<Ticket> fftickets = ts.removeReportedsFromList(ftickets);
+			
 			request.setAttribute("managers", managers);
-			request.setAttribute("ftickets", ftickets);
+			request.setAttribute("ftickets", fftickets);
 			displayPage(request, response, "/controlboard.jsp");
 			
 		}else if (role.equals("Manager")) {
@@ -213,8 +359,12 @@ public class UpdateTicket extends HttpServlet {
 			List<Ticket> mtickets = ts.managerReleated(user.getId());
 			List<User> staffs = us.deptReleated(user.getDept().getName(), "staff");
 			
+			
+			ts = new TicketService();
+			List<Ticket> fftickets = ts.removeReportedsFromList(mtickets);
+			
 			request.setAttribute("staffs", staffs);
-			request.setAttribute("mtickets", mtickets);
+			request.setAttribute("mtickets", fftickets);
 			displayPage(request, response, "/controlboard.jsp");
 		}else if(role.equals("Staff")) {
 			
@@ -222,7 +372,11 @@ public class UpdateTicket extends HttpServlet {
 			TicketService ts = new TicketService();
 			List<Ticket> stickets = ts.staffsTickets(user.getId());
 
-			request.setAttribute("stickets", stickets);
+			
+			ts = new TicketService();
+			List<Ticket> fftickets = ts.removeReportedsFromList(stickets);
+			
+			request.setAttribute("stickets", fftickets);
 			displayPage(request, response, "/controlboard.jsp");
 		}else if(role.equals("Principal Inspector")) {
 

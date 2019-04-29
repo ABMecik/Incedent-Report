@@ -178,6 +178,10 @@
 																<div class="sonar-emitter"
 																	style="background-color: rgb(0, 176, 252)">
 															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==11}">
+															<div class="sonar-emitter"
+																style="background-color: rgb(255, 255, 255)">
+															</c:when>
 														</c:choose>
 
 														<!-- Color Control System -->
@@ -208,8 +212,7 @@
 																<div class="form-group mb-2">
 																	<select class="form-control" name="set-status"
 																		style="width: 100px">
-																		<option selected="${ticket.getStatus().getName()}"
-																			value="${ticket.getStatus().getName()}">${ticket.getStatus().getName()}</option>
+																		<option selected value="${ticket.getStatus().getName()}">${ticket.getStatus().getName()}</option>
 																		<option value="Waiting">Waiting</option>
 																		<option value="Processing">Processing</option>
 																		<option value="Approved">Approved</option>
@@ -226,9 +229,7 @@
 																<div class="form-group mb-2">
 																	<select class="form-control" name="set-priority"
 																		style="width: 80px">
-																		<option
-																			selected="${ticket.getPriority().getImportance()}"
-																			value="${ticket.getPriority().getImportance()}">${ticket.getPriority().getImportance()}</option>
+																		<option selected value="${ticket.getPriority().getImportance()}">${ticket.getPriority().getImportance()}</option>
 																		<option value="1">1</option>
 																		<option value="2">2</option>
 																		<option value="3">3</option>
@@ -256,7 +257,8 @@
 																<div class="form-group mb-2"">
 																	<select class="form-control" name="set-manager"
 																		style="width: 150px">
-																		<option value="" selected disabled hidden>Choose</option>
+																		<option value="${ticket.getCreated_by().getId()}" selected>Creater</option>
+																		<option value="-2">Report to Principal</option>
 																		<c:forEach var="manager" items="${managers}">
 																			<option value="${manager.getId()}">${manager.getName()}
 																				${manager.getSurname()} -
@@ -387,6 +389,10 @@
 															<div class="sonar-emitter"
 																style="background-color: rgb(0, 176, 252)">
 														</c:when>
+														<c:when test="${ticket.getPriority().getImportance()==11}">
+															<div class="sonar-emitter"
+																style="background-color: rgb(255, 255, 255)">
+														</c:when>
 													</c:choose>
 
 													<!-- Color Control System -->
@@ -429,7 +435,7 @@
 															<div class="form-group mb-2">
 																<select class="form-control" name="set-staff"
 																	style="width: 150px">
-																	<option value="" selected disabled hidden>Choose</option>
+																	<option value="-2" selected>Report to Principal</option>
 																	<option value="${ticket.getFrontdesk().getId()}">Front
 																		Desk</option>
 																	<c:forEach var="staff" items="${staffs}">
@@ -565,6 +571,10 @@
 																<div class="sonar-emitter"
 																	style="background-color: rgb(0, 176, 252)">
 															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==11}">
+																<div class="sonar-emitter"
+																style="background-color: rgb(255, 255, 255)">
+															</c:when>
 														</c:choose>
 
 														<!-- Color Control System -->
@@ -657,7 +667,7 @@
 								<div class="form-group mb-2">
 									<input type="text" class="form-control" name="lTitle"
 										placeholder="Search by title" /> <input type="hidden"
-										name="searchType" value="fs"> <input type="submit"
+										name="searchType" value="pps"> <input type="submit"
 										value="SearchTicket" class="btn btn-primary" />
 								</div>
 
@@ -729,6 +739,10 @@
 																<div class="sonar-emitter"
 																	style="background-color: rgb(0, 176, 252)">
 															</c:when>
+															<c:when test="${ticket.getPriority().getImportance()==11}">
+																<div class="sonar-emitter"
+																style="background-color: rgb(255, 255, 255)">
+															</c:when>
 														</c:choose>
 
 														<!-- Color Control System -->
@@ -750,7 +764,7 @@
 													</form>
 												</td>
 												<form action="UpdateTicket" method="POST">
-													<input type="hidden" name="UpdateType" value="uf">
+													<input type="hidden" name="UpdateType" value="ppf">
 													<input type="hidden" name="ticketID"
 														value="${ticket.getId()}">
 													<td align="center">
@@ -759,8 +773,7 @@
 																<div class="form-group mb-2">
 																	<select class="form-control" name="set-status"
 																		style="width: 100px">
-																		<option selected="${ticket.getStatus().getName()}"
-																			value="${ticket.getStatus().getName()}">${ticket.getStatus().getName()}</option>
+																		<option selected value="${ticket.getStatus().getName()}">${ticket.getStatus().getName()}</option>
 																		<option value="Waiting">Waiting</option>
 																		<option value="Processing">Processing</option>
 																		<option value="Approved">Approved</option>
@@ -777,9 +790,7 @@
 																<div class="form-group mb-2">
 																	<select class="form-control" name="set-priority"
 																		style="width: 80px">
-																		<option
-																			selected="${ticket.getPriority().getImportance()}"
-																			value="${ticket.getPriority().getImportance()}">${ticket.getPriority().getImportance()}</option>
+																		<option selected value="${ticket.getPriority().getImportance()}">${ticket.getPriority().getImportance()}</option>
 																		<option value="1">1</option>
 																		<option value="2">2</option>
 																		<option value="3">3</option>
@@ -807,7 +818,7 @@
 																<div class="form-group mb-2"">
 																	<select class="form-control" name="set-manager"
 																		style="width: 150px">
-																		<option value="" selected disabled hidden>Choose</option>
+																		<option value="${ticket.getCreated_by().getId()}">Creater</option>
 																		<option value="${ticket.getFrontdesk().getId()}">Front
 																			Desk</option>
 																		<c:forEach var="manager" items="${managers}">

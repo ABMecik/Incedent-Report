@@ -3,8 +3,10 @@ package com.IncidentReport.web.Services;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpSession;
 
 import com.IncidentReport.web.Listener.EMF;
 import com.IncidentReport.web.Model.Department;
@@ -373,6 +375,15 @@ public class UserService {
 		}
 		
 		return us;
+	}
+
+
+
+	public User findUserIdFromAnySelectedRole(int role) {
+		List<User> us = this.findByRole(role);
+		Random rand = new Random();
+		int n = rand.nextInt(us.size());
+		return us.get(n);
 	}
 
 

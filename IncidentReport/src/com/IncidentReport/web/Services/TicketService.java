@@ -390,6 +390,87 @@ public class TicketService {
 
 
 
+	public List<Ticket> removeReportedsFromList(List<Ticket> artickets) {
+		List<Ticket> tickets = new ArrayList<Ticket>();
+		
+		for(Ticket ticket : artickets) {
+			if(ticket.getStatus().getName().equals("Reported")) {
+				continue;
+			}else {
+				tickets.add(ticket);
+			}
+		}
+		return tickets;
+	}
+
+
+
+	public void setPriority(int ticketID, TicketPriority priority) {
+		try {
+			em.getTransaction().begin();
+			
+			Ticket t = em.find(Ticket.class, ticketID);
+			t.setPriority(priority);
+			
+			em.getTransaction().commit();
+			em.close();
+
+		}
+		catch(Exception e){
+			System.out.println(e);
+			em.close();
+		}
+		
+	}
+
+
+
+	public void updateTicketSP(int ticketID, TicketStatus status, TicketPriority priority, User frontdesk) {
+		try {
+			em.getTransaction().begin();
+
+			Ticket ticket = em.find(Ticket.class, ticketID);
+			
+			ticket.setStatus(status);
+			ticket.setPriority(priority);
+			ticket.setFrontdesk(frontdesk);
+			
+			
+			em.getTransaction().commit();
+			em.close();
+
+		}
+		catch(Exception e){
+			System.out.println(e);
+			em.close();
+		}
+		
+	}
+
+
+
+	public void updateTicketSPNU(int ticketID, TicketStatus status, TicketPriority priority) {
+		try {
+			em.getTransaction().begin();
+
+			Ticket ticket = em.find(Ticket.class, ticketID);
+			
+			ticket.setStatus(status);
+			ticket.setPriority(priority);
+			
+			em.getTransaction().commit();
+			em.close();
+
+		}
+		catch(Exception e){
+			System.out.println(e);
+			em.close();
+		}
+		
+	}
+
+
+
 
 
 

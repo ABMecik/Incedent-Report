@@ -73,8 +73,42 @@ public class SearchTicket extends HttpServlet {
 				
 				StatusService ssTS = new StatusService();
 				List<TicketStatus> statuses = ssTS.allStatuses();
-				request.setAttribute("statuses", statuses);
+				List<TicketStatus> sstatuses = null;
+				if(!role.equals("Principal Inspector")) {
+					ssTS = new StatusService();
+					sstatuses = ssTS.removeReportedFromList(statuses);
+				}else {
+					sstatuses=statuses;
+				}
+				request.setAttribute("statuses", sstatuses);
 				
+				if(searchType.equals("pps")) {
+					
+					List<Ticket> atickets;
+					
+					
+					UserService us = new UserService();
+					List<User> managers = us.findRoleList("Manager");
+					
+					TicketService ts = new TicketService();
+					
+					if(sTitle != null && sStatus != -1) {
+						atickets = ts.findByStatusAndLikeTitle(sTitle,sStatus);
+					}
+					else if(sTitle == null && sStatus != -1) {
+						atickets = ts.findByStatus(sStatus);
+					}
+					else if(sTitle != null && sStatus == -1) {
+						atickets = ts.findLikeTitle(sTitle);
+					}else {
+						atickets = ts.AllTickets();
+					}
+					
+					request.setAttribute("managers", managers);
+					request.setAttribute("atickets", atickets);
+					displayPage(request, response, "/controlboard.jsp");
+
+				}
 				
 				if(searchType.equals("fs")) {
 					
@@ -98,8 +132,12 @@ public class SearchTicket extends HttpServlet {
 						ftickets = ts.AllTickets();
 					}
 					
+					
+					ts = new TicketService();
+					List<Ticket> fftickets = ts.removeReportedsFromList(ftickets);
+					
 					request.setAttribute("managers", managers);
-					request.setAttribute("ftickets", ftickets);
+					request.setAttribute("ftickets", fftickets);
 					displayPage(request, response, "/controlboard.jsp");
 
 				}
@@ -130,9 +168,11 @@ public class SearchTicket extends HttpServlet {
 						mtickets = ts.managerReleated(user.getId());
 					}
 					
+					ts = new TicketService();
+					List<Ticket> fftickets = ts.removeReportedsFromList(mtickets);
 					
 					request.setAttribute("staffs", staffs);
-					request.setAttribute("mtickets", mtickets);
+					request.setAttribute("mtickets", fftickets);
 					displayPage(request, response, "/controlboard.jsp");
 
 				}
@@ -162,9 +202,10 @@ public class SearchTicket extends HttpServlet {
 						stickets = ts.staffsTickets(user.getId());;
 					}
 					
-					
+					ts = new TicketService();
+					List<Ticket> fftickets = ts.removeReportedsFromList(stickets);
 ;
-					request.setAttribute("stickets", stickets);
+					request.setAttribute("stickets", fftickets);
 					displayPage(request, response, "/controlboard.jsp");
 
 				}

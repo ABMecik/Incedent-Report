@@ -135,8 +135,7 @@
 														<div class="row">
 															<div class="form-group mb-2">
 																<select class="form-control" name="set-user-department">
-																	<option selected="${user.getDept().getName()}"
-																		value="${user.getDept().getId()}">${user.getDept().getName()}</option>
+																	<option selected value="${user.getDept().getId()}">${user.getDept().getName()}</option>
 																	<c:forEach var="dept" items="${departments}">
 																		<option value="${dept.getId()}">${dept.getName()}</option>
 																	</c:forEach>
@@ -150,8 +149,7 @@
 														<div class="row">
 															<div class="form-group mb-2">
 																<select class="form-control" name="set-user-role">
-																	<option selected="${user.getRole().getName()}"
-																		value="${user.getRole().getId()}">${user.getRole().getName()}</option>
+																	<option selected value="${user.getRole().getId()}">${user.getRole().getName()}</option>
 																	<c:forEach var="role" items="${roles}">
 																		<option value="${role.getId()}">${role.getName()}</option>
 																	</c:forEach>

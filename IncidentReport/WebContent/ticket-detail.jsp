@@ -9,16 +9,23 @@
 <!DOCTYPE html>
 <html>
 
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link
+	href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+	rel="stylesheet" id="bootstrap-css">
+<script
+	src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script
+	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script class="jsbin"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <head>
-	<title>Welcome</title>
-	<link rel="stylesheet" type="text/css" href="resources/css/ticket_detail.css">
-    <script src="resources/js/photo.js"></script>
+<title>Welcome</title>
+<link rel="stylesheet" type="text/css"
+	href="resources/css/ticket_detail.css">
+<script src="resources/js/photo.js"></script>
 </head>
 <body>
 
@@ -31,7 +38,8 @@
 
 			<%
 				if (session.getAttribute("role").equals("Front Desk") || session.getAttribute("role").equals("Manager")
-							|| session.getAttribute("role").equals("Staff") || session.getAttribute("role").equals("Principal Inspector")) {
+						|| session.getAttribute("role").equals("Staff")
+						|| session.getAttribute("role").equals("Principal Inspector")) {
 			%>
 			<li class="nav-list-item"><a href="controlboard"
 				class="nav-link">Controlboard</a></li>
@@ -65,176 +73,269 @@
 			</li>
 		</ul>
 	</nav>
-    
-    
-    <div class="login-wrap">
-	<div class="login-html">
-        <div class="container">
-            <div class="row">
-            <p></p>
-            <h1>Ticket Details</h1>
-                <div class="col-md-10 col-md-offset-1">
-                    <div class="panel panel-default panel-table">
-                      <div class="panel-heading">
-                        <div class="row">
-                        </div>
-                      </div>
-                      <div class="panel-body">
-                        <table class="table table-striped table-bordered table-list" cellspacing="20">
-                          <thead>
-                            <tr>
-                                <th class="hidden-xs">ID:</th>
-                                <th>${ticket.getId()}</th>
-                            </tr> 
-                          </thead>
-                          <tbody>
-                              <tr>
-                                <td class="hidden-xs" align="center">Title:</td>
-                                <td align="center">${ticket.getTitle()}</td>
-                              </tr>
-                              <tr>
-                                <td class="hidden-xs" align="center">Date:</td>
-                                <td align="center">${ticket.getCreated_at()}</td>
-                              </tr>
-                              <tr>
-                                <td class="hidden-xs" align="center">Description:</td>
-                                <td align="center">${ticket.getComment()}</td>
-                              </tr>
-                              <tr>
-                                <td class="hidden-xs" align="center">Location:</td>
-                                <td align="center">${ticket.getLocation()}</td>
-                              </tr>
-                              <tr>
-                                <td class="hidden-xs" align="center">Priority:</td>
-                                <td align="center">${ticket.getPriority().getImportance()}</td>
-                              </tr>
-                              <tr>
-                                <td class="hidden-xs" align="center">Photo:</td>
-                                <td align="center">
-                                    
-                                    <!-- Trigger the Modal -->
-<img id="myImg" src="${ticket.getPhoto_path()}" alt="Snow" style="width:100%;max-width:300px">
 
-<!-- The Modal -->
-<div id="myModal" class="modal">
 
-  <!-- The Close Button -->
-  <span class="close">&times;</span>
+	<div class="login-wrap">
+		<div class="login-html">
+			<div class="container">
+				<div class="row">
+					<p></p>
+					<h1>Ticket Details</h1>
+					<div class="col-md-10 col-md-offset-1">
+						<div class="panel panel-default panel-table">
+							<div class="panel-heading">
+								<div class="row"></div>
+							</div>
+							<div class="panel-body">
+								<table class="table table-striped table-bordered table-list"
+									cellspacing="20">
+									<thead>
+										<tr>
+											<th class="hidden-xs">ID:</th>
+											<th>${ticket.getId()}</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td class="hidden-xs" align="center">Title:</td>
+											<td align="center">${ticket.getTitle()}</td>
+										</tr>
+										<tr>
+											<td class="hidden-xs" align="center">Date:</td>
+											<td align="center">${ticket.getCreated_at()}</td>
+										</tr>
+										<tr>
+											<td class="hidden-xs" align="center">Description:</td>
+											<td align="center">${ticket.getComment()}</td>
+										</tr>
+										<tr>
+											<td class="hidden-xs" align="center">Location:</td>
+											<td align="center">${ticket.getLocation()}</td>
+										</tr>
+										<tr>
+											<td class="hidden-xs" align="center">Priority:</td>
+											<td align="center">${ticket.getPriority().getImportance()}</td>
+										</tr>
+										<tr>
+											<td class="hidden-xs" align="center">Photo:</td>
+											<td align="center">
+												<!-- Trigger the Modal --> <img id="myImg"
+												src="${ticket.getPhoto_path()}" alt="Snow"
+												style="width: 100%; max-width: 300px"> <!-- The Modal -->
+												<div id="myModal" class="modal">
 
-  <!-- Modal Content (The Image) -->
-  <img class="modal-content" id="img01">
+													<!-- The Close Button -->
+													<span class="close">&times;</span>
 
-  <!-- Modal Caption (Image Text) -->
-  <div id="caption"></div>
-</div>
-                                  </td>
-                              </tr>
-                              
-                              <tr>
-                                <td class="hidden-xs" align="center">Staff Work:</td>
-                                <td align="center">
-                                    
-                                    <!-- Trigger the Modal -->
-<img id="myImg" src="${ticket.getEvidance_path()}" alt="Snow" style="width:100%;max-width:300px">
+													<!-- Modal Content (The Image) -->
+													<img class="modal-content" id="img01">
 
-<!-- The Modal -->
-<div id="myModal" class="modal">
+													<!-- Modal Caption (Image Text) -->
+													<div id="caption"></div>
+												</div>
+											</td>
+										</tr>
 
-  <!-- The Close Button -->
-  <span class="close">&times;</span>
+										<tr>
+											<td class="hidden-xs" align="center">Staff Work:</td>
+											<td align="center">
+												<!-- Trigger the Modal --> <img id="myImg"
+												src="${ticket.getEvidance_path()}" alt="Snow"
+												style="width: 100%; max-width: 300px"> <!-- The Modal -->
+												<div id="myModal" class="modal">
 
-  <!-- Modal Content (The Image) -->
-  <img class="modal-content" id="img01">
+													<!-- The Close Button -->
+													<span class="close">&times;</span>
 
-  <!-- Modal Caption (Image Text) -->
-  <div id="caption"></div>
-</div>
-                                  </td>
-                              </tr>
-                                                      
-                          </tbody>
-                        </table>
-                      </div>
-        </div></div>
-        <%
-    			if (session.getAttribute("role").equals("Front Desk") || session.getAttribute("role").equals("Manager")|| session.getAttribute("role").equals("Staff")) {
-			%>
-        <div class="col-md-10 col-md-offset-1">
-                    <div class="panel panel-default panel-table">
-                      <div class="panel-heading">
-                        <div class="row">
-                        </div>
-                      </div>
-                      <div class="panel-body">
-                        <table class="table table-striped table-bordered table-list" cellspacing="20">
-                          <thead>
-                            <tr></tr>                            
-                            <tr></tr>
-                            <tr></tr>
-                          </thead>
-                          <tbody>
-                                <td class="hidden-xs" align="center">Sender</td>
-                                <td class="hidden-xs" align="center">Message</td>
-                                
-                                <c:forEach var="message" items="${messages}">
-                                	<tr>
-	                                <td align="center">${message.getSender().getRole().getName()}</td>
-	                                <td align="center">${message.getComment()}</td>
-	                                </tr>
-                                </c:forEach>
-                                 
-                          </tbody>
-                        </table>
-                      </div>
-        </div></div>
-                
-        
-        <%} %>
-        
-        <%
-    			if (session.getAttribute("role").equals("Principal Inspector")) {
-			%>
-        <div class="col-md-10 col-md-offset-1">
-                    <div class="panel panel-default panel-table">
-                      <div class="panel-heading">
-                        <div class="row">
-                        </div>
-                      </div>
-                      <div class="panel-body">
-                        <table class="table table-striped table-bordered table-list" cellspacing="20">
-                          <thead>
-                            <tr></tr>                            
-                            <tr></tr>
-                            <tr></tr>
-                          </thead>
-                          <tbody>
-                                <td class="hidden-xs" align="center">Sender</td>
-                                <td class="hidden-xs" align="center">Message</td>
-                                
-                                <c:forEach var="message" items="${messages}">
-                                	<tr>
-	                                <td align="center">${message.getSender().getRole().getName()} - ${message.getSender().getName()} ${message.getSender().getSurname()} - ${message.getSender().getDept().getName()}</td>
-	                                <td align="center">${message.getComment()}</td>
-	                                </tr>
-                                </c:forEach>
-                                 
-                          </tbody>
-                        </table>
-                      </div>
-        </div></div>
-                
-        
-        <%} %>
-        
-        
-        
-        
-        </div>
-         
+													<!-- Modal Content (The Image) -->
+													<img class="modal-content" id="img01">
+
+													<!-- Modal Caption (Image Text) -->
+													<div id="caption"></div>
+												</div>
+											</td>
+										</tr>
+										<c:choose>
+											<c:when
+												test="${user.getId()==ticket.getCreated_by().getId()}">
+
+
+
+
+
+												<form action="SendMsg" method="POST">
+													<tr>
+														<input type="hidden" name="ticketID"
+															value="${ticket.getId()}">
+														<td align="center">
+															<div class="group">
+																<input class="btn btn-primary" type="submit"
+																	value="Send" style="width: 120px">
+															</div>
+														</td>
+														<td align="center">
+															<div class="form-group mb-2">
+																<select class="form-control" name="sendto"
+																	style="width: 280px">
+																	<option selected value="-2" selected>Front
+																		Desk</option>
+																	<option selected value="-1">Principle</option>
+																</select>
+															</div>
+
+														</td>
+													</tr>
+													<tr>
+														<td align="center" colspan="2">
+															<div class="form-group" id="add-note" name="notes">
+																<textarea class="form-control" rows="2" id="comment"
+																	name="notes" style="width: 420px"></textarea>
+															</div>
+
+														</td>
+													</tr>
+												</form>
+
+											</c:when>
+										</c:choose>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<%
+						if (!session.getAttribute("role").equals("Principal Inspector")) {
+					%>
+					<div class="col-md-10 col-md-offset-1">
+						<div class="panel panel-default panel-table">
+							<div class="panel-heading">
+								<div class="row"></div>
+							</div>
+							<div class="panel-body">
+								<table class="table table-striped table-bordered table-list"
+									cellspacing="20">
+									<thead>
+										<tr></tr>
+										<tr></tr>
+										<tr></tr>
+									</thead>
+									<tbody>
+										<td class="hidden-xs" align="center">Sender</td>
+										<td class="hidden-xs" align="center">Message</td>
+
+										<c:forEach var="message" items="${messages}">
+											<c:choose>
+												<c:when test="${message.getSender().getId()==user.getId()}">
+													<tr>
+														<td align="center">ME</td>
+														<td align="center">${message.getComment()}</td>
+													</tr>
+												</c:when>
+												<c:when
+													test="${message.getSender().getId()!=user.getId() && message.getSender().getId()==ticket.getCreated_by().getId()}">
+													<tr>
+														<td align="center">Creater</td>
+														<td align="center">${message.getComment()}</td>
+													</tr>
+												</c:when>
+												<c:otherwise>
+													<tr>
+														<td align="center">${message.getSender().getRole().getName()}</td>
+														<td align="center">${message.getComment()}</td>
+													</tr>
+												</c:otherwise>
+											</c:choose>
+
+										</c:forEach>
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
+
+					<%
+						}
+					%>
+
+					<%
+						if (session.getAttribute("role").equals("Principal Inspector")) {
+					%>
+					<div class="col-md-10 col-md-offset-1">
+						<div class="panel panel-default panel-table">
+							<div class="panel-heading">
+								<div class="row"></div>
+							</div>
+							<div class="panel-body">
+								<table class="table table-striped table-bordered table-list"
+									cellspacing="20">
+									<thead>
+										<tr></tr>
+										<tr></tr>
+										<tr></tr>
+									</thead>
+									<tbody>
+										<td class="hidden-xs" align="center">Sender</td>
+										<td class="hidden-xs" align="center">Message</td>
+
+										<c:forEach var="message" items="${messages}">
+											<c:choose>
+												<c:when test="${message.getSender().getId()==user.getId()}">
+													<tr>
+														<td align="center">ME</td>
+														<td align="center">${message.getComment()}</td>
+													</tr>
+												</c:when>
+												<c:when
+													test="${message.getSender().getId()!=user.getId() && message.getSender().getId()==ticket.getCreated_by().getId() && ticket.getIsAnonim() eq true}">
+													<tr>
+														<td align="center">Creater</td>
+														<td align="center">${message.getComment()}</td>
+													</tr>
+												</c:when>
+												<c:when
+													test="${message.getSender().getId()!=user.getId() && message.getSender().getId()==ticket.getCreated_by().getId() && ticket.getIsAnonim() eq false}">
+													<tr>
+														<td align="center">Creater :
+															${message.getSender().getName()}
+															${message.getSender().getSurname()} -
+															${message.getSender().getDept().getName()}</td>
+														<td align="center">${message.getComment()}</td>
+													</tr>
+												</c:when>
+												<c:otherwise>
+													<tr>
+														<td align="center">${message.getSender().getRole().getName()}
+															- ${message.getSender().getName()}
+															${message.getSender().getSurname()} -
+															${message.getSender().getDept().getName()}</td>
+														<td align="center">${message.getComment()}</td>
+													</tr>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
+
+					<%
+						}
+					%>
+
+
+
+
+				</div>
+
+			</div>
 		</div>
 	</div>
-</div>
-  
+
 </body>
 </html>
 

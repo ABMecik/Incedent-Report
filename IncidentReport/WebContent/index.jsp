@@ -23,7 +23,8 @@
 <title>Welcome</title>
 <link rel="stylesheet" type="text/css" href="resources/css/navbar.css">
 <link rel="stylesheet" type="text/css" href="resources/css/notice.css">
-<link rel="stylesheet" type="text/css" href="resources/css/dashboard.css">
+<link rel="stylesheet" type="text/css"
+	href="resources/css/dashboard.css">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -86,12 +87,12 @@
 
 	<div class="login-wrap">
 		<div class="login-html">
-			<input id="tab-3" type="radio" name="tab" class="register">
-			<label for="tab-3" class="tab">Register</label> 
-			<input id="tab-1" type="radio" name="tab" class="sign-in" checked>
-			<label for="tab-1" class="tab">Sign In</label> 
-			<input id="tab-2" type="radio" name="tab" class="for-pwd">
-			<label for="tab-2"class="tab"></label>
+			<input id="tab-3" type="radio" name="tab" class="register"> <label
+				for="tab-3" class="tab">Register</label> <input id="tab-1"
+				type="radio" name="tab" class="sign-in" checked> <label
+				for="tab-1" class="tab">Sign In</label> <input id="tab-2"
+				type="radio" name="tab" class="for-pwd"> <label for="tab-2"
+				class="tab"></label>
 			<div class="login-form" style="margin-top: 20px">
 
 				<div class="register-htm">
@@ -181,7 +182,8 @@
 
 			<%
 				if (session.getAttribute("role").equals("Front Desk") || session.getAttribute("role").equals("Manager")
-							|| session.getAttribute("role").equals("Staff") || session.getAttribute("role").equals("Principal Inspector")) {
+							|| session.getAttribute("role").equals("Staff")
+							|| session.getAttribute("role").equals("Principal Inspector")) {
 			%>
 			<li class="nav-list-item"><a href="controlboard"
 				class="nav-link">Controlboard</a></li>
@@ -292,6 +294,7 @@
 										<th scope="col" align="center">Status</th>
 										<th scope="col" align="center">Priority</th>
 										<th scope="col" align="center">Detail</th>
+										<th scope="col" align="center">Report</th>
 										<th scope="col" align="center">Delete</th>
 									</tr>
 								</thead>
@@ -342,6 +345,12 @@
 															</c:when>
 															<c:when test="${ticket.getStatus().getName()=='closed'}">
 																<div data-percentage="100%" style="width: 100%;"
+																	class="progress-bar progress-bar-success"
+																	role="progressbar" aria-valuemin="0"
+																	aria-valuemax="100"></div>
+															</c:when>
+															<c:when test="${ticket.getStatus().getName()=='Reported'}">
+																<div data-percentage="0%" style="width: 0%;"
 																	class="progress-bar progress-bar-success"
 																	role="progressbar" aria-valuemin="0"
 																	aria-valuemax="100"></div>
@@ -398,6 +407,11 @@
 																<div class="sonar-emitter"
 																	style="background-color: rgb(0, 176, 252)">
 															</c:when>
+															<c:when
+																test="${ticket.getPriority().getImportance()==11}">
+																<div class="sonar-emitter"
+																	style="background-color: rgb(255, 255, 255)">
+															</c:when>
 														</c:choose>
 
 														<!-- Color Control System -->
@@ -417,6 +431,18 @@
 															</button>
 														</form>
 													</div></td>
+
+												<td align="center"><div class="tit" style="width: 70px">
+														<form action="TicketReport" method="POST">
+															<input type="hidden" , name="ticketID" value="${ticket.getId()}">
+															<button type="submit" class="btn text-color" value="TicketReport">
+															<i class="fa fa-exclamation-triangle"></i>
+															</button>
+
+														</form>
+													</div></td>
+
+
 												<td align="center"><div class="tit" style="width: 70px">
 														<form action="TicketDelete" method="POST">
 															<input type="hidden" , name="ticketID"

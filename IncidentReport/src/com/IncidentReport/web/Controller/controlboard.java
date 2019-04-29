@@ -60,7 +60,14 @@ public class controlboard extends HttpServlet {
 				
 				StatusService ssTS = new StatusService();
 				List<TicketStatus> statuses = ssTS.allStatuses();
-				request.setAttribute("statuses", statuses);
+				List<TicketStatus> sstatuses = null;
+				if(!role.equals("Principal Inspector")) {
+					ssTS = new StatusService();
+					sstatuses = ssTS.removeReportedFromList(statuses);
+				}else {
+					sstatuses=statuses;
+				}
+				request.setAttribute("statuses", sstatuses);
 				
 				if(role.equals("Front Desk")) {
 					TicketService ts = new TicketService();
@@ -68,8 +75,12 @@ public class controlboard extends HttpServlet {
 					List<Ticket> ftickets = ts.AllTickets();
 					List<User> managers = us.findRoleList("Manager");
 
+					
+					ts = new TicketService();
+					List<Ticket> fftickets = ts.removeReportedsFromList(ftickets);
+					
 					request.setAttribute("managers", managers);
-					request.setAttribute("ftickets", ftickets);
+					request.setAttribute("ftickets", fftickets);
 					displayPage(request, response, "/controlboard.jsp");
 				}
 				
@@ -80,8 +91,11 @@ public class controlboard extends HttpServlet {
 					List<Ticket> mtickets = ts.managerReleated(user.getId());
 					List<User> staffs = us.deptReleated(user.getDept().getName(), "Staff");
 					
+					ts = new TicketService();
+					List<Ticket> fftickets = ts.removeReportedsFromList(mtickets);
+					
 					request.setAttribute("staffs", staffs);
-					request.setAttribute("mtickets", mtickets);
+					request.setAttribute("mtickets", fftickets);
 					displayPage(request, response, "/controlboard.jsp");
 				}
 				
@@ -90,8 +104,11 @@ public class controlboard extends HttpServlet {
 
 					TicketService ts = new TicketService();
 					List<Ticket> stickets = ts.staffsTickets(user.getId());
+					
+					ts = new TicketService();
+					List<Ticket> fftickets = ts.removeReportedsFromList(stickets);
 
-					request.setAttribute("stickets", stickets);
+					request.setAttribute("stickets", fftickets);
 					displayPage(request, response, "/controlboard.jsp");
 				}
 				

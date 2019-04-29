@@ -98,4 +98,20 @@ public class StatusService {
 			return ts;
 		}
 	}
+
+
+
+	public List<TicketStatus> removeReportedFromList(List<TicketStatus> statuses) {
+		List<TicketStatus> tss = new ArrayList<TicketStatus>();
+		
+		
+		for(TicketStatus ts : statuses) {
+			if(!ts.getName().equals("Reported")) {
+				tss.add(ts);
+			}
+		}
+		
+		
+		return tss;
+	}
 }
