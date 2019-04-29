@@ -23,8 +23,7 @@
 <title>Welcome</title>
 <link rel="stylesheet" type="text/css" href="resources/css/navbar.css">
 <link rel="stylesheet" type="text/css" href="resources/css/notice.css">
-<link rel="stylesheet" type="text/css"
-	href="resources/css/dashboard.css">
+<link rel="stylesheet" type="text/css" href="resources/css/dashboard.css">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -85,16 +84,15 @@
 		</div>
 	</c:if>
 
-
 	<div class="login-wrap">
 		<div class="login-html">
-			<input id="tab-3" type="radio" name="tab" class="register"><label
-				for="tab-3" class="tab">Register</label> <input id="tab-1"
-				type="radio" name="tab" class="sign-in" checked><label
-				for="tab-1" class="tab">Sign In</label> <input id="tab-2"
-				type="radio" name="tab" class="for-pwd"><label for="tab-2"
-				class="tab">Forgot Password</label>
-			<div class="login-form">
+			<input id="tab-3" type="radio" name="tab" class="register">
+			<label for="tab-3" class="tab">Register</label> 
+			<input id="tab-1" type="radio" name="tab" class="sign-in" checked>
+			<label for="tab-1" class="tab">Sign In</label> 
+			<input id="tab-2" type="radio" name="tab" class="for-pwd">
+			<label for="tab-2"class="tab"></label>
+			<div class="login-form" style="margin-top: 20px">
 
 				<div class="register-htm">
 
