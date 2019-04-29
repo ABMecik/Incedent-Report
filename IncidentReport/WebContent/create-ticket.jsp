@@ -4,16 +4,22 @@
 <!DOCTYPE html>
 <html>
 
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link
+	href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+	rel="stylesheet" id="bootstrap-css">
+<script
+	src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script
+	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script class="jsbin"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <head>
-	<title>Welcome</title>
-	<link rel="stylesheet" type="text/css" href="resources/css/create.css">
-    <script src="resources/js/navbar.js"></script>
+<title>Welcome</title>
+<link rel="stylesheet" type="text/css" href="resources/css/create.css">
+<script src="resources/js/navbar.js"></script>
 
 </head>
 <body>
@@ -27,7 +33,8 @@
 
 			<%
 				if (session.getAttribute("role").equals("Front Desk") || session.getAttribute("role").equals("Manager")
-							|| session.getAttribute("role").equals("Staff") || session.getAttribute("role").equals("Principal Inspector")) {
+						|| session.getAttribute("role").equals("Staff")
+						|| session.getAttribute("role").equals("Principal Inspector")) {
 			%>
 			<li class="nav-list-item"><a href="controlboard"
 				class="nav-link">Controlboard</a></li>
@@ -62,80 +69,86 @@
 		</ul>
 	</nav>
 
-    
-    <form action="NewTicket" method="POST" enctype='multipart/form-data'>
 
-    <div class="login-wrap">
-	<div class="login-html">
-		<input id="tab-1" type="radio" name="tab" class="create-ticket" checked><label for="tab-1" class="tab">Ticket</label>
-        <div class="login-form">
-            
-            <div class="create-ticket-htm">
-				<div class="group">
-					<label class="label">Title</label>
-					<input id="title" type="text" class="input" name="title">
+	<form action="NewTicket" method="POST" enctype='multipart/form-data'>
+
+		<div class="login-wrap">
+			<div class="login-html">
+				<input id="tab-1" type="radio" name="tab" class="create-ticket"
+					checked><label for="tab-1" class="tab">Ticket</label>
+				<div class="login-form">
+
+					<div class="create-ticket-htm">
+						<div class="group">
+							<label class="label">Title</label> <input id="title" type="text"
+								class="input" name="title">
+						</div>
+						<div class="group">
+							<label class="label">Description</label> <input id="decription"
+								type="text" class="input" name="decription">
+						</div>
+						<div class="group">
+							<label class="label">Location</label> <input id="location"
+								type="text" class="input" name="location">
+						</div>
+
+						<div class="group">
+							<div class="container">
+								<!-- https://bootsnipp.com/snippets/4Pxn -->
+								<div class="row">
+									<div class="col-xs-6">
+										<div class="range range-primary">
+											<input type="range" name="priority" min="1" max="10"
+												value="5" onchange="rangePrimary.value=value">
+											<output id="rangePrimary">5</output>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+						<!-- https://bootsnipp.com/snippets/exEoQ -->
+						<div class="group">
+							<div class="checkbox">
+								<input type="checkbox" id="box-1" name="anonim"> <label
+									for="box-1">Stay Anonim</label>
+							</div>
+						</div>
+
+						<div class="group">
+							<div class="file-upload">
+								<div class="image-upload-wrap">
+									<input class="file-upload-input" type='file' id="photo"
+										name="photo" onchange="readURL(this);" accept="image/*" />
+									<div class="drag-text">
+										<h3>Drag and drop a file</h3>
+									</div>
+								</div>
+								<div class="file-upload-content">
+									<img class="file-upload-image" src="#" alt="your image" />
+									<div class="image-title-wrap">
+										<button type="button" onclick="removeUpload()"
+											class="remove-image">
+											Remove <span class="image-title">Uploaded Image</span>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="group">
+							<input type="submit" class="button" value="Create Ticket">
+						</div>
+
+						<div class="hr"></div>
+					</div>
+
 				</div>
-                <div class="group">
-					<label class="label">Description</label>
-					<input id="decription" type="text" class="input" name="decription">
-				</div>
-				<div class="group">
-					<label class="label">Location</label>
-					<input id="location" type="text" class="input" name="location">
-				</div>
-				
-                <div class="group">
-				    <div class="container">
-                      <div class="row">
-                        <div class="col-xs-6">                         
-                          <label id="priority" for="checkbox">Priority</label>
-                          <div class="range">
-                            <input type="range" name="priority" min="1" max="10" value="5" onchange="range.value=value">
-                            <output id="range">5</output>
-                          </div>
-                        </div>
-                      </div>
-                </div>
-				</div>
-                
-                
-                
-                <div class="group">
-                    <div class="checkbox">
-                        <input id="anonim" name="anonim" type="checkbox"/><label id="unknown" for="checkbox">Stay Anonim</label>
-                    </div>
-                </div>
-                
-                <div class="group">
-                    <div class="file-upload">
-                      <div class="image-upload-wrap">
-                        <input class="file-upload-input" type='file' id="photo" name="photo" onchange="readURL(this);" accept="image/*" />
-                        <div class="drag-text">
-                          <h3>Drag and drop a file</h3>
-                        </div>
-                      </div>
-                      <div class="file-upload-content">
-                        <img class="file-upload-image" src="#" alt="your image" />
-                        <div class="image-title-wrap">
-                          <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
-                        </div>
-                      </div>
-                    </div>
-                </div>
-                
-				<div class="group">
-					<input type="submit" class="button" value="Create Ticket">
-				</div>
-				
-				<div class="hr"></div>
 			</div>
-
 		</div>
-	</div>
-</div>
+	</form>
 
-</form>
 
-    
 </body>
 </html>

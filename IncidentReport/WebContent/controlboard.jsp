@@ -25,7 +25,8 @@
 
 <head>
 <title>Welcome</title>
-<link rel="stylesheet" type="text/css" href="resources/css/dashboard.css">
+<link rel="stylesheet" type="text/css"
+	href="resources/css/dashboard.css">
 <script src="resources/js/staff_open_image.js"></script>
 </head>
 <body>
@@ -39,7 +40,8 @@
 
 			<%
 				if (session.getAttribute("role").equals("Front Desk") || session.getAttribute("role").equals("Manager")
-							|| session.getAttribute("role").equals("Staff") || session.getAttribute("role").equals("Principal Inspector")) {
+						|| session.getAttribute("role").equals("Staff")
+						|| session.getAttribute("role").equals("Principal Inspector")) {
 			%>
 			<li class="nav-list-item"><a href="controlboard"
 				class="nav-link">Controlboard</a></li>
@@ -418,11 +420,9 @@
 													</div>
 												</td>
 												<td align="center">
-													<div class="form-check">
-														<input type="checkbox" class="form-check-input"
-															name="close-ticket">
-													</div>
-												</td>
+													<input type="checkbox" id="box-${ticket.getId()}" name="close-ticket">
+												 	<label for="box-${ticket.getId()}"></label>
+												 </td>
 												<td align="center">
 													<div class="container">
 														<div class="row">
@@ -629,9 +629,9 @@
 	<%
 		} else if (session.getAttribute("role").equals("Principal Inspector")) {
 	%>
-	
-	
-	
+
+
+
 
 	<div class="lbox-wrap" style="margin-left: 1px">
 		<div class="lbox-html">
@@ -808,7 +808,8 @@
 																	<select class="form-control" name="set-manager"
 																		style="width: 150px">
 																		<option value="" selected disabled hidden>Choose</option>
-																		<option value="${ticket.getFrontdesk().getId()}">Front Desk</option>
+																		<option value="${ticket.getFrontdesk().getId()}">Front
+																			Desk</option>
 																		<c:forEach var="manager" items="${managers}">
 																			<option value="${manager.getId()}">${manager.getName()}
 																				${manager.getSurname()} -
@@ -838,14 +839,16 @@
 			</div>
 		</div>
 	</div>
-	
-	
-	
-	
-	
-	
-	
-	<%} %>
+
+
+
+
+
+
+
+	<%
+		}
+	%>
 
 
 
