@@ -246,7 +246,7 @@
 															<div class="row">
 																<div class="form-group mb-2">
 																	<select class="form-control" name="set-priority"
-																		style="width: 80px">
+																		style="width: 60px">
 																		<option selected value="${ticket.getPriority().getImportance()}">${ticket.getPriority().getImportance()}</option>
 																		<option value="1">1</option>
 																		<option value="2">2</option>
@@ -266,7 +266,7 @@
 													<td align="center">
 														<div class="form-group" id="add-note" name="notes">
 															<textarea class="form-control" rows="2" id="comment"
-																name="notes" style="width: 170px"></textarea>
+																name="notes" style="width: 150px"></textarea>
 														</div>
 													</td>
 													<td align="center">
@@ -274,7 +274,7 @@
 															<div class="row">
 																<div class="form-group mb-2"">
 																	<select class="form-control" name="set-manager"
-																		style="width: 150px">
+																		style="width: 130px">
 																		<option value="${ticket.getCreated_by().getId()}" selected>Creater</option>
 																		<option value="-2">Report to Principal</option>
 																		<c:forEach var="manager" items="${managers}">
@@ -290,7 +290,7 @@
 													<td align="center">
 														<div class="group">
 															<input class="btn btn-primary" type="submit"
-																value="UpdateTicket">
+																value="UpdateTicket" style="width: 120px">
 														</div>
 													</td>
 												</form>
